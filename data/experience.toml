@@ -1,0 +1,60 @@
+[[experience]]
+title = "Principal Machine Learning Engineer"
+company = "Capital One"
+location = "Bengaluru, India"
+start_date = 2025
+end_date = 2025
+description = "Research in Generative AI and Vector Search Engineering Optimizations"
+company_url = "https://www.capitalone.com/"
+company_favicon = "https://www.capitalone.com/favicon.ico"
+
+[[experience]]
+title = "Principal Research Engineer"
+company = "UptimeAI"
+location = "Bengaluru, India"
+start_date = 2024
+end_date = 2025
+description = "Research in Generative AI in Time Series Domain for Industrial Automation"
+company_url = "https://www.uptimeai.com/"
+company_favicon = "https://www.uptimeai.com/dist/img/favicon.png"
+
+[[experience]]
+title = "Staff Software Engineer"
+company = "Visa, Inc"
+location = "Bengaluru, India"
+start_date = 2023
+end_date = 2024
+description = "Software Development and Engineering in Federated Learning for Payment Fraud Prevention"
+company_url = "https://www.visa.com/"
+company_favicon = "https://www.visa.com/api/image-proxy?path=%2Fcontent%2Fdam%2Fvisa%2Fheader%2FVectorBlue.png"
+
+
+[[experience]]
+title = "Senior Machine Learning Engineer II"
+company = "Rakuten"
+location = "Bengaluru, India"
+start_date = 2022
+end_date = 2023
+description = "Software Development and Research in Vector Search for e-commerce at scale"
+company_url = "https://global.rakuten.com/corp/"
+company_favicon = "https://global.rakuten.com/corp/assets/img/common/logo.svg"
+
+[[experience]]
+title = "Software Engineer III"
+company = "J.P. Morgan Chase & Co."
+location = "Bengaluru, India"
+start_date = 2019
+end_date = 2022
+description = "Software Development and Research in Federated Learning and Anomaly Detection for Blockchain Networks"
+company_url = "https://www.jpmorganchase.com/"
+company_favicon = "https://www.jpmorganchase.com/content/dam/jpmorganchase/images/logos/jpmc-logo.svg"
+
+[[experience]]
+title = "Associate Software Engineer"
+company = "Veritas (now part of Cohesity)"
+location = "Pune, India"
+start_date = 2018
+end_date = 2019
+description = "Software Development in Distributed Cluster for Storage"
+company_url = "https://www.cohesity.com/"
+company_favicon = "https://www.cohesity.com/favicon.ico"

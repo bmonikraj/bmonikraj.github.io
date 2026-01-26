@@ -40,6 +40,11 @@ name = "Publications"
 url = "/publications/"
 weight = 1
 
+[[extra.menu]]
+name = "Experience"
+url = "/experience/"
+weight = 1
+
 # Features to enable
 enable_dark_mode = true
 enable_search = false

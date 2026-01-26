@@ -31,6 +31,10 @@
                         <header class="experience-header">
                             <h3 class="experience-title">{{ exp.title }}</h3>
                             <div class="experience-company">
+                                <a href="{{ exp.company_url }}" target="_blank" rel="noopener noreferrer"></a>
+                                {% if exp.company_favicon %}
+                                    <img src="{{ exp.company_favicon }}" alt="{{ exp.company }}" height="15vh">
+                                {% endif %}
                                 {{ exp.company }}
                                 {% if exp.location %}
                                     <span class="experience-location">• {{ exp.location }}</span>
