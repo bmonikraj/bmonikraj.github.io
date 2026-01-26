@@ -23,9 +23,9 @@
                     <header class="publication-header">
                         <h3 class="publication-title">
                             {% if pub.type == "article" %}
-                                <i class="fa-solid fa-book"></i>
+                                <i class="fa-solid fa-book"></i> [Article]
                             {% elif pub.type == "patent" %}
-                                <i class="fas fa-lightbulb"></i>
+                                <i class="fas fa-lightbulb"></i> [Patent]
                             {% else %}
                                 <i class="fa-solid fa-newspaper"></i>
                             {% endif %}
@@ -44,7 +44,13 @@
                         
                         <div class="publication-authors">
                             {% for author in pub.author %}         
-                                <span class="author">{{ author }}</span>{% if not loop.last %}, {% endif %}
+                                <span class="author">
+                                    {% if author is starting_with("*") and author is ending_with("*") %}
+                                        <strong>{{ author | replace(from="*", to="") }}</strong>
+                                    {% else %}
+                                        {{ author }}
+                                    {% endif %}
+                                </span>{% if not loop.last %},{% endif %}
                             {% endfor %}
                         </div>
                     </header>

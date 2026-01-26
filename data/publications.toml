@@ -3,7 +3,7 @@ type = "patent"
 title = "Systems and methods for federated learning using distributed messaging with entitlements for anonymous computation and secure delivery of model"
 pub_year = 2025
 author = [
-    "Monik Raj Behera",
+    "*Monik Raj Behera*",
     "Sudhir Upadhyay",
     "Rob Otter",
     "Suresh Shetty",
@@ -16,7 +16,7 @@ type = "patent"
 title = "Systems and methods for federated learning using peer-to-peer networks"
 pub_year = 2022
 author = [
-    "Monik Raj Behera",
+    "*Monik Raj Behera*",
     "Sudhir Upadhyay",
     "Rob Otter",
     "Suresh Shetty",
@@ -29,7 +29,7 @@ type = "article"
 title = "FedSyn: Synthetic Data Generation using Federated Learning"
 pub_year = 2022
 author = [
-    "Monik Raj Behera",
+    "*Monik Raj Behera*",
     "Sudhir Upadhyay",
     "Suresh Shetty",
     "Sudha Priyadarshini",
@@ -45,7 +45,7 @@ type = "article"
 title = "Federated Learning using Smart Contracts on Blockchains, based on Reward Driven Approach"
 pub_year = 2021
 author = [
-    "Monik Raj Behera",
+    "*Monik Raj Behera*",
     "Sudhir Upadhyay",
     "Suresh Shetty",
 ]
@@ -60,7 +60,7 @@ pub_year = 2022
 author = [
     "Marco Pistoia",
     "Omar Amer",
-    "Monik Raj Behera",
+    "*Monik Raj Behera*",
     "Joseph A Dolphin",
     "James F Dynes",
     "Benny John",
@@ -80,7 +80,7 @@ title = "Systems and methods for reward-driven federated learning"
 pub_year = 2022
 author = [
     "Sudhir Upadhyay",
-    "Monik Raj Behera",
+    "*Monik Raj Behera*",
 ]
 abstract = "Systems and methods for federated learning based on a reward-driven approach are disclosed. In one embodiment, a method may include: (1) receiving, by a federated contribution computer program executed by a federated node in a distributed ledger network, a plurality of local machine learning model updates from a plurality of clients in the distributed ledger networks; (2) retrieving, by the federated contribution computer program, a prior global machine learning model; (3) calculating, by the federated contribution computer program, a current global machine learning model based on the prior global machine learning model and the plurality of local machine learning model updates; (4) determining, by the federated contribution computer program, a federated contribution for each client based on each client's federated contribution to the current global machine learning model; and (5) issuing, by the federated contribution computer program, rewards to each client based on the client's federated contribution."
 url = "https://patents.google.com/patent/US20220391779A1/en"
@@ -91,7 +91,7 @@ title = "SYSTEMS AND METHODS FOR GENERATING SYNTHETIC DATA USING FEDERATED, COLL
 pub_year = 2023
 author = [
     "Sudhir Upadhyay",
-    "Monik Raj Behera",
+    "*Monik Raj Behera*",
     "Palka Patel",
     "Alexander Littleton",
     "Sophia Wasserman",
@@ -110,7 +110,7 @@ title = "Systems and methods for privacy preserving, network analytics, and anom
 pub_year = 2023
 author = [
     "Sudhir Upadhyay",
-    "Monik Raj Behera",
+    "*Monik Raj Behera*",
     "Suresh Shetty",
     "Tulasi Movva",
     "Palka Patel",
@@ -126,7 +126,7 @@ type = "article"
 title = "pFedGame-Decentralized Federated Learning Using Game Theory in Dynamic Topology"
 pub_year = 2024
 author = [
-    "Monik Raj Behera",
+    "*Monik Raj Behera*",
     "Suchetana Chakraborty",
 ]
 journal = "2024 16th International Conference on COMmunication Systems & NETworkS (COMSNETS)"
@@ -139,7 +139,7 @@ type = "article"
 title = "Federated Learning using Distributed Messaging with Entitlements for Anonymous Computation and Secure Delivery of Model"
 pub_year = 2020
 author = [
-    "Monik Raj Behera",
+    "*Monik Raj Behera*",
     "Sudhir upadhyay",
     "Robert Otter",
     "Suresh Shetty",
@@ -153,7 +153,7 @@ type = "article"
 title = "Federated Learning using Peer-to-peer Network for Decentralized Orchestration of Model Weights"
 pub_year = 2021
 author = [
-    "Monik Raj Behera",
+    "*Monik Raj Behera*",
     "Sudhir upadhyay",
     "Robert Otter",
     "Suresh Shetty",
