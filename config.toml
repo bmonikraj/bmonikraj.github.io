@@ -31,8 +31,6 @@ cv_url = ""
 # Bio/about section
 bio = """
 I work at the *[Center for Applied Intelligent Systems Research (CAISR)](https://www.hh.se/english/research/our-research/research-at-the-school-of-information-technology/center-for-applied-intelligent-systems-research-caisr.html)* in *[Halmstad University](https://www.hh.se/english.html)* in **Algorithms for Privacy Preserving AI and Foundation Models**.
-
-Before embarking on my doctoral studies, I worked on numerous projects in the industry as a Principal Machine Learning Engineer at Capital One, JP Morgan Chase, Visa, and Rakuten. My work in these global fintech and e-commerce leaders involved software development and architecting large-scale AI systems and navigating the challenges of deploying robust, scalable models in high-stakes environments.
 """
 
 # Features to enable
