@@ -31,9 +31,9 @@ jobs:
       run: |
         python scripts/fetch_pubs.py
         
-    - name: Compile CV with Typst
-      run: |
-        typst compile --root . static/cv/cv.typ
+    # - name: Compile CV with Typst
+    #   run: |
+    #     typst compile --root . static/cv/cv.typ
         
     - name: Check for changes
       id: verify-changed-files
