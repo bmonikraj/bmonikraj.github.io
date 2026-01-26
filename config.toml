@@ -35,6 +35,10 @@ I work at the *[Center for Applied Intelligent Systems Research (CAISR)](https:/
 Before embarking on my doctoral studies, I worked on numerous projects in the industry as a Principal Machine Learning Engineer at Capital One, JP Morgan Chase, Visa, and Rakuten. My work in these global fintech and e-commerce leaders involved software development and architecting large-scale AI systems and navigating the challenges of deploying robust, scalable models in high-stakes environments.
 """
 
+# Features to enable
+enable_dark_mode = true
+enable_search = false
+
 [[extra.menu]]
 name = "Publications"
 url = "/publications/"
@@ -43,11 +47,7 @@ weight = 1
 [[extra.menu]]
 name = "Experience"
 url = "/experience/"
-weight = 1
-
-# Features to enable
-enable_dark_mode = true
-enable_search = false
+weight = 2
 
 # Color theme configuration
 [extra.colors]
