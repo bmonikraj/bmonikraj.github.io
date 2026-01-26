@@ -30,7 +30,7 @@ cv_url = ""
 
 # Bio/about section
 bio = """
-I work at the *[Center for Applied Intelligent Systems Research (CAISR)](https://www.hh.se/english/research/our-research/research-at-the-school-of-information-technology/center-for-applied-intelligent-systems-research-caisr.html)* in *[Halmstad University](https://www.hh.se/english.html)* in **Algorithms for Privacy Preserving AI and Foundation Models**.
+I work at the *[Center for Applied Intelligent Systems Research (CAISR)](https://www.hh.se/english/research/our-research/research-at-the-school-of-information-technology/center-for-applied-intelligent-systems-research-caisr.html)*, *[Halmstad University](https://www.hh.se/english.html)* in **Algorithms for Privacy Preserving AI and Foundation Models**.
 """
 
 # Features to enable
