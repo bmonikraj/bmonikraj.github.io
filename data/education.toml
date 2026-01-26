@@ -1,0 +1,17 @@
+[[education]]
+degree = "Masters in Artificial Intelligence"
+year = "2023"
+institution = "Indian Institute of Technology, Jodhpur"
+institution_url = "https://www.iitj.ac.in/"
+honors = "Honours"
+lab = "UbiSys Lab"
+lab_url = "https://ubisysresearch.github.io/"
+
+[[education]]
+degree = "Bachelors in Computer Science and Engineering"
+year = "2018"
+institution = "National Institute of Technology, Rourkela"
+institution_url = "https://www.nitrkl.ac.in/"
+honors = "Honours"
+lab = "Intelligent Computing and Computer Vision"
+lab_url = "https://www.nitrkl.ac.in/CS/ResearchGroup/"

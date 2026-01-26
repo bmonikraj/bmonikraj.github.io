@@ -1,0 +1,63 @@
+# The URL the site will be built for
+base_url = "https://bmonikraj.github.io"
+title = "Monik Raj Behera"
+description = "Researcher in Artificial Intelligence"
+theme = "peritus"
+
+# Whether to automatically compile all Sass files in the sass directory
+compile_sass = true
+
+# Whether to build a search index to be used later on by a JavaScript library
+build_search_index = true
+
+[markdown]
+
+[markdown.highlighting]
+theme = "catppuccin-mocha"
+
+[extra]
+# Put all your custom variables here
+
+# Personal information
+name = "Monik Raj Behera"
+role = "Doctoral Student in Machine Learning"
+organization = "Halmstad University"
+location = "Halmstad, Sweden"
+email = "monik.raj.behera@hh.se"
+last_name_identifier = "Behera"
+organization_url = "https://www.hh.se/english/information-english/search-staff.html?person=22542F17-CEA5-49B7-94B4-9356AB807781"
+cv_url = ""
+
+# Bio/about section
+bio = """
+I work at the *[Center for Applied Intelligent Systems Research (CAISR)](https://www.hh.se/english/research/our-research/research-at-the-school-of-information-technology/center-for-applied-intelligent-systems-research-caisr.html)* in *[Halmstad University](https://www.hh.se/english.html)* in **Algorithms for Privacy Preserving AI and Foundation Models**.
+
+Before embarking on my doctoral studies, I worked on numerous projects in the industry as a Principal Machine Learning Engineer at Capital One, JP Morgan Chase, Visa, and Rakuten. My work in these global fintech and e-commerce leaders involved software development and architecting large-scale AI systems and navigating the challenges of deploying robust, scalable models in high-stakes environments.
+"""
+
+[[extra.menu]]
+name = "Publications"
+url = "/publications/"
+weight = 1
+
+# Features to enable
+enable_dark_mode = true
+enable_search = false
+
+# Color theme configuration
+[extra.colors]
+# Light mode colors
+primary_color = "#003660"      # UCSB Navy
+secondary_color = "#FEBC11"    # UCSB Gold  
+accent_color = "#09847A"       # UCSB Sea Green
+text_color = "#3D4952"         # UCSB Dark Gray
+background_color = "#ffffff"    # White
+card_background = "#ffffff"     # White
+border_color = "#DCE1E5"       # UCSB Light Gray
+light_background = "#EEF0F2"   # UCSB Light Light Gray
+
+# Dark mode colors
+dark_text_color = "#DCE1E5"        # UCSB Light Gray for dark mode text
+dark_background_color = "#111517"   # UCSB Light Gray Darken 80
+dark_card_background = "#1e1e1e"
+dark_border_color = "#333333"

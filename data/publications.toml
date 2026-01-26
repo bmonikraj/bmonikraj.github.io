@@ -1,0 +1,17 @@
+[metadata]
+source = "Google Scholar"
+scholar_id = "Lrz4h9AAAAAJ"
+github_username = "bmonikraj"
+note = "Publications automatically fetched from Google Scholar profile"
+
+[[publication]]
+title = "Modeling the infectiousness of Twitter hashtags"
+pub_year = 2017
+author = [
+    "Jonathan Skaza",
+    "Brian Blais",
+]
+journal = "Physica A: Statistical Mechanics and its Applications"
+volume = "465"
+abstract = "This study applies dynamical and statistical modeling techniques to quantify the proliferation and popularity of trending hashtags on Twitter. Using time-series data reflecting actual tweets in New York City and San Francisco, we present estimates for the dynamics (i.e., rates of infection and recovery) of several hundred trending hashtags using an epidemic modeling framework coupled with Bayesian Markov Chain Monte Carlo (MCMC) methods. This methodological strategy is an extension of techniques traditionally used to model the spread of infectious disease. Using SIR-type models, we demonstrate that most hashtags are marginally infectious, while very few emerge as “trending”. In doing so we illustrate that hashtags can be grouped by infectiousness, possibly providing a method for quantifying the trendiness of a topic."
+url = "https://www.sciencedirect.com/science/article/pii/S0378437116305556"

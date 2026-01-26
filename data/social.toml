@@ -1,0 +1,29 @@
+[[social]]
+name = "Email"
+url = "mailto:monik.raj.behera@hh.se"
+icon = "fas fa-envelope"
+
+[[social]]
+name = "X"
+url = "https://x.com/raj_monik"
+icon = "fa-brands fa-x-twitter"
+
+[[social]]
+name = "Google Scholar"
+url = "https://scholar.google.com/citations?user=Lrz4h9AAAAAJ"
+icon = "ai ai-google-scholar"
+
+[[social]]
+name = "ORCID"
+url = "https://orcid.org/0000-0001-9385-2533"
+icon = "fa-brands fa-orcid"
+
+[[social]]
+name = "GitHub"
+url = "https://github.com/bmonikraj"
+icon = "fab fa-github"
+
+[[social]]
+name = "LinkedIn"
+url = "https://in.linkedin.com/in/bmonikraj"
+icon = "fab fa-linkedin" 
