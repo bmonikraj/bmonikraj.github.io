@@ -133,8 +133,8 @@ def build_toml(scholar_id: str, github_username: str = None) -> dict:
 
 def main() -> None:
     ap = argparse.ArgumentParser(description="Sync Google Scholar → TOML")
-    ap.add_argument("--scholar-id", default="dAAMOqgAAAAJ")
-    ap.add_argument("--github-username", default="jskaza")
+    ap.add_argument("--scholar-id", default="Lrz4h9AAAAAJ")
+    ap.add_argument("--github-username", default="bmonikraj")
     ap.add_argument("--out", default=Path(__file__).parent.parent / "data" / "publications.toml")
     args = ap.parse_args()
 
