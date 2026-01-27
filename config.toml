@@ -30,12 +30,11 @@ cv_url = ""
 
 # Bio/about section
 bio = """
-I work at the *[Center for Applied Intelligent Systems Research (CAISR)](https://www.hh.se/english/research/our-research/research-at-the-school-of-information-technology/center-for-applied-intelligent-systems-research-caisr.html)* in *[Halmstad University](https://www.hh.se/english.html)*. My research focuses on **Algorithms for Generative AI and Privacy Preserving ML Systems**.
+I work at the *[Center for Applied Intelligent Systems Research (CAISR)](https://www.hh.se/english/research/our-research/research-at-the-school-of-information-technology/center-for-applied-intelligent-systems-research-caisr.html)* in *[Halmstad University](https://www.hh.se/english.html)*. My research focuses on **Algorithms and Systems for Generative AI, Deep Learning and Privacy Preserving AI**.
 """
 
 # Features to enable
 enable_dark_mode = true
-enable_search = false
 
 [[extra.menu]]
 name = "Publications"
@@ -47,20 +46,58 @@ name = "Experience"
 url = "/experience/"
 weight = 2
 
-# Color theme configuration
-[extra.colors]
-# Light mode colors
-primary_color = "#003660"      # UCSB Navy
-secondary_color = "#FEBC11"    # UCSB Gold  
-accent_color = "#09847A"       # UCSB Sea Green
-text_color = "#3D4952"         # UCSB Dark Gray
-background_color = "#ffffff"    # White
-card_background = "#ffffff"     # White
-border_color = "#DCE1E5"       # UCSB Light Gray
-light_background = "#EEF0F2"   # UCSB Light Light Gray
+####
+#To enable a color theme, the toml key must be [extra.colors]
+#To disable, make the toml key as [extra.colors.disabled.1] or [extra.colors.disabled.2] and so on. 
+####
 
-# Dark mode colors
-dark_text_color = "#DCE1E5"        # UCSB Light Gray for dark mode text
-dark_background_color = "#111517"   # UCSB Light Gray Darken 80
-dark_card_background = "#1e1e1e"
+# Color theme configuration - High Tech Minimalist Theme
+[extra.colors.disabled.1]
+# Light mode
+primary_color = "#000000"      # Pure Black for headers (Very "Design" focused)
+secondary_color = "#475569"    # Slate Gray for secondary info
+accent_color = "#007AFF"       # San Francisco Blue (Apple/OpenAI style)
+text_color = "#111827"         # Rich Dark Gray
+background_color = "#FFFFFF"
+card_background = "#F9FAFB"
+border_color = "#E5E7EB"
+
+# Dark mode
+dark_text_color = "#F9FAFB"        # Almost white
+dark_background_color = "#020617"   # Deep Navy Black
+dark_card_background = "#0F172A"    # Slate Navy
+dark_border_color = "#1E293B"       # Subtle slate borders
+
+# Color theme configuration - Academic Classic
+[extra.colors]
+# Light mode
+primary_color = "#8C1515"      # Stanford Red / Deep Crimson
+secondary_color = "#5E666E"    # Steel Gray
+accent_color = "#2E7D32"       # Success Green
+text_color = "#2C2C2C"         # Soft Black
+background_color = "#FCFAFA"   # Slightly warm white (easier on eyes)
+card_background = "#FFFFFF"
+border_color = "#D1D5DB"
+
+# Dark mode
+dark_text_color = "#E5E7EB"
+dark_background_color = "#121212"   # Material Dark
+dark_card_background = "#1E1E1E"    # Elevated Surface
 dark_border_color = "#333333"
+
+# Color theme configuration - Nordic classic
+[extra.colors.disabled.2]
+# Light mode
+primary_color = "#0891B2"      # Cyan/Teal (Engineering vibe)
+secondary_color = "#6366F1"    # Indigo (For a modern tech touch)
+accent_color = "#F59E0B"       # Amber (For awards)
+text_color = "#1F2937"         
+background_color = "#F3F4F6"   # Cool Gray Background
+card_background = "#FFFFFF"    # White cards pop against gray background
+border_color = "#E5E7EB"
+
+# Dark mode
+dark_text_color = "#D1D5DB"
+dark_background_color = "#111827"   # Cool Dark Navy
+dark_card_background = "#1F2937"    # Darker Lighter Navy
+dark_border_color = "#374151"

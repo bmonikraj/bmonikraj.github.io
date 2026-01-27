@@ -23,9 +23,9 @@
                     <header class="publication-header">
                         <h3 class="publication-title">
                             {% if pub.type == "article" %}
-                                <i class="fa-solid fa-book"></i> [Article]
+                                <i class="fa-solid fa-book"></i>
                             {% elif pub.type == "patent" %}
-                                <i class="fas fa-lightbulb"></i> [Patent]
+                                <i class="fas fa-lightbulb"></i>
                             {% else %}
                                 <i class="fa-solid fa-newspaper"></i>
                             {% endif %}
@@ -67,7 +67,13 @@
                     <footer class="publication-footer">
                         {% if pub.url %}
                             <a href="{{ pub.url }}" class="publication-link" target="_blank" rel="noopener noreferrer">
-                                View Manuscript →
+                                {% if pub.type == "article" %}
+                                    View Manuscript →
+                                {% elif pub.type == "patent" %}
+                                    View Patent →
+                                {% else %}
+                                    View Content →
+                                {% endif %}
                             </a>
                         {% endif %}
                     </footer>

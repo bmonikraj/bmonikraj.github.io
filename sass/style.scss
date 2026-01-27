@@ -206,6 +206,11 @@ a {
 }
 
 .avatar-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1rem;
   .avatar {
     width: 200px;
     height: 200px;
@@ -335,12 +340,14 @@ a {
 .info-content {
   min-width: 0; // Prevent grid overflow
   margin-left: 2rem; // Push further right
+  flex: 1;
 }
 
 .info-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: 1fr 1fr;
   gap: 3rem;
+  width: 100%;
   
   @media (max-width: 768px) {
     grid-template-columns: 1fr;
