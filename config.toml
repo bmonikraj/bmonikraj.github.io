@@ -2,7 +2,7 @@
 base_url = "https://bmonikraj.github.io"
 title = "Monik Raj Behera"
 description = "Researcher in Artificial Intelligence"
-theme = "peritus"
+
 
 # Whether to automatically compile all Sass files in the sass directory
 compile_sass = true
