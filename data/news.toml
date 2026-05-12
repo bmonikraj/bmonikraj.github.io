@@ -1,0 +1,8 @@
+# data/news.toml
+[[news]]
+date = "2026 Jun"
+content = "Attending ML Summer School in Reliability and Safety in Kraków, Poland [MLSS R&S2026](https://mlss2026.mlinpl.org/)"
+
+[[news]]
+date = "2025 Dec"
+content = "Started PhD in Artificial Intelligence at [Halmstad University, Sweden](https://hh.se/english.html)"

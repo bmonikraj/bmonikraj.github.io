@@ -4,19 +4,14 @@ url = "mailto:monik.raj.behera@hh.se"
 icon = "fas fa-envelope"
 
 [[social]]
-name = "X"
-url = "https://x.com/raj_monik"
-icon = "fa-brands fa-x-twitter"
+name = "LinkedIn"
+url = "https://in.linkedin.com/in/bmonikraj"
+icon = "fab fa-linkedin" 
 
 [[social]]
 name = "Google Scholar"
-url = "https://scholar.google.com/citations?user=Lrz4h9AAAAAJ"
+url = "https://scholar.google.com/citations?hl=en&user=Lrz4h9AAAAAJ&view_op=list_works&sortby=pubdate"
 icon = "ai ai-google-scholar"
-
-[[social]]
-name = "ORCID"
-url = "https://orcid.org/0000-0001-9385-2533"
-icon = "fa-brands fa-orcid"
 
 [[social]]
 name = "GitHub"
@@ -24,6 +19,11 @@ url = "https://github.com/bmonikraj"
 icon = "fab fa-github"
 
 [[social]]
-name = "LinkedIn"
-url = "https://in.linkedin.com/in/bmonikraj"
-icon = "fab fa-linkedin" 
+name = "ORCID"
+url = "https://orcid.org/0000-0001-9385-2533"
+icon = "fa-brands fa-orcid"
+
+[[social]]
+name = "X"
+url = "https://x.com/raj_monik"
+icon = "fa-brands fa-x-twitter"

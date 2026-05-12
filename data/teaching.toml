@@ -1,0 +1,23 @@
+[[teaching]]
+name = "DT8034: Big Data Parallel Programming"
+role = "Teaching Assistant"
+institution = "Halmstad University"
+term = "Spring 2026"
+details = [
+    "Managed the Project Evaluation for students in PySpark.",
+    "Assisted students in the class and labs with their doubts in Conda, Spark, Big Data",
+    "Grading and Doubt Clearing from Students"
+]
+link = "#"
+
+[[teaching]]
+name = "DI4021: Linux Administration"
+role = "Teaching Assistant"
+institution = "Halmstad University"
+term = "Spring 2026"
+details = [
+    "Managed the Project Evaluation for students.",
+    "Assisted students in the class and labs with their doubts",
+    "Hands-on support to students with linux commands in multiple hosts and environments"
+]
+link = "#"

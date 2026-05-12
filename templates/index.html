@@ -5,6 +5,7 @@
 {% set education_data = load_data(path="data/education.toml") %}
 {% set social_data = load_data(path="data/social.toml") %}
 {% set interests_data = load_data(path="data/interests.toml") %}
+{% set news_data = load_data(path="data/news.toml") %}
 <div class="hero-section">
     <div class="container">
         <div class="hero-content">
@@ -45,6 +46,20 @@
                     <div>{{ config.extra.bio | markdown(inline=false) | safe }}</div>
                 </div>
                 {% endif %}
+
+                {% if news_data.news %}
+                <div class="news-container">
+                    <h3>News</h3>
+                    <ul class="news-list">
+                        {% for item in news_data.news %}
+                        <li class="news-item">
+                            <span class="news-date"><i class="fa-solid fa-bullhorn"></i> {{ item.date }}</span>
+                            <span class="news-content">{{ item.content | markdown(inline=true) | safe }}</span>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
                 
                 <!-- Social links and Info sections horizontally aligned -->
                 <div class="social-info-section">
@@ -52,6 +67,22 @@
                     <!-- Interests and Education to the right of social links -->
                     <div class="info-content">
                         <div class="info-grid">
+
+                            <!-- News -->
+                            <!-- {% if news_data.news %}
+                            <div class="info-box">
+                                <h3>News</h3>
+                                <ul class="news-list">
+                                    {% for item in news_data.news %}
+                                    <li class="news-item">
+                                        <span class="news-date">{{ item.date }}</span>
+                                        <span class="news-content">{{ item.content | markdown(inline=true) | safe }}</span>
+                                    </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                            {% endif %} -->
+
                             <!-- Interests -->
                             {% if interests_data.interests %}
                             <div class="info-box">

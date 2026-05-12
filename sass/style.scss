@@ -525,45 +525,45 @@ a {
   }
 }
 
-// News section
-.news-section {
-  padding: 4rem 0;
-  background-color: var(--card-background);
-}
+// // News section
+// .news-section {
+//   padding: 4rem 0;
+//   background-color: var(--card-background);
+// }
 
-.news-items {
-  max-width: var(--content-width);
-  margin: 0 auto;
-}
+// .news-items {
+//   max-width: var(--content-width);
+//   margin: 0 auto;
+// }
 
-.news-item {
-  background-color: var(--background-color);
-  padding: 2rem;
-  border-radius: 0.5rem;
-  box-shadow: var(--shadow);
-  margin-bottom: 2rem;
-  border: 1px solid var(--border-color);
+// .news-item {
+//   background-color: var(--background-color);
+//   padding: 2rem;
+//   border-radius: 0.5rem;
+//   box-shadow: var(--shadow);
+//   margin-bottom: 2rem;
+//   border: 1px solid var(--border-color);
   
-  h3 {
-    margin-bottom: 1rem;
-  }
+//   h3 {
+//     margin-bottom: 1rem;
+//   }
   
-  .news-date {
-    color: var(--secondary-color);
-    font-size: 0.9rem;
-    margin-bottom: 1rem;
-    display: block;
-  }
+//   .news-date {
+//     color: var(--secondary-color);
+//     font-size: 0.9rem;
+//     margin-bottom: 1rem;
+//     display: block;
+//   }
   
-  p {
-    margin-bottom: 1rem;
-  }
+//   p {
+//     margin-bottom: 1rem;
+//   }
   
-  .read-more {
-    color: var(--primary-color);
-    font-weight: 500;
-  }
-}
+//   .read-more {
+//     color: var(--primary-color);
+//     font-weight: 500;
+//   }
+// }
 
 // Footer
 .footer {
@@ -752,93 +752,132 @@ a {
   }
 }
 
-// Recent News
-.recent-news {
-  padding: 4rem 0;
-  background-color: var(--background-color);
+// // Recent News
+// .recent-news {
+//   padding: 4rem 0;
+//   background-color: var(--background-color);
   
-  h3 {
-    margin-bottom: 2rem;
-    font-size: 2rem;
-  }
+//   h3 {
+//     margin-bottom: 2rem;
+//     font-size: 2rem;
+//   }
   
-  .news-list {
-    max-width: var(--content-width);
-    margin: 0 auto;
-  }
+//   .news-list {
+//     max-width: var(--content-width);
+//     margin: 0 auto;
+//   }
   
-  .news-item {
-    padding: 1.5rem 0;
-    border-bottom: 1px solid var(--border-color);
+//   .news-item {
+//     padding: 1.5rem 0;
+//     border-bottom: 1px solid var(--border-color);
     
-    &:last-child {
-      border-bottom: none;
-    }
+//     &:last-child {
+//       border-bottom: none;
+//     }
     
-    h4 {
-      margin-bottom: 0.5rem;
+//     h4 {
+//       margin-bottom: 0.5rem;
       
-      a {
-        color: var(--text-color);
-        text-decoration: none;
+//       a {
+//         color: var(--text-color);
+//         text-decoration: none;
         
-        &:hover {
-          color: var(--primary-color);
-        }
-      }
-    }
+//         &:hover {
+//           color: var(--primary-color);
+//         }
+//       }
+//     }
     
-    .news-date {
-      color: var(--secondary-color);
-      font-size: 0.9rem;
-      margin-bottom: 1rem;
-      display: block;
-    }
+//     .news-date {
+//       color: var(--secondary-color);
+//       font-size: 0.9rem;
+//       margin-bottom: 1rem;
+//       display: block;
+//     }
     
-    p {
-      margin-bottom: 1rem;
-      color: var(--secondary-color);
-    }
+//     p {
+//       margin-bottom: 1rem;
+//       color: var(--secondary-color);
+//     }
     
-    .read-more {
-      color: var(--primary-color);
-      font-weight: 500;
-      text-decoration: none;
+//     .read-more {
+//       color: var(--primary-color);
+//       font-weight: 500;
+//       text-decoration: none;
       
-      &:hover {
-        text-decoration: underline;
-      }
-    }
-  }
+//       &:hover {
+//         text-decoration: underline;
+//       }
+//     }
+//   }
+// }
+
+// // Responsive design
+// @media (max-width: 768px) {
+//   .container {
+//     padding: 0 1rem;
+//   }
+  
+//   .hero-section {
+//     padding: 2rem 0;
+//   }
+  
+//   .research-section,
+//   .featured-publications,
+//   .recent-publications,
+//   .recent-talks,
+//   .recent-news {
+//     padding: 3rem 0;
+//   }
+  
+//   .publication-cards {
+//     grid-template-columns: 1fr;
+//   }
+  
+//   .section-title,
+//   .featured-publications h3,
+//   .recent-publications h3,
+//   .recent-talks h3,
+//   .recent-news h3 {
+//     font-size: 1.75rem;
+//   }
+// } 
+
+/* News Container Styling */
+.news-container {
+    margin-top: 1.5rem;
+    margin-bottom: 2rem;
 }
 
-// Responsive design
-@media (max-width: 768px) {
-  .container {
-    padding: 0 1rem;
-  }
-  
-  .hero-section {
-    padding: 2rem 0;
-  }
-  
-  .research-section,
-  .featured-publications,
-  .recent-publications,
-  .recent-talks,
-  .recent-news {
-    padding: 3rem 0;
-  }
-  
-  .publication-cards {
-    grid-template-columns: 1fr;
-  }
-  
-  .section-title,
-  .featured-publications h3,
-  .recent-publications h3,
-  .recent-talks h3,
-  .recent-news h3 {
-    font-size: 1.75rem;
-  }
-} 
+.news-container h3 {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid #eee; /* Optional: adds a subtle separator */
+    padding-bottom: 5px;
+}
+
+.news-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.news-item {
+    display: grid;
+    grid-template-columns: 100px 1fr; /* Fixed width for date, rest for text */
+    gap: 15px;
+    margin-bottom: 0.8rem;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    padding: 0.2rem;
+}
+
+.news-date {
+    font-weight: 600;
+    color: #666;
+    font-family: monospace; /* Optional: gives it a clean academic look */
+}
+
+.news-content {
+    color: #333;
+}

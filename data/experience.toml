@@ -4,7 +4,7 @@ company = "Halmstad University"
 location = "Halmstad, Sweden"
 start_date = 2025.12
 end_date = 2029.11
-description = "Research in Generative AI and Privacy Preserving AI"
+description = "Research in Artificial Intelligence"
 company_url = "https://www.hh.se/english.html"
 company_favicon = "https://www.hh.se/images/18.5a3f038a1683708262e1f81f/1550842088798/halmstad_normal.svg"
 
@@ -26,7 +26,7 @@ start_date = 2025.01
 end_date = 2025.07
 description = "Research in Generative AI in Time Series Domain for Industrial Automation"
 company_url = "https://www.uptimeai.com/"
-company_favicon = "https://www.uptimeai.com/dist/img/favicon.png"
+company_favicon = "https://www.uptimeai.com/wp-content/themes/uptimeai/assets/images/uptimeai-logo.svg"
 
 [[experience]]
 title = "Staff Software Engineer"

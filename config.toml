@@ -30,11 +30,11 @@ cv_url = "/MONIK_RAJ_BEHERA.pdf"
 
 # Bio/about section
 bio = """
-I work at the *[Center for Applied Intelligent Systems Research (CAISR)](https://www.hh.se/english/research/our-research/research-at-the-school-of-information-technology/center-for-applied-intelligent-systems-research-caisr.html)* in *[Halmstad University](https://www.hh.se/english.html)*. My research focuses on **Algorithms and Systems for Generative AI, Deep Learning and Privacy Preserving AI**.
+I work in the *[CAISR](https://www.hh.se/english/research/our-research/research-at-the-school-of-information-technology/center-for-applied-intelligent-systems-research-caisr.html)* group at *[Halmstad University](https://www.hh.se/english.html)* as a Doctoral Student in Machine Learning. I have extensive research and engineering experience in AI Algorithms and Systems while working at various Fortune 500 companies.
 """
 
 # Features to enable
-enable_dark_mode = true
+enable_dark_mode = false
 
 [[extra.menu]]
 name = "Publications"
@@ -44,7 +44,12 @@ weight = 1
 [[extra.menu]]
 name = "Experience"
 url = "/experience/"
-weight = 2
+weight = 1
+
+[[extra.menu]]
+name = "Teaching"
+url = "/teaching/"
+weight = 1
 
 ####
 #To enable a color theme, the toml key must be [extra.colors]
@@ -69,7 +74,7 @@ dark_card_background = "#0F172A"    # Slate Navy
 dark_border_color = "#1E293B"       # Subtle slate borders
 
 # Color theme configuration - Academic Classic
-[extra.colors]
+[extra.colors.disabled.2]
 # Light mode
 primary_color = "#8C1515"      # Stanford Red / Deep Crimson
 secondary_color = "#5E666E"    # Steel Gray
@@ -86,7 +91,7 @@ dark_card_background = "#1E1E1E"    # Elevated Surface
 dark_border_color = "#333333"
 
 # Color theme configuration - Nordic classic
-[extra.colors.disabled.2]
+[extra.colors.disabled.3]
 # Light mode
 primary_color = "#0891B2"      # Cyan/Teal (Engineering vibe)
 secondary_color = "#6366F1"    # Indigo (For a modern tech touch)
@@ -101,3 +106,20 @@ dark_text_color = "#D1D5DB"
 dark_background_color = "#111827"   # Cool Dark Navy
 dark_card_background = "#1F2937"    # Darker Lighter Navy
 dark_border_color = "#374151"
+
+# Color theme configuration - Modern Monograph
+[extra.colors]
+# Light mode
+primary_color = "#1A1A1A"      # Off-black (Looks more premium than pure #000)
+secondary_color = "#71717A"    # Muted Zinc
+accent_color = "#A47C48"       # Bronzed Gold (Classic, but desaturated for modern feel)
+text_color = "#27272A"         # Deep Charcoal
+background_color = "#FDFCFB"   # "Paper" White (Slightly warm/parchment undertone)
+card_background = "#FFFFFF"
+border_color = "#E4E4E7"
+
+# Dark mode
+dark_text_color = "#E2E2E2"    # Soft White
+dark_background_color = "#09090B" # Deep Onyx
+dark_card_background = "#18181B"  # Zinc Card
+dark_border_color = "#27272A"     # Subtle Zinc Border
