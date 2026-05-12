@@ -30,7 +30,7 @@ cv_url = "/MONIK_RAJ_BEHERA.pdf"
 
 # Bio/about section
 bio = """
-I am a first year PhD student at *[Halmstad University](https://www.hh.se/english.html)*, where I conduct research in Artificial Intelligence within the *[CAISR](https://www.hh.se/english/research/our-research/research-at-the-school-of-information-technology/center-for-applied-intelligent-systems-research-caisr.html)* group. My work is driven by a unique blend of academic rigor and extensive industry experience, having spent years designing and building AI algorithms and systems for Fortune 500 companies spanning across industries.
+I am a first year PhD student at *[Halmstad University](https://www.hh.se/english.html)*, where I conduct research in foundational and theoretical Artificial Intelligence within the *[CAISR](https://www.hh.se/english/research/our-research/research-at-the-school-of-information-technology/center-for-applied-intelligent-systems-research-caisr.html)* group. My work is driven by a unique blend of academic rigor and extensive industry experience, having spent years in research and building AI algorithms and systems for Fortune 500 companies spanning across industries.
 """
 
 # Features to enable
