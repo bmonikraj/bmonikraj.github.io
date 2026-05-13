@@ -1,7 +1,7 @@
 # data/news.toml
 [[news]]
 date = "2026 Jun"
-content = "Attending ELLIS Unit Warsaw's Summer School in ML Reliability in Kraków, Poland [MLSS R&S2026](https://mlss2026.mlinpl.org/)"
+content = "Attending ELLIS Unit Warsaw's Summer School in ML Reliability at Kraków, Poland [MLSS R&S2026](https://mlss2026.mlinpl.org/)"
 
 [[news]]
 date = "2025 Dec"
