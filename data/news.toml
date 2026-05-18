@@ -1,5 +1,9 @@
 # data/news.toml
 [[news]]
+date = "2026 Oct"
+content = "Serving as PC Member in [9th AAAI Conference on AI, Ethics, and Society](https://www.aies-conference.com/2026/)"
+
+[[news]]
 date = "2026 Jun"
 content = "Attending ELLIS Warsaw's Summer School in ML Reliability at Kraków, Poland [MLSS R&S2026](https://mlss2026.mlinpl.org/)"
 
