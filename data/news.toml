@@ -1,5 +1,9 @@
 # data/news.toml
 [[news]]
+date = "2026 Dec"
+content = "Serving as Ethics Reviewer in [40th Conference on Neural Information Processing Systems (NeurIPS)](https://neurips.cc/Conferences/2026)"
+
+[[news]]
 date = "2026 Oct"
 content = "Serving as PC Member in [9th AAAI Conference on AI, Ethics, and Society](https://www.aies-conference.com/2026/)"
 
