@@ -403,43 +403,25 @@ a {
   }
 }
 
-// Ambient graph animation — a computation-graph of nodes and edges, with
-// small signal pulses traveling along edges (a nod to message-passing /
-// forward-pass computation). Alpha is controlled per-element inside the
-// canvas drawing code, so the element itself stays fully opaque — it reads
-// clearly as an intentional graphic, not a barely-there texture.
-// Shared base for every ambient computation-graph canvas across the site
-// (hero banner + every inner-page section header). The drawing code itself
-// also clips the graph away from each page's actual text line-boxes (see
-// the data-protect attribute + base.html script), so this is a second,
-// coarser safety net at the CSS layer.
+// Ambient graph animation — a single computation-graph of nodes and edges,
+// with small signal pulses traveling along edges (a nod to message-passing /
+// forward-pass computation), fixed behind the entire page like a backdrop.
+// Colors/alpha are tuned to sit well below text and brand-color contrast in
+// the canvas drawing code, so it reads as a faint texture, never competing
+// with foreground content. It also clips itself away from each page's
+// actual text line-boxes (see the data-protect attribute + base.html
+// script) as a second, coarser safety net beyond the z-index/opacity one.
 [data-ambient-network] {
-  position: absolute;
+  position: fixed;
   inset: 0;
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
   pointer-events: none;
 
   @media (prefers-reduced-motion: reduce) {
     display: none;
   }
-}
-
-.hero-network {
-  z-index: 0;
-  // Fade out well before the bio copy/news list/cards lower in the hero —
-  // keeps the graph a clear banner effect around the name/avatar instead of
-  // a texture sitting under paragraphs of body text.
-  mask-image: linear-gradient(to bottom, black, black 38%, transparent 68%);
-  -webkit-mask-image: linear-gradient(to bottom, black, black 38%, transparent 68%);
-}
-
-// Inner-page header banner — a negative z-index paints it behind the
-// (non-positioned) eyebrow/h1/description text automatically, so it never
-// has to compete with them for legibility. Confined to the header's own
-// box, so it can't bleed into the list content beneath.
-.section-network {
-  z-index: -1;
 }
 
 .hero-content {
@@ -522,7 +504,7 @@ a {
 
   .organization {
     font-size: 1.05rem;
-    color: var(--secondary-color);
+    color: var(--primary-color);
     margin-bottom: 1.5rem;
   }
 
@@ -536,7 +518,7 @@ a {
     p {
       font-size: 1.05rem;
       line-height: 1.75;
-      color: var(--secondary-color);
+      color: var(--primary-color);
     }
   }
 }

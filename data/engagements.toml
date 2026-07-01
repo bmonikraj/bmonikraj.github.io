@@ -1,4 +1,12 @@
 [[engagement]]
+type = "Talk"
+title = "ReTAG - Real Time Anomaly Detection on Blockchain Graph"
+year = 2022
+venue = "NISER"
+location = "Bhubaneswar, India"
+url = "https://www.niser.ac.in/~smishra/event/cskathabarta/archive/2022.html"
+
+[[engagement]]
 type = "Summer School"
 title = "ELLIS Warsaw Summer School in Machine Learning Reliability and Safety (MLSS R&S 2026)"
 year = 2026
