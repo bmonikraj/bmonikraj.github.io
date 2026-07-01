@@ -1,20 +1,27 @@
-// Academic CV Theme Styles
-// Color variables are now dynamically set from config.toml via template
+// Personal site theme — sleek/modern refresh
+// Color variables are dynamically set from config.toml via base.html
 :root {
-  // Colors are injected from config.toml in base.html template
-  // Static variables that don't change based on config
-  --shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  --hover-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-  --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-  --heading-font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  color-scheme: light;
+  --shadow: 0 1px 2px rgba(20, 20, 20, 0.04), 0 8px 24px rgba(20, 20, 20, 0.06);
+  --hover-shadow: 0 4px 12px rgba(20, 20, 20, 0.06), 0 16px 40px rgba(20, 20, 20, 0.12);
+  --glow-shadow: 0 0 0 1px var(--accent-color), 0 10px 30px rgba(20, 20, 20, 0.10);
+  --font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --heading-font: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --display-font: "Fraunces", Georgia, "Times New Roman", serif;
   --max-width: 1200px;
   --content-width: 800px;
+  --radius: 1rem;
+  --radius-sm: 0.6rem;
+  --radius-pill: 999px;
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --nav-height: 68px;
 }
 
-// Dark mode shadow adjustments
 .dark-mode {
-  --shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-  --hover-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  color-scheme: dark;
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 8px 24px rgba(0, 0, 0, 0.35);
+  --hover-shadow: 0 4px 16px rgba(0, 0, 0, 0.4), 0 16px 40px rgba(0, 0, 0, 0.45);
+  --glow-shadow: 0 0 0 1px var(--accent-color), 0 10px 30px rgba(0, 0, 0, 0.4);
 }
 
 // Reset and base styles
@@ -28,19 +35,33 @@ html {
   scroll-behavior: smooth;
 }
 
+::selection {
+  background-color: var(--accent-color);
+  color: white;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent-color);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
 body {
   font-family: var(--font-family);
   color: var(--text-color);
   background-color: var(--background-color);
   line-height: 1.6;
-  transition: all 0.3s ease;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.3s var(--ease), color 0.3s var(--ease);
 }
 
 // Typography
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--heading-font);
-  font-weight: 600;
+  font-weight: 700;
   line-height: 1.2;
+  letter-spacing: -0.02em;
   margin-bottom: 1rem;
 }
 
@@ -55,12 +76,45 @@ p {
 }
 
 a {
-  color: var(--accent-color); // Use UCSB Sea Green for better visibility
+  color: var(--accent-color);
   text-decoration: none;
-  transition: all 0.3s ease;
-  
+  transition: all 0.2s var(--ease);
+
   &:hover {
-    color: var(--secondary-color); // Use UCSB Gold on hover
+    color: var(--secondary-color);
+  }
+}
+
+// Reveal-on-scroll animation
+.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.6s var(--ease), transform 0.6s var(--ease);
+
+  &.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Section eyebrow label
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent-color);
+  margin-bottom: 0.75rem;
+
+  &::before {
+    content: "";
+    width: 1.25rem;
+    height: 2px;
+    background-color: var(--accent-color);
+    border-radius: 2px;
   }
 }
 
@@ -68,57 +122,108 @@ a {
 .container {
   max-width: var(--max-width);
   margin: 0 auto;
-  padding: 0 1rem;
+  padding: 0 1.5rem;
+
+  @media (max-width: 480px) {
+    padding: 0 1.1rem;
+  }
 }
 
 .main-content {
   min-height: calc(100vh - 140px);
 }
 
-// Navigation
+// Navigation — sticky glass bar
 .navbar {
-  background-color: var(--card-background);
-  box-shadow: var(--shadow);
+  background-color: color-mix(in srgb, var(--card-background) 78%, transparent);
+  backdrop-filter: blur(16px) saturate(160%);
+  -webkit-backdrop-filter: blur(16px) saturate(160%);
+  border-bottom: 1px solid transparent;
   position: sticky;
   top: 0;
   z-index: 1000;
-  transition: all 0.3s ease;
+  transition: all 0.3s var(--ease);
+
+  &.is-scrolled {
+    border-bottom-color: var(--border-color);
+    box-shadow: var(--shadow);
+  }
 }
 
 .nav-container {
   max-width: var(--max-width);
   margin: 0 auto;
-  padding: 0 1rem;
+  padding: 0 1.5rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 70px;
+  min-height: var(--nav-height);
+  flex-wrap: wrap;
+  row-gap: 0.4rem;
+
+  @media (max-width: 480px) {
+    padding: 0 1rem;
+  }
 }
 
-.nav-brand a {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: var(--text-color);
+.nav-brand-mark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--ink-color), var(--accent-color));
+  color: white !important;
+  font-family: var(--display-font);
+  font-weight: 600;
+  font-size: 0.72rem;
+  letter-spacing: 0.01em;
+  transition: transform 0.3s var(--ease);
+
+  &:hover {
+    transform: scale(1.08) rotate(-4deg);
+  }
+
+  @media (max-width: 480px) {
+    width: 38px;
+    height: 38px;
+    font-size: 0.68rem;
+  }
 }
 
 .nav-menu {
   display: flex;
   list-style: none;
   align-items: center;
-  gap: 2rem;
-  
+  gap: 1rem;
+
+  @media (min-width: 769px) and (max-width: 1024px) {
+    gap: 0.35rem;
+  }
+
   @media (max-width: 768px) {
     position: fixed;
+    top: var(--nav-height);
     left: -100%;
-    top: 70px;
+    right: 0;
+    bottom: 0;
+    /* Explicit height instead of relying on the top/bottom inset to stretch this
+       fixed flex column — some engines size an abspos flex container by its content
+       (collapsing to just the padding) rather than filling the inset box. */
+    height: calc(100vh - var(--nav-height));
     flex-direction: column;
+    justify-content: center;
+    overflow-y: auto;
     background-color: var(--card-background);
     width: 100%;
     text-align: center;
-    transition: 0.3s;
+    transition: 0.3s var(--ease);
     box-shadow: var(--shadow);
     padding: 2rem 0;
-    
+    gap: 1.5rem;
+
     &.active {
       left: 0;
     }
@@ -126,28 +231,73 @@ a {
 }
 
 .nav-link {
+  position: relative;
   color: var(--text-color);
   font-weight: 500;
-  padding: 0.5rem 0;
-  
+  font-size: 0.92rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: var(--radius-sm);
+  white-space: nowrap;
+
+  i {
+    font-size: 0.95rem;
+  }
+
+  @media (min-width: 769px) and (max-width: 1024px) {
+    font-size: 0.85rem;
+    padding: 0.45rem 0.5rem;
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0.75rem;
+    right: 0.75rem;
+    bottom: 0.15rem;
+    height: 2px;
+    background-color: var(--accent-color);
+    border-radius: 2px;
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: transform 0.25s var(--ease);
+  }
+
   &:hover {
-    color: var(--primary-color);
+    color: var(--text-color);
+
+    &::after {
+      transform: scaleX(1);
+    }
   }
 }
 
 .dark-mode-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   background: none;
-  border: none;
+  border: 1px solid var(--border-color);
   color: var(--text-color);
-  font-size: 1.2rem;
+  font-size: 0.95rem;
   cursor: pointer;
-  padding: 0.5rem;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
-  transition: all 0.3s ease;
-  
+  transition: all 0.3s var(--ease);
+
+  .sun-icon { display: none; }
+  .moon-icon { display: inline; }
+
   &:hover {
-    background-color: var(--border-color);
+    border-color: var(--accent-color);
+    color: var(--accent-color);
+    transform: rotate(15deg);
   }
+}
+
+.dark-mode .dark-mode-toggle {
+  .sun-icon { display: inline; }
+  .moon-icon { display: none; }
 }
 
 // Mobile menu toggle
@@ -155,49 +305,92 @@ a {
   display: none;
   flex-direction: column;
   cursor: pointer;
-  
+  z-index: 1001;
+
   @media (max-width: 768px) {
     display: flex;
   }
-  
+
   .bar {
-    width: 25px;
-    height: 3px;
+    width: 22px;
+    height: 2px;
     background-color: var(--text-color);
     margin: 3px 0;
-    transition: 0.3s;
+    border-radius: 2px;
+    transition: 0.3s var(--ease);
   }
-  
+
   &.is-active .bar:nth-child(2) {
     opacity: 0;
   }
-  
+
   &.is-active .bar:nth-child(1) {
-    transform: translateY(9px) rotate(45deg);
+    transform: translateY(5px) rotate(45deg);
   }
-  
+
   &.is-active .bar:nth-child(3) {
-    transform: translateY(-9px) rotate(-45deg);
+    transform: translateY(-5px) rotate(-45deg);
   }
 }
 
 // Hero section
 .hero-section {
-  padding: 4rem 0;
-  background-color: var(--background-color);
+  position: relative;
+  padding: 5rem 0 4rem;
+  overflow: hidden;
+
+  @media (max-width: 768px) {
+    padding: 3rem 0 2.5rem;
+  }
+  // Faint lab-notebook dot grid — a nod to the blueprint/graph-paper texture
+  // common to research-lab sites, kept subtle enough not to compete with content.
+  background-image: radial-gradient(circle, color-mix(in srgb, var(--text-color) 12%, transparent) 1px, transparent 1.6px);
+  background-size: 26px 26px;
+  background-position: -6px -6px;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: -12rem;
+    right: -8rem;
+    width: 32rem;
+    height: 32rem;
+    background: radial-gradient(circle, color-mix(in srgb, var(--accent-color) 22%, transparent), transparent 70%);
+    filter: blur(10px);
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: -10rem;
+    left: -10rem;
+    width: 28rem;
+    height: 28rem;
+    background: radial-gradient(circle, color-mix(in srgb, var(--primary-color) 10%, transparent), transparent 70%);
+    filter: blur(10px);
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  .container {
+    position: relative;
+    z-index: 1;
+  }
 }
 
 .hero-content {
   display: grid;
   grid-template-columns: auto 1fr;
-  gap: 3rem;
+  gap: 3.5rem;
   align-items: start;
-  
+
   @media (max-width: 1024px) {
     grid-template-columns: auto 1fr;
     gap: 2rem;
   }
-  
+
   @media (max-width: 768px) {
     grid-template-columns: 1fr;
     text-align: center;
@@ -210,14 +403,23 @@ a {
   flex-direction: column;
   align-items: center;
   text-align: center;
-  gap: 1rem;
+  gap: 1.25rem;
+
   .avatar {
-    width: 200px;
-    height: 200px;
+    width: 190px;
+    height: 190px;
     border-radius: 50%;
     object-fit: cover;
+    padding: 5px;
+    background: linear-gradient(135deg, var(--accent-color), var(--primary-color));
     box-shadow: var(--shadow);
-    
+    transition: transform 0.4s var(--ease), box-shadow 0.4s var(--ease);
+
+    &:hover {
+      transform: translateY(-4px) scale(1.02);
+      box-shadow: var(--hover-shadow);
+    }
+
     @media (max-width: 768px) {
       width: 150px;
       height: 150px;
@@ -227,38 +429,50 @@ a {
 
 .bio-section {
   .name {
-    font-size: 3rem;
-    margin-bottom: 0.5rem;
+    font-family: var(--display-font);
+    font-size: 3.1rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    margin-bottom: 0.4rem;
     color: var(--text-color);
-    
+
     @media (max-width: 768px) {
-      font-size: 2.5rem;
+      font-size: 2.4rem;
+    }
+
+    @media (max-width: 400px) {
+      font-size: 2rem;
     }
   }
-  
+
   .role {
-    font-size: 1.5rem;
-    color: var(--secondary-color); // Use UCSB Gold for role
-    margin-bottom: 0.5rem;
-    font-weight: 500;
+    display: inline-block;
+    font-size: 1rem;
+    color: var(--primary-color);
+    background-color: color-mix(in srgb, var(--accent-color) 14%, transparent);
+    padding: 0.35rem 0.9rem;
+    border-radius: var(--radius-pill);
+    margin-bottom: 0.75rem;
+    font-weight: 600;
   }
-  
+
   .organization {
-    font-size: 1.2rem;
+    font-size: 1.05rem;
     color: var(--secondary-color);
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
   }
-  
+
   .bio {
     margin-bottom: 2rem;
-    
+
     h3 {
       margin-bottom: 1rem;
     }
-    
+
     p {
-      font-size: 1.1rem;
-      line-height: 1.7;
+      font-size: 1.05rem;
+      line-height: 1.75;
+      color: var(--secondary-color);
     }
   }
 }
@@ -268,20 +482,21 @@ a {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  padding: 0.25rem 0.5rem;
-  border-radius: 0.375rem;
-  font-weight: 500;
+  padding: 0.55rem 1.15rem;
+  border-radius: var(--radius-pill);
+  font-weight: 600;
+  font-size: 0.9rem;
   text-decoration: none;
-  transition: all 0.3s ease;
+  transition: all 0.25s var(--ease);
   border: none;
   cursor: pointer;
-  
+
   &.btn-primary {
-    background-color: var(--primary-color);
+    background-color: var(--ink-color);
     color: white;
-    
+
     &:hover {
-      background-color: var(--accent-color); // Use UCSB Sea Green on hover
+      background-color: var(--accent-color);
       transform: translateY(-2px);
       box-shadow: var(--hover-shadow);
     }
@@ -289,7 +504,7 @@ a {
 }
 
 .cv-download {
-  margin-bottom: 2rem;
+  margin-bottom: 1.75rem;
 }
 
 // Social links and info sections horizontally aligned
@@ -299,7 +514,7 @@ a {
   grid-template-columns: auto 1fr;
   gap: 5rem;
   align-items: start;
-  
+
   @media (max-width: 768px) {
     grid-template-columns: 1fr;
     gap: 2rem;
@@ -310,574 +525,329 @@ a {
 .social-links {
   display: flex;
   flex-direction: row;
-  gap: 1rem;
-  
+  gap: 0.75rem;
+  flex-wrap: wrap;
+
   @media (max-width: 768px) {
     justify-content: center;
   }
-  
+
   a {
-    width: 40px;
-    height: 40px;
+    width: 38px;
+    height: 38px;
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 50%;
-    background-color: var(--border-color);
+    background-color: transparent;
+    border: 1px solid var(--border-color);
     color: var(--text-color);
-    font-size: 1.2rem;
-    transition: all 0.3s ease;
-    
+    font-size: 1.05rem;
+    transition: all 0.25s var(--ease);
+
     &:hover {
-      background-color: var(--secondary-color); // Use UCSB Gold on hover
-      color: var(--primary-color); // Use UCSB Navy text on gold background
-      transform: translateY(-2px);
+      background-color: var(--accent-color);
+      border-color: var(--accent-color);
+      color: white;
+      transform: translateY(-3px);
     }
   }
 }
 
 // Info content (Interests & Education)
 .info-content {
-  min-width: 0; // Prevent grid overflow
-  margin-left: 2rem; // Push further right
+  min-width: 0;
   flex: 1;
 }
 
 .info-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 3rem;
+  gap: 2.5rem;
   width: 100%;
-  
+
   @media (max-width: 768px) {
     grid-template-columns: 1fr;
-    gap: 2rem;
+    gap: 1.5rem;
     margin-left: 0;
   }
 }
 
 .info-box {
+  background-color: var(--card-background);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  padding: 1.5rem 1.75rem;
+  box-shadow: var(--shadow);
+  transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease), border-color 0.3s var(--ease);
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--hover-shadow);
+    border-color: color-mix(in srgb, var(--accent-color) 40%, var(--border-color));
+  }
+
   h3 {
     margin-bottom: 1rem;
     color: var(--text-color);
-    font-size: 1.1rem;
-    font-weight: 600;
+    font-size: 1.05rem;
+    font-weight: 700;
   }
 }
 
 .interests-list {
   list-style: none;
-  
+
   li {
-    padding: 0.35rem 0;
+    padding: 0.4rem 0;
     color: var(--text-color);
-    font-size: 0.9rem;
-    
+    font-size: 0.92rem;
+
     &::before {
-      content: "🔍";
-      font-family: "Font Awesome 6 Free"; // Use 'Font Awesome 5 Free' for older versions
-      font-weight: 900; // Required for 'Solid' icons to render
-      color: var(--secondary-color); // Use UCSB Gold for bullet points
-      margin-right: 0.5rem;
-      font-weight: bold;
-      font-size: 1rem;
+      content: "→";
+      color: var(--accent-color);
+      margin-right: 0.6rem;
+      font-weight: 700;
       display: inline-block;
-      -webkit-font-smoothing: antialiased;
     }
   }
 }
 
 .education-list {
   list-style: none;
-  
+
   .education-item {
     display: flex;
     align-items: flex-start;
-    padding: 0.5rem 0;
-    
+    padding: 0.65rem 0;
+
     &:not(:last-child) {
       border-bottom: 1px solid var(--border-color);
     }
-    
+
     &::before {
-      content: "🎓";
-      margin-right: 0.75rem;
-      margin-top: 0.1rem;
-      font-size: 1rem;
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: var(--accent-color);
+      margin-right: 0.85rem;
+      margin-top: 0.45rem;
       flex-shrink: 0;
     }
-    
+
     .education-content {
       flex: 1;
     }
-    
+
     .degree {
       font-weight: 600;
       margin-bottom: 0.2rem;
       color: var(--text-color);
-      font-size: 0.9rem;
+      font-size: 0.92rem;
       line-height: 1.3;
     }
-    
+
     .institution {
       color: var(--secondary-color);
-      font-size: 0.8rem;
-      line-height: 1.3;
+      font-size: 0.82rem;
+      line-height: 1.4;
+
+      i {
+        color: var(--accent-color);
+        width: 1rem;
+      }
     }
-    
+
+    .institution-line {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+      margin-top: 0.2rem;
+    }
+
+    .honors {
+      color: var(--secondary-color);
+      font-size: 0.78rem;
+      opacity: 0.85;
+
+      i {
+        color: var(--accent-color);
+        width: 1rem;
+      }
+    }
+
     .year-text {
       color: var(--secondary-color);
-      font-size: 0.7rem;
+      font-size: 0.72rem;
       font-weight: 400;
-      opacity: 0.7;
-      margin-top: 0.1rem;
+      opacity: 0.75;
+      margin-top: 0.15rem;
     }
   }
 }
 
-// Featured section
-.featured-section {
-  padding: 4rem 0;
-}
+// News
+.news-container {
+  margin-top: 0.5rem;
+  margin-bottom: 2rem;
 
-.section-title {
-  text-align: center;
-  margin-bottom: 3rem;
-  font-size: 2.5rem;
-}
-
-.featured-content {
-  max-width: var(--content-width);
-  margin: 0 auto 3rem;
-  text-align: center;
-  
-  p {
-    font-size: 1.1rem;
-    line-height: 1.7;
-    margin-bottom: 1.5rem;
-  }
-}
-
-// Publications
-.publications-preview {
-  margin-top: 3rem;
-  
   h3 {
-    margin-bottom: 2rem;
-    text-align: center;
+    font-size: 1.05rem;
+    margin-bottom: 1rem;
   }
 }
 
-.publication-cards {
+.news-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.news-item {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-  gap: 2rem;
-}
+  grid-template-columns: 92px 1fr;
+  gap: 1rem;
+  align-items: baseline;
+  font-size: 0.92rem;
+  line-height: 1.55;
+  padding: 0.4rem 0;
+  border-bottom: 1px dashed var(--border-color);
 
-.publication-card {
-  background-color: var(--card-background);
-  padding: 2rem;
-  border-radius: 0.5rem;
-  box-shadow: var(--shadow);
-  border: 1px solid var(--border-color);
-  transition: all 0.3s ease;
-  
-  &:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--hover-shadow);
-  }
-  
-  h4 {
-    margin-bottom: 1rem;
-    color: var(--text-color);
-  }
-  
-  .publication-meta {
-    color: var(--primary-color);
-    font-size: 0.9rem;
-    margin-bottom: 1rem;
-    font-weight: 500;
-  }
-  
-  .publication-description {
-    margin-bottom: 1.5rem;
-    color: var(--secondary-color);
-  }
-  
-  .publication-links {
-    display: flex;
-    gap: 1rem;
-    flex-wrap: wrap;
-  }
-  
-  .publication-link {
-    padding: 0.5rem 1rem;
-    background-color: var(--border-color);
-    border-radius: 0.25rem;
-    font-size: 0.9rem;
-    font-weight: 500;
-    transition: all 0.3s ease;
-    
-    &:hover {
-      background-color: var(--primary-color);
-      color: white;
-    }
+  &:last-child {
+    border-bottom: none;
   }
 }
 
-// // News section
-// .news-section {
-//   padding: 4rem 0;
-//   background-color: var(--card-background);
-// }
+.news-date {
+  font-weight: 600;
+  color: var(--accent-color);
+  font-size: 0.78rem;
+  letter-spacing: 0.02em;
 
-// .news-items {
-//   max-width: var(--content-width);
-//   margin: 0 auto;
-// }
+  i { margin-right: 0.3rem; }
+}
 
-// .news-item {
-//   background-color: var(--background-color);
-//   padding: 2rem;
-//   border-radius: 0.5rem;
-//   box-shadow: var(--shadow);
-//   margin-bottom: 2rem;
-//   border: 1px solid var(--border-color);
-  
-//   h3 {
-//     margin-bottom: 1rem;
-//   }
-  
-//   .news-date {
-//     color: var(--secondary-color);
-//     font-size: 0.9rem;
-//     margin-bottom: 1rem;
-//     display: block;
-//   }
-  
-//   p {
-//     margin-bottom: 1rem;
-//   }
-  
-//   .read-more {
-//     color: var(--primary-color);
-//     font-weight: 500;
-//   }
-// }
+.news-content {
+  color: var(--text-color);
+}
 
 // Footer
 .footer {
   background-color: var(--card-background);
   border-top: 1px solid var(--border-color);
-  padding: 1rem 0;
+  padding: 1.75rem 0;
   margin-top: auto;
 }
 
 .footer-content {
   text-align: center;
   color: var(--secondary-color);
-  
+  font-size: 0.85rem;
+
   a {
     color: var(--primary-color);
   }
 }
 
-// Section templates
+// Section templates (Publications / Experience / Teaching / Conferences pages)
 .section-template {
-  padding: 4rem 0;
-  
+  padding: 3.5rem 0 5rem;
+
   .section-header {
     text-align: center;
     margin-bottom: 3rem;
-    
-    h1 {
-      font-size: 3rem;
-      margin-bottom: 1rem;
-    }
-    
-    p {
-      font-size: 1.2rem;
-      color: var(--secondary-color);
-    }
-  }
-}
 
-// Research section
-.research-section {
-  padding: 4rem 0;
-  background-color: var(--background-color);
-  
-  .research-content {
-    max-width: var(--content-width);
-    margin: 0 auto;
-    text-align: center;
-    
+    h1 {
+      font-family: var(--display-font);
+      font-size: 2.75rem;
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+
+      @media (max-width: 768px) {
+        font-size: 2.1rem;
+      }
+    }
+
     p {
       font-size: 1.1rem;
-      line-height: 1.7;
-      margin-bottom: 1.5rem;
-      color: var(--text-color);
-    }
-  }
-}
-
-// Featured Publications
-.featured-publications {
-  padding: 4rem 0;
-  background-color: var(--light-background); // Use UCSB light background
-  
-  h3 {
-    text-align: center;
-    margin-bottom: 3rem;
-    font-size: 2rem;
-  }
-}
-
-// Recent Publications List
-.recent-publications {
-  padding: 4rem 0;
-  background-color: var(--background-color);
-  
-  h3 {
-    margin-bottom: 2rem;
-    font-size: 2rem;
-  }
-  
-  .publication-list {
-    max-width: var(--content-width);
-    margin: 0 auto;
-  }
-  
-  .publication-item {
-    padding: 1.5rem 0;
-    border-bottom: 1px solid var(--border-color);
-    
-    &:last-child {
-      border-bottom: none;
-    }
-    
-    .authors {
-      font-weight: 500;
-    }
-    
-    .year {
       color: var(--secondary-color);
-    }
-    
-    .title {
-      color: var(--text-color);
-      font-weight: 600;
-      margin: 0 0.25rem;
-      
-      &:hover {
-        color: var(--primary-color);
-      }
-    }
-    
-    .item-links {
-      margin-top: 0.5rem;
-      display: flex;
-      gap: 1rem;
-      flex-wrap: wrap;
-    }
-    
-    .link-btn {
-      padding: 0.25rem 0.75rem;
-      background-color: var(--border-color);
-      border-radius: 0.25rem;
-      font-size: 0.85rem;
-      font-weight: 500;
-      text-decoration: none;
-      transition: all 0.3s ease;
-      
-      &:hover {
-        background-color: var(--primary-color);
-        color: white;
-      }
+      max-width: 600px;
+      margin: 0 auto;
     }
   }
 }
 
-// Recent Talks
-.recent-talks {
-  padding: 4rem 0;
-  background-color: var(--light-background); // Use UCSB light background
-  
-  h3 {
-    margin-bottom: 2rem;
-    font-size: 2rem;
+// -----------------------------------------------------------------------
+// Shared "surface card" treatment — applies to every list-item card
+// across Publications, Experience, Teaching, Conferences and Section pages.
+// Keeps the visual language consistent without repeating the same rules
+// inside every page-level <style> block.
+// -----------------------------------------------------------------------
+.publication-item,
+.experience-content,
+.teaching-card,
+.reviewing-card,
+.conference-item,
+.item-card,
+.subsection,
+.talk-item {
+  background-color: var(--card-background);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease), border-color 0.3s var(--ease);
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent-color), var(--primary-color));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.35s var(--ease);
   }
-  
-  .talks-list {
-    max-width: var(--content-width);
-    margin: 0 auto;
-  }
-  
-  .talk-item {
-    padding: 2rem;
-    background-color: var(--background-color);
-    border: 1px solid var(--border-color);
-    border-radius: 0.5rem;
-    margin-bottom: 2rem;
-    transition: all 0.3s ease;
-    
-    &:hover {
-      transform: translateY(-2px);
-      box-shadow: var(--hover-shadow);
-    }
-    
-    h4 {
-      margin-bottom: 1rem;
-      
-      a {
-        color: var(--text-color);
-        text-decoration: none;
-        
-        &:hover {
-          color: var(--primary-color);
-        }
-      }
-    }
-    
-    .talk-description {
-      margin-bottom: 1rem;
-      color: var(--secondary-color);
-    }
-    
-    .talk-date {
-      color: var(--secondary-color); // Use UCSB Gold for dates
-      font-size: 0.9rem;
-      font-weight: 500;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--hover-shadow);
+    border-color: color-mix(in srgb, var(--accent-color) 35%, var(--border-color));
+
+    &::before {
+      transform: scaleX(1);
     }
   }
 }
 
-// // Recent News
-// .recent-news {
-//   padding: 4rem 0;
-//   background-color: var(--background-color);
-  
-//   h3 {
-//     margin-bottom: 2rem;
-//     font-size: 2rem;
-//   }
-  
-//   .news-list {
-//     max-width: var(--content-width);
-//     margin: 0 auto;
-//   }
-  
-//   .news-item {
-//     padding: 1.5rem 0;
-//     border-bottom: 1px solid var(--border-color);
-    
-//     &:last-child {
-//       border-bottom: none;
-//     }
-    
-//     h4 {
-//       margin-bottom: 0.5rem;
-      
-//       a {
-//         color: var(--text-color);
-//         text-decoration: none;
-        
-//         &:hover {
-//           color: var(--primary-color);
-//         }
-//       }
-//     }
-    
-//     .news-date {
-//       color: var(--secondary-color);
-//       font-size: 0.9rem;
-//       margin-bottom: 1rem;
-//       display: block;
-//     }
-    
-//     p {
-//       margin-bottom: 1rem;
-//       color: var(--secondary-color);
-//     }
-    
-//     .read-more {
-//       color: var(--primary-color);
-//       font-weight: 500;
-//       text-decoration: none;
-      
-//       &:hover {
-//         text-decoration: underline;
-//       }
-//     }
-//   }
-// }
+// Shared pill-style link/button treatment for "view more" style links
+.publication-link,
+.link-btn,
+.item-link,
+.conference-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.45rem 1rem;
+  background-color: color-mix(in srgb, var(--accent-color) 12%, transparent);
+  color: var(--primary-color);
+  border-radius: var(--radius-pill);
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.25s var(--ease);
 
-// // Responsive design
-// @media (max-width: 768px) {
-//   .container {
-//     padding: 0 1rem;
-//   }
-  
-//   .hero-section {
-//     padding: 2rem 0;
-//   }
-  
-//   .research-section,
-//   .featured-publications,
-//   .recent-publications,
-//   .recent-talks,
-//   .recent-news {
-//     padding: 3rem 0;
-//   }
-  
-//   .publication-cards {
-//     grid-template-columns: 1fr;
-//   }
-  
-//   .section-title,
-//   .featured-publications h3,
-//   .recent-publications h3,
-//   .recent-talks h3,
-//   .recent-news h3 {
-//     font-size: 1.75rem;
-//   }
-// } 
-
-/* News Container Styling */
-.news-container {
-    margin-top: 1.5rem;
-    margin-bottom: 2rem;
+  &:hover {
+    background-color: var(--accent-color);
+    color: white;
+    transform: translateY(-2px);
+  }
 }
 
-.news-container h3 {
-    font-size: 1.2rem;
-    margin-bottom: 1rem;
-    border-bottom: 1px solid #eee; /* Optional: adds a subtle separator */
-    padding-bottom: 5px;
-}
-
-.news-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.news-item {
-    display: grid;
-    grid-template-columns: 100px 1fr; /* Fixed width for date, rest for text */
-    gap: 15px;
-    margin-bottom: 0.8rem;
-    font-size: 0.95rem;
-    line-height: 1.5;
-    padding: 0.2rem;
-}
-
-.news-date {
-    font-weight: 600;
-    color: #666;
-    font-family: monospace; /* Optional: gives it a clean academic look */
-}
-
-.news-content {
-    color: #333;
-}

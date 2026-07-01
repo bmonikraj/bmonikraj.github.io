@@ -1,0 +1,225 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="section-template">
+    <div class="container">
+        <div class="section-header">
+            <h1>{{ section.title | default(value="Services") }}</h1>
+            {% if section.description %}
+            <p>{{ section.description }}</p>
+            {% else %}
+            <p>Academic, Instructional and Service Roles</p>
+            {% endif %}
+        </div>
+
+        {% set teachings = load_data(path="data/teaching.toml") %}
+        {% set reviewing = load_data(path="data/reviewing.toml") %}
+
+        <div class="section-content">
+            {% if section.content %}
+                {{ section.content | safe }}
+            {% endif %}
+
+            <div class="duty-group">
+                <h2 class="duty-group-title">Reviewers / PC Members</h2>
+                <div class="reviewing-list">
+                    {% for duty in reviewing.reviewing | sort(attribute="year") | reverse %}
+                    <article class="reviewing-card">
+                        <div class="reviewing-title-row">
+                            <h3 class="reviewing-role">
+                                {% if duty.url %}
+                                    <a href="{{ duty.url }}" target="_blank" rel="noopener noreferrer">{{ duty.role }}</a>
+                                {% else %}
+                                    {{ duty.role }}
+                                {% endif %}
+                            </h3>
+                            <span class="term-tag">{{ duty.year }}</span>
+                        </div>
+                        <div class="reviewing-venue">
+                            {% if duty.url %}
+                                <a href="{{ duty.url }}" target="_blank" rel="noopener noreferrer">{{ duty.venue }}</a>
+                            {% else %}
+                                {{ duty.venue }}
+                            {% endif %}
+                        </div>
+                    </article>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="duty-group">
+                <h2 class="duty-group-title">Teaching</h2>
+                <div class="teaching-list">
+                    {% for course in teachings.teaching %}
+                    <article class="teaching-card">
+                        <header class="teaching-header">
+                            <div class="teaching-title-row">
+                                <h3 class="course-name">
+                                    {% if course.link %}
+                                        <a href="{{ course.link }}" target="_blank">{{ course.name }}</a>
+                                    {% else %}
+                                        {{ course.name }}
+                                    {% endif %}
+                                </h3>
+                                <span class="term-tag">{{ course.term }}</span>
+                            </div>
+
+                            <div class="teaching-meta">
+                                <span class="role-text"><strong>{{ course.role }}</strong></span>
+                                <span class="separator">•</span>
+                                <span class="institution-text">{{ course.institution }}</span>
+                            </div>
+                        </header>
+
+                        {% if course.details %}
+                        <ul class="teaching-details">
+                            {% for detail in course.details %}
+                                <li>{{ detail }}</li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                    </article>
+                    {% endfor %}
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<style>
+.duty-group {
+    max-width: 800px;
+    margin: 0 auto 3rem auto;
+}
+
+.duty-group-title {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--text-color);
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.teaching-list, .reviewing-list {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.teaching-card, .reviewing-card {
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+}
+
+.teaching-title-row, .reviewing-title-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.course-name, .reviewing-role {
+    margin: 0;
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+.course-name a, .reviewing-role a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.course-name a:hover, .reviewing-role a:hover {
+    text-decoration: underline;
+}
+
+.reviewing-role {
+    font-size: 1.15rem;
+}
+
+.term-tag {
+    font-style: italic;
+    font-size: 0.9rem;
+    color: var(--text-color);
+    opacity: 0.8;
+    white-space: nowrap;
+    font-weight: bolder;
+}
+
+.teaching-meta {
+    margin-bottom: 1rem;
+    font-size: 1rem;
+    color: var(--text-color);
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 8px;
+}
+
+.separator {
+    margin: 0 0.5rem;
+    color: var(--secondary-color);
+}
+
+.teaching-details {
+    margin-top: 1rem;
+    padding-left: 1.2rem;
+    list-style-type: disc;
+}
+
+.teaching-details li {
+    font-size: 0.95rem;
+    margin-bottom: 0.4rem;
+    line-height: 1.5;
+    color: var(--text-color);
+}
+
+.reviewing-venue {
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--accent-color);
+    line-height: 1.4;
+}
+
+.reviewing-venue a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.reviewing-venue a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+    .teaching-title-row, .reviewing-title-row {
+        flex-direction: column;
+        gap: 0.25rem;
+    }
+
+    .teaching-card, .reviewing-card {
+        padding: 1.2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .course-name, .reviewing-role {
+        font-size: 1.05rem;
+    }
+
+    .reviewing-venue {
+        font-size: 1rem;
+    }
+
+    .teaching-meta {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+    }
+
+    .separator {
+        display: none;
+    }
+}
+</style>
+{% endblock content %}

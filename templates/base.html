@@ -8,6 +8,11 @@
     <title>{% if page.title %}{{ page.title }} | {% endif %}{{ config.title }}</title>
     <meta name="description" content="{% if page.description %}{{ page.description }}{% elif section.description %}{{ section.description }}{% else %}{{ config.description }}{% endif %}">
     
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&display=swap" rel="stylesheet">
+
     <!-- CSS -->
     <link rel="stylesheet" href="{{ get_url(path="style.css") }}">
     
@@ -23,13 +28,25 @@
             --card-background: {{ config.extra.colors.card_background | default(value="#FFFFFF") }};
             --border-color: {{ config.extra.colors.border_color | default(value="#D0D3D4") }};
             --light-background: {{ config.extra.colors.light_background | default(value="#EDF0F2") }};
+            /* Constant brand ink — always the light-mode primary color. Used only for solid
+               button/badge fills that are explicitly paired with literal white text, so that
+               pairing stays dark+white (readable) regardless of color scheme. */
+            --ink-color: {{ config.extra.colors.primary_color | default(value="#39444C") }};
         }
-        
+
         .dark-mode {
             --text-color: {{ config.extra.colors.dark_text_color | default(value="#E0E0E0") }};
             --background-color: {{ config.extra.colors.dark_background_color | default(value="#121212") }};
             --card-background: {{ config.extra.colors.dark_card_background | default(value="#1E1E1E") }};
             --border-color: {{ config.extra.colors.dark_border_color | default(value="#2C2C2C") }};
+            --light-background: {{ config.extra.colors.dark_card_background | default(value="#1E1E1E") }};
+            /* Primary/secondary are tuned for the light canvas and are near-invisible as
+               foreground (text/links/icons) on a near-black canvas (contrast ratio ~1.1:1),
+               so dark mode remaps them to lighter tints in the same hue family. --ink-color
+               deliberately keeps the original dark value — it backs solid buttons/badges
+               that are paired with literal white text. */
+            --primary-color: {{ config.extra.colors.dark_primary_color | default(value=config.extra.colors.primary_color | default(value="#98A6AD")) }};
+            --secondary-color: {{ config.extra.colors.dark_secondary_color | default(value=config.extra.colors.secondary_color | default(value="#C8102E")) }};
         }
         
         /* Footer link styling */
@@ -70,19 +87,23 @@
 </head>
 <body>
     <!-- Navigation -->
-    <nav class="navbar">
+    <nav class="navbar" id="navbar">
         <div class="nav-container">
+            <a href="{{ get_url(path="/") }}" class="nav-brand-mark" aria-label="Home">
+                {{ config.extra.initials | default(value=config.extra.name | truncate(length=1, end="")) }}
+            </a>
+
             <!-- Mobile menu button -->
             <div class="nav-toggle" id="mobile-menu">
                 <span class="bar"></span>
                 <span class="bar"></span>
                 <span class="bar"></span>
             </div>
-            
+
             <!-- Navigation links -->
             <ul class="nav-menu" id="nav-menu">
                 <li class="nav-item">
-                    <a href="{{ get_url(path="/") }}" class="nav-link"><i class="fas fa-home"></i></a>
+                    <a href="{{ get_url(path="/") }}" class="nav-link"><i class="fas fa-house"></i></a>
                 </li>
                 {% if config.extra.menu %}
                     {% for item in config.extra.menu %}
@@ -91,11 +112,12 @@
                     </li>
                     {% endfor %}
                 {% endif %}
-                
+
                 {% if config.extra.enable_dark_mode %}
                 <li class="nav-item">
                     <button class="dark-mode-toggle" onclick="toggleDarkMode()" aria-label="Toggle dark mode">
-                        <i class="fas fa-moon"></i>
+                        <i class="fa-solid fa-moon moon-icon"></i>
+                        <i class="fa-solid fa-sun sun-icon"></i>
                     </button>
                 </li>
                 {% endif %}
@@ -111,7 +133,7 @@
     <!-- Footer -->
     <footer class="footer">
         <div class="footer-content">
-            <p style="font-size: 0.8em;">&copy; {{ now() | date(format="%Y") }} {{ config.extra.name | default(value=config.title) }}. <br> Built with <a href="https://www.getzola.org/">Zola</a> using the <a href="https://github.com/jskaza/peritus"><strong>peritus</strong></a> theme</a>.</p>
+            <p style="font-size: 0.8em;">&copy; {{ now() | date(format="%Y") }} {{ config.extra.name | default(value=config.title) }}. <br> Built with <a href="https://www.getzola.org/">Zola</a>.</p>
         </div>
     </footer>
 
@@ -120,17 +142,49 @@
         // Mobile menu toggle
         const mobileMenu = document.getElementById('mobile-menu');
         const navMenu = document.getElementById('nav-menu');
-        
+
         mobileMenu.addEventListener('click', function() {
             mobileMenu.classList.toggle('is-active');
             navMenu.classList.toggle('active');
         });
-        
+
         // Close mobile menu when clicking on a link
         document.querySelectorAll('.nav-link').forEach(n => n.addEventListener('click', () => {
             mobileMenu.classList.remove('is-active');
             navMenu.classList.remove('active');
         }));
+
+        // Sticky navbar elevation on scroll
+        const navbar = document.getElementById('navbar');
+        const setNavElevation = () => navbar.classList.toggle('is-scrolled', window.scrollY > 8);
+        setNavElevation();
+        window.addEventListener('scroll', setNavElevation, { passive: true });
+
+        // Scroll-reveal animation for cards and content blocks
+        const revealSelectors = [
+            '.info-box', '.publication-item', '.experience-item', '.teaching-card',
+            '.reviewing-card', '.conference-item', '.item-card', '.subsection', '.talk-item'
+        ];
+        const revealTargets = document.querySelectorAll(revealSelectors.join(','));
+
+        if ('IntersectionObserver' in window && revealTargets.length) {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+            revealTargets.forEach((el, i) => {
+                el.classList.add('reveal');
+                el.style.transitionDelay = `${Math.min(i, 6) * 60}ms`;
+                observer.observe(el);
+            });
+        } else {
+            revealTargets.forEach(el => el.classList.add('is-visible'));
+        }
     </script>
 </body>
 </html> 

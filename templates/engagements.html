@@ -15,17 +15,33 @@
                 {{ section.content | safe }}
             {% endif %}
             
-            {% set conferences = load_data(path="data/conferences.toml") %}
+            {% set engagements = load_data(path="data/engagements.toml") %}
             
             <div class="conferences-list">
-                {% for conf in conferences.conference | sort(attribute="year") | reverse %}
+                {% for conf in engagements.engagement | sort(attribute="year") | reverse %}
                 <article class="conference-item">
                     <header class="conference-header">
                         <h3 class="conference-title">
-                            {{ conf.title }}
+                            {% if conf.type == "Summer School" %}
+                                <i class="fa-solid fa-graduation-cap"></i>
+                            {% elif conf.type == "Workshop" %}
+                                <i class="fa-solid fa-chalkboard-user"></i>
+                            {% elif conf.type == "Talk" %}
+                                <i class="fa-solid fa-microphone"></i>
+                            {% else %}
+                                <i class="fa-solid fa-people-group"></i>
+                            {% endif %}
+                            {% if conf.url %}
+                                <a href="{{ conf.url }}" target="_blank" rel="noopener noreferrer">{{ conf.title }}</a>
+                            {% else %}
+                                {{ conf.title }}
+                            {% endif %}
                         </h3>
-                        
+
                         <div class="conference-meta">
+                            {% if conf.type %}
+                                <span class="conference-type">{{ conf.type }}</span>
+                            {% endif %}
                             <span class="conference-date">{{ conf.year}}</span>
                             {% if conf.venue %}
                                 <span class="conference-venue">{{ conf.venue }}</span>
@@ -34,7 +50,7 @@
                                 <br><span class="conference-location">{{ conf.location }}</span>
                             {% endif %}
                         </div>
-                        
+
                         {% if conf.author %}
                         <div class="conference-authors">
                             {% for author in conf.author %}
@@ -82,18 +98,8 @@
 }
 
 .conference-item {
-    background-color: var(--card-background);
-    border: 1px solid var(--border-color);
-    border-radius: 0.5rem;
     padding: 2rem;
     margin-bottom: 2rem;
-    box-shadow: var(--shadow);
-    transition: all 0.3s ease;
-}
-
-.conference-item:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--hover-shadow);
 }
 
 .conference-header {
@@ -127,8 +133,20 @@
     color: var(--text-color);
 }
 
+.conference-type {
+    display: inline-block;
+    margin-right: 0.75rem;
+    padding: 0.15rem 0.6rem;
+    border-radius: var(--radius-pill, 12px);
+    background-color: var(--accent-color);
+    color: white;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
 .conference-venue {
     font-style: italic;
+    font-weight: bold;
     color: var(--text-color);
 }
 
@@ -147,7 +165,7 @@
 }
 
 .highlighted-author {
-    color: #FEBC11;
+    color: var(--accent-color);
     font-weight: 600;
 }
 
@@ -185,20 +203,7 @@
 }
 
 .conference-link {
-    padding: 0.5rem 1rem;
-    background-color: var(--border-color);
-    border-radius: 0.25rem;
-    font-size: 0.9rem;
-    font-weight: 500;
-    text-decoration: none;
-    margin-right: 1rem;
-    display: inline-block;
-    transition: all 0.3s ease;
-}
-
-.conference-link:hover {
-    background-color: var(--primary-color);
-    color: white;
+    margin-right: 0.75rem;
 }
 
 @media (max-width: 768px) {
@@ -206,9 +211,20 @@
         padding: 1rem;
         margin-bottom: 1.5rem;
     }
-    
+
     .conference-title {
         font-size: 1.1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .conference-title {
+        font-size: 1.02rem;
+    }
+
+    .conference-type {
+        display: inline-block;
+        margin-bottom: 0.4rem;
     }
 }
 </style>

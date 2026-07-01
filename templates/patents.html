@@ -1,0 +1,155 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="section-template">
+    <div class="container">
+        <div class="section-header">
+            <h1>{{ section.title }}</h1>
+            {% if section.description %}
+            <p>{{ section.description }}</p>
+            {% endif %}
+        </div>
+
+        {% set patents = load_data(path="data/patents.toml") %}
+
+        <div class="section-content">
+            {% if section.content %}
+                {{ section.content | safe }}
+            {% endif %}
+
+            <div class="publications-list">
+                {% for pat in patents.patent | sort(attribute="pub_year") | reverse %}
+                <article class="publication-item">
+                    <header class="publication-header">
+                        <h3 class="publication-title">
+                            <i class="fas fa-lightbulb"></i>
+                            {{ pat.title }}
+                        </h3>
+
+                        <div class="publication-meta">
+                            <span class="publication-year">{{ pat.pub_year }}</span>
+                        </div>
+
+                        <div class="publication-authors">
+                            {% for author in pat.author %}
+                                <span class="author">
+                                    {% if author is starting_with("*") and author is ending_with("*") %}
+                                        <strong>{{ author | replace(from="*", to="") }}</strong>
+                                    {% else %}
+                                        {{ author }}
+                                    {% endif %}
+                                </span>{% if not loop.last %},{% endif %}
+                            {% endfor %}
+                        </div>
+                    </header>
+
+                    {% if pat.abstract %}
+                    <div class="publication-abstract">
+                        <details>
+                            <summary>Abstract</summary>
+                            <p>{{ pat.abstract }}</p>
+                        </details>
+                    </div>
+                    {% endif %}
+
+                    <footer class="publication-footer">
+                        {% if pat.url %}
+                            <a href="{{ pat.url }}" class="publication-link" target="_blank" rel="noopener noreferrer">
+                                View Patent →
+                            </a>
+                        {% endif %}
+                    </footer>
+                </article>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.publications-list {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.publication-item {
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+}
+
+.publication-title {
+    margin: 0 0 0.5rem 0;
+    font-size: 1.2rem;
+    font-weight: 600;
+    line-height: 1.4;
+}
+
+.publication-meta {
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    color: var(--text-color);
+}
+
+.publication-year {
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.publication-authors {
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+    color: var(--text-color);
+}
+
+.author {
+    font-weight: 500;
+}
+
+.publication-abstract details {
+    margin-top: 1rem;
+}
+
+.publication-abstract summary {
+    cursor: pointer;
+    font-weight: 500;
+    color: var(--text-color);
+    padding: 0.5rem 0;
+    transition: color 0.2s ease;
+}
+
+.publication-abstract summary:hover {
+    color: var(--primary-color);
+}
+
+.publication-abstract p {
+    margin: 0.5rem 0 0 0;
+    padding: 0.5rem 0;
+    line-height: 1.6;
+    color: var(--text-color);
+    border-top: 1px solid var(--border-color);
+}
+
+.publication-footer {
+    margin-top: 1rem;
+}
+
+@media (max-width: 768px) {
+    .publication-item {
+        padding: 1rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .publication-title {
+        font-size: 1.1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .publication-title {
+        font-size: 1.02rem;
+        display: flex;
+        gap: 0.5rem;
+    }
+}
+</style>
+{% endblock content %}

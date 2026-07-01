@@ -1,4 +1,15 @@
 [[teaching]]
+name = "Master's Thesis Co-Supervision"
+role = "Co-Supervisor"
+institution = "Halmstad University"
+term = "Spring 2026"
+details = [
+    "Supervision of two Master's student in their thesis project",
+    "Guidance and mentorship in Asynchronous Federated Learning",
+]
+link = "#"
+
+[[teaching]]
 name = "DT8034: Big Data Parallel Programming"
 role = "Teaching Assistant"
 institution = "Halmstad University"

@@ -98,17 +98,17 @@
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    padding: 0.75rem 1.5rem;
-    background-color: var(--primary-color);
+    padding: 0.7rem 1.4rem;
+    background-color: var(--ink-color);
     color: white;
     text-decoration: none;
-    border-radius: 0.375rem;
-    font-weight: 500;
-    transition: all 0.3s ease;
+    border-radius: var(--radius-pill);
+    font-weight: 600;
+    transition: all 0.25s ease;
 }
 
 .page-link:hover {
-    background-color: darken(#2962ff, 10%);
+    background-color: var(--accent-color);
     transform: translateY(-2px);
     box-shadow: var(--hover-shadow);
 }
@@ -170,6 +170,16 @@
     padding: 0;
 }
 
+@media (max-width: 768px) {
+    .page-template {
+        padding: 2.5rem 0;
+    }
+
+    .page-header h1 {
+        font-size: 1.9rem;
+    }
+}
+
 .citation-box {
     margin-top: 3rem;
     padding: 2rem;
@@ -197,18 +207,19 @@
 }
 
 .copy-citation-btn {
-    background-color: var(--primary-color);
+    background-color: var(--ink-color);
     color: white;
     border: none;
     padding: 0.5rem 1rem;
-    border-radius: 0.25rem;
+    border-radius: var(--radius-pill);
     cursor: pointer;
-    font-weight: 500;
-    transition: all 0.3s ease;
+    font-weight: 600;
+    transition: all 0.25s ease;
 }
 
 .copy-citation-btn:hover {
-    background-color: darken(#2962ff, 10%);
+    background-color: var(--accent-color);
+    transform: translateY(-1px);
 }
 </style>
 

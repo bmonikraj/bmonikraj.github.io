@@ -66,23 +66,19 @@
 <style>
 .items-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(350px, 100%), 1fr));
     gap: 2rem;
     margin-top: 2rem;
 }
 
 .item-card {
-    background-color: var(--card-background);
     padding: 2rem;
-    border-radius: 0.5rem;
-    box-shadow: var(--shadow);
-    border: 1px solid var(--border-color);
-    transition: all 0.3s ease;
 }
 
-.item-card:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--hover-shadow);
+@media (max-width: 480px) {
+    .item-card {
+        padding: 1.25rem;
+    }
 }
 
 .item-card h3 {
@@ -121,28 +117,9 @@
     flex-wrap: wrap;
 }
 
-.item-link {
-    padding: 0.5rem 1rem;
-    background-color: var(--border-color);
-    border-radius: 0.25rem;
-    font-size: 0.9rem;
-    font-weight: 500;
-    text-decoration: none;
-    transition: all 0.3s ease;
-}
-
-.item-link:hover {
-    background-color: var(--primary-color);
-    color: white;
-}
-
 .subsection {
     margin-bottom: 2rem;
     padding: 1.5rem;
-    background-color: var(--card-background);
-    border-radius: 0.5rem;
-    box-shadow: var(--shadow);
-    border: 1px solid var(--border-color);
 }
 
 .subsection h2 a {

@@ -1,0 +1,67 @@
+[[patent]]
+title = "Systems and methods for federated learning using distributed messaging with entitlements for anonymous computation and secure delivery of model"
+pub_year = 2025
+author = [
+    "*Monik Raj Behera*",
+    "Sudhir Upadhyay",
+    "Rob Otter",
+    "Suresh Shetty",
+]
+abstract = "A method may include an aggregator node in a distributed computer network: generating an aggregator node public/private key pair; communicating the aggregator node public key to participant nodes; receiving, from each participant node, a message comprising a local machine learning (ML) model encrypted with a participant node private key and the aggregator node public key, and a participant node public key encrypted with the aggregator node public key; decrypting the local ML models and the participant node public keys using the aggregator node public key; decrypting the local ML models using the participant node public keys; generating an aggregated ML model based on the local ML models; encrypting, with each participant node public key, the aggregated ML model; and communicating the encrypted ML models to all participant nodes. Each participant node decrypts one of the encrypted ML models and modifies its local ML model with the aggregated ML model."
+url = "https://patents.google.com/patent/US12333400B2/en"
+
+[[patent]]
+title = "Systems and methods for federated learning using peer-to-peer networks"
+pub_year = 2022
+author = [
+    "*Monik Raj Behera*",
+    "Sudhir Upadhyay",
+    "Rob Otter",
+    "Suresh Shetty",
+]
+abstract = "Systems and methods for federated learning using peer-to-peer networks are disclosed. A method may include: electing a participant node as a collaborator node using a consensus algorithm; the collaborator node generating and broadcasting a public/private key pair; the participant nodes generating public/private key pairs for each communication with the collaborator node, encrypting and broadcasting a message comprising a parameter for a local machine learning model for the participant node and its public key with the collaborator node's public key, the collaborator node decrypting the encrypted messages, updating an aggregated machine learning model with the decrypted parameters, encrypting and broadcasting update messages each comprising an update with each participant node's public key; the participant nodes decrypting one of the messages with their private keys, and the participant nodes updating their local machine learning models with the update."
+url = "https://patents.google.com/patent/US20220245528A1/en"
+
+[[patent]]
+title = "Systems and methods for reward-driven federated learning"
+pub_year = 2022
+author = [
+    "Sudhir Upadhyay",
+    "*Monik Raj Behera*",
+]
+abstract = "Systems and methods for federated learning based on a reward-driven approach are disclosed. In one embodiment, a method may include: (1) receiving, by a federated contribution computer program executed by a federated node in a distributed ledger network, a plurality of local machine learning model updates from a plurality of clients in the distributed ledger networks; (2) retrieving, by the federated contribution computer program, a prior global machine learning model; (3) calculating, by the federated contribution computer program, a current global machine learning model based on the prior global machine learning model and the plurality of local machine learning model updates; (4) determining, by the federated contribution computer program, a federated contribution for each client based on each client's federated contribution to the current global machine learning model; and (5) issuing, by the federated contribution computer program, rewards to each client based on the client's federated contribution."
+url = "https://patents.google.com/patent/US20220391779A1/en"
+
+[[patent]]
+title = "SYSTEMS AND METHODS FOR GENERATING SYNTHETIC DATA USING FEDERATED, COLLABORATIVE, PRIVACY PRESERVING MODELS"
+pub_year = 2023
+author = [
+    "Sudhir Upadhyay",
+    "*Monik Raj Behera*",
+    "Palka Patel",
+    "Alexander Littleton",
+    "Sophia Wasserman",
+    "Ker Fran Lee",
+    "Ahmed Elhassan",
+    "Senthil Nathan",
+    "Sudha Priyadarshini",
+    "Arjun Acharya",
+]
+abstract = "Systems and methods for generating synthetic data using federated, collaborative, privacy preserving learning models are disclosed. In one embodiment, a method for generating synthetic data from real data for use in a federated learning network may include: (1) conducting, by a backend for a first institution of a plurality of institutions in a federated learning network, a transaction comprising transaction data; (2) generating, by the backend for the first institution, local synthetic data for the transaction data using a local synthetic data generating model; (3) sharing, by the backend for the first institution, the local synthetic data with a plurality of backends for other institutions; (4) receiving, by the backend for the first institution, global synthetic data from the plurality of backends for the other institutions; and (5) training, by the backend for the first institution, a local machine learning model with the global synthetic data."
+url = "https://patents.google.com/patent/US20230090398A1/en"
+
+[[patent]]
+title = "Systems and methods for privacy preserving, network analytics, and anomaly detection on decentralized, private, permissioned distributed ledger networks"
+pub_year = 2023
+author = [
+    "Sudhir Upadhyay",
+    "*Monik Raj Behera*",
+    "Suresh Shetty",
+    "Tulasi Movva",
+    "Palka Patel",
+    "Vinay Somashekar",
+    "Thomas Eapen",
+    "Chang Yang Jiao",
+]
+abstract = "A method for privacy preserving machine learning model sharing may include a computer program for a first institution of a plurality of institutions in a distributed ledger network: receiving transaction data for a transaction; training a local machine learning model using the transaction data; submitting parameters for the local machine learning model to the distributed ledger network as a private transaction with a trusted entity, wherein the trusted entity receives parameters for a plurality of local machine learning models from the distributed ledger network for the plurality of institutions in the distributed ledger network and aggregates the parameters into an aggregated machine learning model and submits the aggregated parameters to the distributed ledger network as one or more transactions; receiving, from the distributed ledger network, the aggregated parameters for the aggregated machine learning model; and updating the local machine learning model with the aggregated parameters."
+url = "https://patents.google.com/patent/US20230325528A1/en"

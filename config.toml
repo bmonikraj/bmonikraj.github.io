@@ -25,6 +25,7 @@ organization = "Halmstad University"
 location = "Halmstad, Sweden"
 email = "monik.raj.behera@hh.se"
 last_name_identifier = "Behera"
+initials = "MRB"
 organization_url = "https://www.hh.se/english/information-english/search-staff.html?person=22542F17-CEA5-49B7-94B4-9356AB807781"
 cv_url = "/MONIK_RAJ_BEHERA.pdf"
 
@@ -34,11 +35,16 @@ I am a first year PhD student at *[Halmstad University](https://www.hh.se/englis
 """
 
 # Features to enable
-enable_dark_mode = false
+enable_dark_mode = true
 
 [[extra.menu]]
 name = "Publications"
 url = "/publications/"
+weight = 1
+
+[[extra.menu]]
+name = "Engagements"
+url = "/engagements/"
 weight = 1
 
 [[extra.menu]]
@@ -47,8 +53,13 @@ url = "/experience/"
 weight = 1
 
 [[extra.menu]]
-name = "Teaching"
-url = "/teaching/"
+name = "Services"
+url = "/services/"
+weight = 1
+
+[[extra.menu]]
+name = "Patents"
+url = "/patents/"
 weight = 1
 
 ####
@@ -108,7 +119,7 @@ dark_card_background = "#1F2937"    # Darker Lighter Navy
 dark_border_color = "#374151"
 
 # Color theme configuration - Modern Monograph
-[extra.colors]
+[extra.colors.disabled.4]
 # Light mode
 primary_color = "#1A1A1A"      # Off-black (Looks more premium than pure #000)
 secondary_color = "#71717A"    # Muted Zinc
@@ -123,3 +134,53 @@ dark_text_color = "#E2E2E2"    # Soft White
 dark_background_color = "#09090B" # Deep Onyx
 dark_card_background = "#18181B"  # Zinc Card
 dark_border_color = "#27272A"     # Subtle Zinc Border
+
+# Color theme configuration - Indigo Nordic (Indian indigo + Nordic minimalism)
+# Superseded by Foundational Indigo below; kept as a fallback option.
+[extra.colors.disabled.5]
+# Light mode
+primary_color = "#22284A"      # Deep Indigo — headings, primary emphasis
+secondary_color = "#5B6472"    # Cool Slate — secondary text, Nordic restraint
+accent_color = "#BD6B3A"       # Muted Terracotta/Saffron — links, highlights, CTAs
+text_color = "#1C1E26"         # Ink Black
+background_color = "#F7F7F5"   # Cool Nordic Off-White
+card_background = "#FFFFFF"
+border_color = "#E3E4E4"
+
+# Dark mode
+dark_text_color = "#EAEAEA"        # Soft White
+dark_background_color = "#12141F"   # Deep Indigo-Black
+dark_card_background = "#1B1E2C"    # Indigo Slate Card
+dark_border_color = "#2B2E3D"       # Subtle Indigo Border
+
+# Color theme configuration - Foundational Indigo (Indian indigo + Nordic minimalism,
+# calibrated for a foundational/theoretical AI research identity)
+# A deeper, more deliberate indigo than the previous iteration — reads closer to the
+# institutional gravitas of big-tech and big-academic research labs (DeepMind/MSR-style
+# blue-indigo, Stanford/MIT-style seriousness) while the warm clay accent (kin to the
+# clay/terracotta used by Anthropic) signals societal impact and human warmth rather than
+# cold "corporate tech." Nordic-minimal paper canvas keeps it restrained, not flashy.
+[extra.colors]
+# Light mode
+primary_color = "#1B2340"      # Deep Ink-Indigo — headings, primary emphasis, research gravitas
+secondary_color = "#545B6B"    # Graphite-Slate — secondary text, Nordic restraint
+accent_color = "#C1652F"       # Warm Clay/Terracotta — links, highlights, CTAs, societal warmth
+text_color = "#1A1D29"         # Ink Black
+background_color = "#F6F5F2"   # Warm Nordic Paper White
+card_background = "#FFFFFF"
+border_color = "#E2E1DC"
+
+# Dark mode
+dark_text_color = "#ECEBE6"        # Soft Warm White
+dark_background_color = "#0E1220"   # Deep Indigo-Black
+dark_card_background = "#171B2C"    # Indigo Slate Card
+dark_border_color = "#262B3D"       # Subtle Indigo Border
+# primary/secondary above are tuned for the light paper canvas; reused as-is on the
+# near-black canvas they read as near-invisible (contrast ratio ~1.1:1 for primary
+# on background). Dark mode gets its own lighter tints in the same hue family so
+# headings, links and muted text stay legible (both ratios checked > 7.5:1).
+# accent_color is intentionally left constant across modes — it already clears
+# ~4.2-4.6:1 against dark surfaces (AA for bold/large text and UI components) while
+# staying correct for the white-on-accent badges/pills that use it as a solid fill.
+dark_primary_color = "#A6B0E8"     # Soft Periwinkle-Indigo — headings, links (~8.9:1 on bg)
+dark_secondary_color = "#9BA3B8"   # Cool Slate Light — secondary/muted text (~7.6:1 on bg)
