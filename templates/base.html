@@ -186,5 +186,235 @@
             revealTargets.forEach(el => el.classList.add('is-visible'));
         }
     </script>
+
+    <script>
+    // Ambient computation-graph animation, shared by every page that carries
+    // a [data-ambient-network] canvas (the homepage hero, and every inner
+    // page's section/page header). Each instance draws its own independent
+    // graph: gradient-stroked edges (primary -> accent), glowing nodes, and
+    // a few bright "signal" pulses traveling along edges on loop — a nod to
+    // message-passing / a forward pass through a network. Colors are read
+    // live from the page's CSS custom properties, so every instance follows
+    // light/dark mode automatically.
+    //
+    // Legibility: the selectors in each canvas's data-protect attribute are
+    // measured with Range.getClientRects() to get the actual rendered text
+    // line-boxes (not just each element's full block width), and every
+    // frame's drawing is clipped to exclude those boxes. The graph only
+    // ever occupies the negative space around text, never underneath it.
+    //
+    // Performance: frame rate, pixel ratio and node count are capped; each
+    // instance pauses when its own canvas is off-screen, the tab is
+    // hidden, or the visitor prefers reduced motion (in which case this
+    // whole script no-ops, since the CSS also hides the canvas outright).
+    (function () {
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        const canvases = document.querySelectorAll('[data-ambient-network]');
+        if (!canvases.length) return;
+
+        function hexToRgb(hex) {
+            let h = (hex || '').trim().replace('#', '');
+            if (h.length === 3) h = h.split('').map(c => c + c).join('');
+            const num = parseInt(h, 16);
+            return isNaN(num) ? null : [(num >> 16) & 255, (num >> 8) & 255, num & 255];
+        }
+
+        function readColor(name, fallback) {
+            const v = getComputedStyle(document.documentElement).getPropertyValue(name);
+            return hexToRgb(v) || fallback;
+        }
+
+        function textLineRects(selectorList, canvasRect) {
+            const rects = [];
+            selectorList.forEach((sel) => {
+                document.querySelectorAll(sel).forEach((el) => {
+                    try {
+                        const range = document.createRange();
+                        range.selectNodeContents(el);
+                        Array.prototype.forEach.call(range.getClientRects(), (r) => {
+                            if (r.width < 1 || r.height < 1) return;
+                            rects.push({
+                                x: r.left - canvasRect.left - 6,
+                                y: r.top - canvasRect.top - 4,
+                                w: r.width + 12,
+                                h: r.height + 8
+                            });
+                        });
+                    } catch (e) { /* not a text-bearing element; ignore */ }
+                });
+            });
+            return rects;
+        }
+
+        function initNetwork(canvas) {
+            if (!canvas.getContext) return;
+            const ctx = canvas.getContext('2d');
+            const protectSelectors = (canvas.getAttribute('data-protect') || '')
+                .split(',').map(s => s.trim()).filter(Boolean);
+            const bandFraction = parseFloat(canvas.getAttribute('data-band') || '1');
+
+            let width = 0, height = 0, dpr = 1, bandHeight = 0;
+            let nodes = [], signals = [], textRects = [];
+            let active = true, lastFrame = 0;
+            const FRAME_INTERVAL = 1000 / 30;
+            const MAX_SIGNALS = 4;
+
+            function neighborsOf(list, linkDist) {
+                const edges = [];
+                for (let a = 0; a < list.length; a++) {
+                    for (let b = a + 1; b < list.length; b++) {
+                        const dx = list[a].x - list[b].x, dy = list[a].y - list[b].y;
+                        const dist = Math.sqrt(dx * dx + dy * dy);
+                        if (dist < linkDist) edges.push([a, b, dist]);
+                    }
+                }
+                return edges;
+            }
+
+            function spawnSignal(edges) {
+                if (!edges.length) return null;
+                const e = edges[Math.floor(Math.random() * edges.length)];
+                return { a: e[0], b: e[1], t: 0, speed: 0.006 + Math.random() * 0.006, forward: Math.random() > 0.5 };
+            }
+
+            function resize() {
+                const rect = canvas.getBoundingClientRect();
+                dpr = Math.min(window.devicePixelRatio || 1, 2);
+                width = rect.width;
+                height = rect.height;
+                if (!width || !height) return;
+                canvas.width = Math.round(width * dpr);
+                canvas.height = Math.round(height * dpr);
+                ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+                bandHeight = Math.max(120, height * bandFraction);
+                textRects = textLineRects(protectSelectors, rect);
+
+                const isSmall = width < 600;
+                const area = width * bandHeight;
+                const count = Math.max(14, Math.min(isSmall ? 26 : 55, Math.round(area / 9000)));
+                nodes = [];
+                for (let i = 0; i < count; i++) {
+                    nodes.push({
+                        x: Math.random() * width,
+                        y: Math.random() * bandHeight,
+                        vx: (Math.random() - 0.5) * 0.1,
+                        vy: (Math.random() - 0.5) * 0.1,
+                        r: 1.5 + Math.random() * 1.5
+                    });
+                }
+                signals = [];
+            }
+
+            function step(ts) {
+                if (!active) return;
+                requestAnimationFrame(step);
+                if (ts - lastFrame < FRAME_INTERVAL) return;
+                lastFrame = ts;
+                if (!width || !height) return;
+
+                const primaryRgb = readColor('--primary-color', [27, 35, 64]);
+                const accentRgb = readColor('--accent-color', [193, 101, 47]);
+                const linkDist = Math.min(160, Math.max(85, width / 5.5));
+
+                ctx.clearRect(0, 0, width, height);
+
+                for (let i = 0; i < nodes.length; i++) {
+                    const n = nodes[i];
+                    n.x += n.vx; n.y += n.vy;
+                    if (n.x <= 0 || n.x >= width) n.vx *= -1;
+                    if (n.y <= 0 || n.y >= bandHeight) n.vy *= -1;
+                    n.x = Math.max(0, Math.min(width, n.x));
+                    n.y = Math.max(0, Math.min(bandHeight, n.y));
+                }
+
+                const edges = neighborsOf(nodes, linkDist);
+
+                ctx.save();
+                if (textRects.length) {
+                    ctx.beginPath();
+                    ctx.rect(0, 0, width, height);
+                    textRects.forEach(r => ctx.rect(r.x, r.y, r.w, r.h));
+                    ctx.clip('evenodd');
+                }
+
+                for (let e = 0; e < edges.length; e++) {
+                    const na = nodes[edges[e][0]], nb = nodes[edges[e][1]], dist = edges[e][2];
+                    const alpha = Math.pow(1 - dist / linkDist, 1.4) * 0.5;
+                    const grad = ctx.createLinearGradient(na.x, na.y, nb.x, nb.y);
+                    grad.addColorStop(0, `rgba(${primaryRgb.join(',')},${alpha})`);
+                    grad.addColorStop(1, `rgba(${accentRgb.join(',')},${alpha})`);
+                    ctx.strokeStyle = grad;
+                    ctx.lineWidth = 1.1;
+                    ctx.beginPath();
+                    ctx.moveTo(na.x, na.y);
+                    ctx.lineTo(nb.x, nb.y);
+                    ctx.stroke();
+                }
+
+                while (signals.length < MAX_SIGNALS && edges.length) {
+                    const s = spawnSignal(edges);
+                    if (s) signals.push(s);
+                }
+                for (let si = signals.length - 1; si >= 0; si--) {
+                    const sig = signals[si];
+                    sig.t += sig.speed;
+                    if (sig.t >= 1) { signals.splice(si, 1); continue; }
+                    const from = sig.forward ? nodes[sig.a] : nodes[sig.b];
+                    const to = sig.forward ? nodes[sig.b] : nodes[sig.a];
+                    if (!from || !to) { signals.splice(si, 1); continue; }
+                    const px = from.x + (to.x - from.x) * sig.t;
+                    const py = from.y + (to.y - from.y) * sig.t;
+                    const fade = Math.sin(Math.PI * sig.t);
+                    ctx.beginPath();
+                    ctx.arc(px, py, 2.4, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(${accentRgb.join(',')},${0.85 * fade})`;
+                    ctx.shadowColor = `rgba(${accentRgb.join(',')},0.9)`;
+                    ctx.shadowBlur = 8;
+                    ctx.fill();
+                    ctx.shadowBlur = 0;
+                }
+
+                for (let k = 0; k < nodes.length; k++) {
+                    const node = nodes[k];
+                    ctx.beginPath();
+                    ctx.arc(node.x, node.y, node.r, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(${accentRgb.join(',')},0.85)`;
+                    ctx.shadowColor = `rgba(${primaryRgb.join(',')},0.45)`;
+                    ctx.shadowBlur = 5;
+                    ctx.fill();
+                    ctx.shadowBlur = 0;
+                }
+
+                ctx.restore();
+            }
+
+            resize();
+            requestAnimationFrame(step);
+
+            let resizeTimer;
+            window.addEventListener('resize', () => {
+                clearTimeout(resizeTimer);
+                resizeTimer = setTimeout(resize, 200);
+            });
+
+            document.addEventListener('visibilitychange', () => {
+                active = !document.hidden;
+                if (active) requestAnimationFrame(step);
+            });
+
+            if ('IntersectionObserver' in window) {
+                new IntersectionObserver((entries) => {
+                    entries.forEach((entry) => {
+                        active = entry.isIntersecting && !document.hidden;
+                        if (active) requestAnimationFrame(step);
+                    });
+                }, { threshold: 0 }).observe(canvas);
+            }
+        }
+
+        canvases.forEach(initNetwork);
+    })();
+    </script>
 </body>
 </html> 

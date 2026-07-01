@@ -7,6 +7,7 @@
 {% set interests_data = load_data(path="data/interests.toml") %}
 {% set news_data = load_data(path="data/news.toml") %}
 <div class="hero-section">
+    <canvas class="hero-network" data-ambient-network data-protect=".name, .organization, .bio, .news-container" data-band="0.55" aria-hidden="true"></canvas>
     <div class="container">
         <div class="hero-content">
             <!-- Avatar section -->
@@ -130,4 +131,5 @@
         </div>
     </div>
 </div>
-{% endblock content %} 
+
+{% endblock content %}

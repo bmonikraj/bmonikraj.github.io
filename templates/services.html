@@ -4,6 +4,8 @@
 <div class="section-template">
     <div class="container">
         <div class="section-header">
+            <canvas class="section-network" data-ambient-network data-protect=".section-header" aria-hidden="true"></canvas>
+            {% if section.extra.eyebrow %}<span class="eyebrow">{{ section.extra.eyebrow }}</span>{% endif %}
             <h1>{{ section.title | default(value="Services") }}</h1>
             {% if section.description %}
             <p>{{ section.description }}</p>

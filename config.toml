@@ -153,22 +153,24 @@ dark_background_color = "#12141F"   # Deep Indigo-Black
 dark_card_background = "#1B1E2C"    # Indigo Slate Card
 dark_border_color = "#2B2E3D"       # Subtle Indigo Border
 
-# Color theme configuration - Foundational Indigo (Indian indigo + Nordic minimalism,
+# Color theme configuration - Foundational Indigo (monochromatic cool indigo-violet,
 # calibrated for a foundational/theoretical AI research identity)
-# A deeper, more deliberate indigo than the previous iteration — reads closer to the
-# institutional gravitas of big-tech and big-academic research labs (DeepMind/MSR-style
-# blue-indigo, Stanford/MIT-style seriousness) while the warm clay accent (kin to the
-# clay/terracotta used by Anthropic) signals societal impact and human warmth rather than
-# cold "corporate tech." Nordic-minimal paper canvas keeps it restrained, not flashy.
+# A deliberately cool, restrained palette — near-black ink-indigo for headings paired
+# with one vivid, equally-cool indigo-violet accent, reading closer to the institutional
+# register of big-tech and big-academic research labs (DeepMind/MSR-style blue-indigo,
+# ETH/Cambridge-style academic blue) than a warm editorial site. Because primary and
+# accent share one hue family, every primary->accent gradient in the UI (buttons,
+# badges, the graph animation's edges) reads as a single deliberate "signal" gradient
+# rather than a color clash. Nordic-minimal paper canvas keeps it restrained, not flashy.
 [extra.colors]
 # Light mode
 primary_color = "#1B2340"      # Deep Ink-Indigo — headings, primary emphasis, research gravitas
 secondary_color = "#545B6B"    # Graphite-Slate — secondary text, Nordic restraint
-accent_color = "#C1652F"       # Warm Clay/Terracotta — links, highlights, CTAs, societal warmth
+accent_color = "#6366F1"       # Signal Violet — links, highlights, CTAs, the graph's pulse color
 text_color = "#1A1D29"         # Ink Black
-background_color = "#F6F5F2"   # Warm Nordic Paper White
+background_color = "#F4F5F7"   # Cool Nordic Paper White — crisp, slightly blue-gray canvas
 card_background = "#FFFFFF"
-border_color = "#E2E1DC"
+border_color = "#E1E4E8"
 
 # Dark mode
 dark_text_color = "#ECEBE6"        # Soft Warm White
@@ -179,8 +181,10 @@ dark_border_color = "#262B3D"       # Subtle Indigo Border
 # near-black canvas they read as near-invisible (contrast ratio ~1.1:1 for primary
 # on background). Dark mode gets its own lighter tints in the same hue family so
 # headings, links and muted text stay legible (both ratios checked > 7.5:1).
-# accent_color is intentionally left constant across modes — it already clears
-# ~4.2-4.6:1 against dark surfaces (AA for bold/large text and UI components) while
-# staying correct for the white-on-accent badges/pills that use it as a solid fill.
+# accent_color is intentionally left constant across modes. A single hue can't hit
+# 4.5:1 as plain text against both a near-white AND a near-black canvas AND as a
+# white-on-solid-fill badge all at once — Signal Violet (#6366F1) was picked as the
+# most even compromise of the three (~4.1:1 on the light canvas, ~4.2:1 on the dark
+# canvas, ~4.5:1 for white text on an accent fill), rather than over-indexing on one.
 dark_primary_color = "#A6B0E8"     # Soft Periwinkle-Indigo — headings, links (~8.9:1 on bg)
 dark_secondary_color = "#9BA3B8"   # Cool Slate Light — secondary/muted text (~7.6:1 on bg)

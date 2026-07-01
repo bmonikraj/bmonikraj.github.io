@@ -5,6 +5,7 @@
     <div class="container">
         <article class="page-content">
             <header class="page-header">
+                <canvas class="section-network" data-ambient-network data-protect=".page-header" aria-hidden="true"></canvas>
                 <h1>{{ page.title }}</h1>
                 
                 {% if page.date %}
@@ -64,8 +65,10 @@
 }
 
 .page-header {
+    position: relative;
+    z-index: 0;
     margin-bottom: 3rem;
-    padding-bottom: 2rem;
+    padding: 1.5rem 0 2rem;
     border-bottom: 1px solid var(--border-color);
 }
 
@@ -99,7 +102,9 @@
     align-items: center;
     gap: 0.5rem;
     padding: 0.7rem 1.4rem;
-    background-color: var(--ink-color);
+    background: linear-gradient(120deg, var(--ink-color), var(--accent-color));
+    background-size: 160% 160%;
+    background-position: 0% 50%;
     color: white;
     text-decoration: none;
     border-radius: var(--radius-pill);
@@ -108,7 +113,7 @@
 }
 
 .page-link:hover {
-    background-color: var(--accent-color);
+    background-position: 100% 50%;
     transform: translateY(-2px);
     box-shadow: var(--hover-shadow);
 }
@@ -207,7 +212,9 @@
 }
 
 .copy-citation-btn {
-    background-color: var(--ink-color);
+    background: linear-gradient(120deg, var(--ink-color), var(--accent-color));
+    background-size: 160% 160%;
+    background-position: 0% 50%;
     color: white;
     border: none;
     padding: 0.5rem 1rem;
@@ -218,7 +225,7 @@
 }
 
 .copy-citation-btn:hover {
-    background-color: var(--accent-color);
+    background-position: 100% 50%;
     transform: translateY(-1px);
 }
 </style>
