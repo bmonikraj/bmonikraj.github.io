@@ -365,11 +365,6 @@ a {
   @media (max-width: 768px) {
     padding: 3rem 0 2.5rem;
   }
-  // Faint lab-notebook dot grid — a nod to the blueprint/graph-paper texture
-  // common to research-lab sites, kept subtle enough not to compete with content.
-  background-image: radial-gradient(circle, color-mix(in srgb, var(--text-color) 12%, transparent) 1px, transparent 1.6px);
-  background-size: 26px 26px;
-  background-position: -6px -6px;
 
   &::before {
     content: "";
@@ -403,15 +398,16 @@ a {
   }
 }
 
-// Ambient graph animation — a single computation-graph of nodes and edges,
-// with small signal pulses traveling along edges (a nod to message-passing /
-// forward-pass computation), fixed behind the entire page like a backdrop.
-// Colors/alpha are tuned to sit well below text and brand-color contrast in
-// the canvas drawing code, so it reads as a faint texture, never competing
-// with foreground content. It also clips itself away from each page's
-// actual text line-boxes (see the data-protect attribute + base.html
-// script) as a second, coarser safety net beyond the z-index/opacity one.
-[data-ambient-network] {
+// Ambient manifold animation — a smoothly warping wireframe surface (a
+// continuous, differentiable height field rendered as spline-smoothed grid
+// curves, with glowing markers gliding along geodesics), fixed behind the
+// entire page like a backdrop. Colors/alpha are tuned to sit well below
+// text and brand-color contrast in the canvas drawing code, so it reads as
+// a faint texture, never competing with foreground content. It also clips
+// itself away from each page's actual text line-boxes (see the
+// data-protect attribute + base.html script) as a second, coarser safety
+// net beyond the z-index/opacity one.
+[data-ambient-manifold] {
   position: fixed;
   inset: 0;
   width: 100vw;
@@ -796,12 +792,6 @@ a {
 // Section templates (Publications / Experience / Teaching / Conferences pages)
 .section-template {
   padding: 3.5rem 0 5rem;
-  // Same lab-notebook dot grid as the hero, at a quarter of the opacity —
-  // ties every inner page back to the same quiet "graph paper" motif
-  // without competing with list content.
-  background-image: radial-gradient(circle, color-mix(in srgb, var(--text-color) 6%, transparent) 1px, transparent 1.6px);
-  background-size: 26px 26px;
-  background-position: -6px -6px;
 
   .section-header {
     position: relative;
