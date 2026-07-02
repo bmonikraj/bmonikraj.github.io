@@ -33,7 +33,7 @@
                             <h3 class="experience-title">{{ exp.title }}</h3>
                             <div class="experience-company">
                                 {% if exp.company_favicon %}
-                                    <img src="{{ exp.company_favicon }}" alt="{{ exp.company }}" height="15vh">
+                                    <img class="company-favicon" src="{{ exp.company_favicon }}" alt="{{ exp.company }}">
                                 {% endif %}
                                 <a href="{{ exp.company_url }}" target="_blank" rel="noopener noreferrer">
                                     {{ exp.company }}
@@ -126,9 +126,25 @@
 }
 
 .experience-company {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
     font-size: 1.1rem;
     font-weight: 500;
     margin-bottom: 0.5rem;
+}
+
+/* Company favicons vary wildly in native aspect ratio (square icons vs. wide
+   wordmark logos) — a fixed bounding box with object-fit keeps every row's
+   mark the same visual size and baseline-aligned with the company name,
+   instead of each logo dictating its own width. */
+.company-favicon {
+    height: 18px;
+    width: 24px;
+    object-fit: contain;
+    object-position: left center;
+    flex-shrink: 0;
 }
 
 .experience-company a:hover {

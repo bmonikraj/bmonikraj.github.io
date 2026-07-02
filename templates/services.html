@@ -57,7 +57,7 @@
                             <div class="teaching-title-row">
                                 <h3 class="course-name">
                                     {% if course.link %}
-                                        <a href="{{ course.link }}" target="_blank">{{ course.name }}</a>
+                                        <a href="{{ course.link }}" target="_blank" rel="noopener noreferrer">{{ course.name }}</a>
                                     {% else %}
                                         {{ course.name }}
                                     {% endif %}

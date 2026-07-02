@@ -79,6 +79,11 @@ p {
   margin-bottom: 1rem;
   color: var(--text-color);
   text-align: justify;
+  // Justified text without hyphenation opens uneven gaps ("rivers") between
+  // words, especially in the site's narrower card/column widths — hyphenation
+  // lets the browser break long words instead of stretching whitespace.
+  -webkit-hyphens: auto;
+  hyphens: auto;
 }
 
 a {
@@ -288,6 +293,17 @@ a {
 
   &:hover {
     color: var(--text-color);
+
+    &::after {
+      transform: scaleX(1);
+    }
+  }
+
+  // Persistent indicator for whichever section the visitor is currently on,
+  // using the same underline vocabulary as the hover state.
+  &.active {
+    color: var(--text-color);
+    font-weight: 600;
 
     &::after {
       transform: scaleX(1);
@@ -779,6 +795,8 @@ a {
 .news-content {
   color: var(--text-color);
   text-align: justify;
+  -webkit-hyphens: auto;
+  hyphens: auto;
 }
 
 // Footer

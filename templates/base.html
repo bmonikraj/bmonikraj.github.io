@@ -68,7 +68,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
     
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="{{ get_url(path="avataaars.png") }}">
+    <link rel="icon" type="image/png" href="{{ get_url(path="avataaars.png") }}">
     
     {% if config.extra.enable_dark_mode %}
     <script>
@@ -108,12 +108,12 @@
             <!-- Navigation links -->
             <ul class="nav-menu" id="nav-menu">
                 <li class="nav-item">
-                    <a href="{{ get_url(path="/") }}" class="nav-link"><i class="fas fa-house"></i></a>
+                    <a href="{{ get_url(path="/") }}" class="nav-link{% if current_path == "/" %} active{% endif %}"><i class="fas fa-house"></i></a>
                 </li>
                 {% if config.extra.menu %}
                     {% for item in config.extra.menu %}
                     <li class="nav-item">
-                        <a href="{{ get_url(path=item.url) }}" class="nav-link">{{ item.name }}</a>
+                        <a href="{{ get_url(path=item.url) }}" class="nav-link{% if current_path == item.url %} active{% endif %}">{{ item.name }}</a>
                     </li>
                     {% endfor %}
                 {% endif %}
