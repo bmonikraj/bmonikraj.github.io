@@ -51,7 +51,7 @@
                 <div class="news-container">
                     <h3>News</h3>
                     <ul class="news-list">
-                        {% for item in news_data.news %}
+                        {% for item in news_data.news | reverse %}
                         <li class="news-item">
                             <span class="news-date"><i class="fa-solid fa-bullhorn"></i> {{ item.date }}</span>
                             <span class="news-content">{{ item.content | markdown(inline=true) | safe }}</span>

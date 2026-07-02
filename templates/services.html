@@ -51,7 +51,7 @@
             <div class="duty-group">
                 <h2 class="duty-group-title">Teaching</h2>
                 <div class="teaching-list">
-                    {% for course in teachings.teaching %}
+                    {% for course in teachings.teaching | reverse %}
                     <article class="teaching-card">
                         <header class="teaching-header">
                             <div class="teaching-title-row">

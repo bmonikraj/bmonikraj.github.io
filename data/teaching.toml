@@ -1,11 +1,12 @@
 [[teaching]]
-name = "Master's Thesis Co-Supervision"
-role = "Co-Supervisor"
+name = "DI4021: Linux Administration"
+role = "Teaching Assistant"
 institution = "Halmstad University"
 term = "Spring 2026"
 details = [
-    "Supervision of two Master's student in their thesis project",
-    "Guidance and mentorship in Asynchronous Federated Learning",
+    "Managed the Project Evaluation for students.",
+    "Assisted students in the class and labs with their doubts",
+    "Hands-on support to students with linux commands in multiple hosts and environments"
 ]
 link = "#"
 
@@ -22,13 +23,12 @@ details = [
 link = "#"
 
 [[teaching]]
-name = "DI4021: Linux Administration"
-role = "Teaching Assistant"
+name = "Master's Thesis Co-Supervision"
+role = "Co-Supervisor"
 institution = "Halmstad University"
 term = "Spring 2026"
 details = [
-    "Managed the Project Evaluation for students.",
-    "Assisted students in the class and labs with their doubts",
-    "Hands-on support to students with linux commands in multiple hosts and environments"
+    "Supervision of two Master's student in their thesis project",
+    "Guidance and mentorship in Asynchronous Federated Learning",
 ]
 link = "#"

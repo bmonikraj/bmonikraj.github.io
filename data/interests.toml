@@ -1,8 +1,7 @@
 interests = [
-  "Artificial Intelligence, Deep Learning and Machine Learning",
+  "Foundations of Deep Learning and AI",
   "Collective and Collaborative Learning",
   "Generative AI and Agentic Systems",
-  "Geometry of AI Models",
-  "Distributed Systems and Algorithms",
-  "Software Engineering and Systems Architecture"
+  "Geometry of Deep Learning Models",
+  "Software Engineering, Systems Architecture and Distributed Computing"
 ]

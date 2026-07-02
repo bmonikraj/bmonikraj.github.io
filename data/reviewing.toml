@@ -1,10 +1,4 @@
 [[reviewing]]
-role = "Ethics Reviewer"
-venue = "40th Conference on Neural Information Processing Systems (NeurIPS 2026)"
-year = 2026
-url = "https://neurips.cc/Conferences/2026"
-
-[[reviewing]]
 role = "PC Member"
 venue = "9th AAAI Conference on AI, Ethics, and Society (AIES 2026)"
 year = 2026
@@ -15,3 +9,9 @@ role = "Workshop Reviewer"
 venue = "ECML PKDD 2026"
 year = 2026
 url = "https://ecmlpkdd.org/2026/"
+
+[[reviewing]]
+role = "Ethics Reviewer"
+venue = "40th Conference on Neural Information Processing Systems (NeurIPS 2026)"
+year = 2026
+url = "https://neurips.cc/Conferences/2026"
