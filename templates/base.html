@@ -4,10 +4,83 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    
-    <title>{% if page.title %}{{ page.title }} | {% endif %}{{ config.title }}</title>
-    <meta name="description" content="{% if page.description %}{{ page.description }}{% elif section.description %}{{ section.description }}{% else %}{{ config.description }}{% endif %}">
-    
+
+    {# Resolve a single title/description pair, falling back page -> section -> site,
+       so every template (including section list pages, which only expose `section`,
+       not `page`) gets a unique <title> instead of silently collapsing to config.title. #}
+    {% set_global page_title = config.title %}
+    {% if page.title %}
+        {% set_global page_title = page.title %}
+    {% elif section.title %}
+        {% set_global page_title = section.title %}
+    {% endif %}
+
+    {% set_global page_description = config.description %}
+    {% if page.description %}
+        {% set_global page_description = page.description %}
+    {% elif section.description %}
+        {% set_global page_description = section.description %}
+    {% endif %}
+
+    {% set_global canonical_url = current_url | default(value=config.base_url) %}
+    {% set social_data = load_data(path="data/social.toml") %}
+    {% set_global twitter_handle = "" %}
+    {% for s in social_data.social %}
+        {% if s.name == "X" %}
+            {% set_global x_handle = s.url | split(pat="/") | last %}
+            {% set_global twitter_handle = "@" ~ x_handle %}
+        {% endif %}
+    {% endfor %}
+
+    <title>{% if page_title != config.title %}{{ page_title }} | {% endif %}{{ config.title }}</title>
+    <meta name="description" content="{{ page_description }}">
+    <meta name="author" content="{{ config.extra.name | default(value=config.title) }}">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="{{ canonical_url | safe }}">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="{% if page.title %}article{% else %}website{% endif %}">
+    <meta property="og:title" content="{{ page_title }}">
+    <meta property="og:description" content="{{ page_description }}">
+    <meta property="og:url" content="{{ canonical_url | safe }}">
+    <meta property="og:site_name" content="{{ config.title }}">
+    <meta property="og:image" content="{{ get_url(path="profile.jpg") }}">
+    <meta property="og:locale" content="en_US">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ page_title }}">
+    <meta name="twitter:description" content="{{ page_description }}">
+    <meta name="twitter:image" content="{{ get_url(path="profile.jpg") }}">
+    {% if twitter_handle %}<meta name="twitter:creator" content="{{ twitter_handle }}">{% endif %}
+
+    <!-- Structured data: Person schema for knowledge-panel / rich-result eligibility -->
+    {% set_global same_as = [] %}
+    {% for s in social_data.social %}
+        {% if s.name != "Email" %}
+            {% set_global same_as = same_as | concat(with=[s.url]) %}
+        {% endif %}
+    {% endfor %}
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": {{ config.extra.name | default(value=config.title) | json_encode() | safe }},
+        "url": {{ config.base_url | json_encode() | safe }},
+        "image": {{ get_url(path="profile.jpg") | json_encode() | safe }},
+        {% if config.extra.role %}"jobTitle": {{ config.extra.role | json_encode() | safe }},{% endif %}
+        {% if config.extra.organization %}
+        "worksFor": {
+            "@type": "Organization",
+            "name": {{ config.extra.organization | json_encode() | safe }}{% if config.extra.organization_url %},
+            "url": {{ config.extra.organization_url | json_encode() | safe }}{% endif %}
+        },
+        {% endif %}
+        {% if config.extra.email %}{% set_global mailto_url = "mailto:" ~ config.extra.email %}"email": {{ mailto_url | json_encode() | safe }},{% endif %}
+        "sameAs": {{ same_as | json_encode() | safe }}
+    }
+    </script>
+
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -68,7 +141,9 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
     
     <!-- Favicon -->
+    <link rel="icon" href="{{ get_url(path="favicon.ico") }}" sizes="any">
     <link rel="icon" type="image/png" href="{{ get_url(path="avataaars.png") }}">
+    <link rel="apple-touch-icon" href="{{ get_url(path="avataaars.png") }}">
     
     {% if config.extra.enable_dark_mode %}
     <script>
