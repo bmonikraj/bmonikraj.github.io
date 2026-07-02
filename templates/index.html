@@ -6,6 +6,7 @@
 {% set social_data = load_data(path="data/social.toml") %}
 {% set interests_data = load_data(path="data/interests.toml") %}
 {% set news_data = load_data(path="data/news.toml") %}
+{% set awards_data = load_data(path="data/awards.toml") %}
 <div class="hero-section">
     <div class="container">
         <div class="hero-content">
@@ -109,6 +110,34 @@
                             </div>
                             {% endif %}
                         </div>
+
+                        <!-- Awards & Recognitions -->
+                        {% if awards_data.awards %}
+                        <div class="info-box awards-box">
+                            <h3>Notable Awards &amp; Recognitions</h3>
+                            <ul class="awards-list">
+                                {% for award in awards_data.awards | reverse %}
+                                <li class="award-item">
+                                    <div class="award-content">
+                                        <div class="award-title">{{ award.title }}</div>
+                                        <div class="institution"><i class="fas fa-calendar"></i> {{ award.year }}</div>
+                                        <div class="institution">
+                                            <i class="fas fa-award"></i>
+                                            {% if award.issuer_url %}
+                                            <a href="{{ award.issuer_url }}" target="_blank" rel="noopener noreferrer"> {{ award.issuer }}</a>
+                                            {% else %}
+                                            {{ award.issuer }}
+                                            {% endif %}
+                                        </div>
+                                        {% if award.description %}
+                                        <div class="award-description">{{ award.description }}</div>
+                                        {% endif %}
+                                    </div>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>

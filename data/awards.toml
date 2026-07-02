@@ -1,0 +1,9 @@
+# data/awards.toml
+# Add one [[awards]] entry per award/recognition. `issuer_url` and `description` are optional.
+
+[[awards]]
+title = "Winner (J.P. Morgan Chase & Co.)"
+year = "2021"
+issuer = "SWIFT"
+issuer_url = "https://www.swift.com/news-events/news/swift-hackathon-2021-results-are"
+description = "Synthetic Dataset Generation using Federated Learning and GAN"
