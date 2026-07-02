@@ -78,6 +78,7 @@ h4 { font-size: 1.25rem; }
 p {
   margin-bottom: 1rem;
   color: var(--text-color);
+  text-align: justify;
 }
 
 a {
@@ -435,6 +436,14 @@ a {
     grid-template-columns: 1fr;
     text-align: center;
     gap: 2rem;
+
+    // The global `p { text-align: justify }` rule otherwise wins over this
+    // inherited center (an element's own explicit alignment always beats an
+    // inherited one), which would un-center the bio/organization text here.
+    .organization,
+    .bio p {
+      text-align: center;
+    }
   }
 }
 
@@ -769,6 +778,7 @@ a {
 
 .news-content {
   color: var(--text-color);
+  text-align: justify;
 }
 
 // Footer
@@ -783,6 +793,13 @@ a {
   text-align: center;
   color: var(--secondary-color);
   font-size: 0.85rem;
+
+  // The global `p { text-align: justify }` rule is an explicit declaration on
+  // the <p> itself, which otherwise beats this inherited center regardless
+  // of specificity — so it needs restating here.
+  p {
+    text-align: center;
+  }
 
   a {
     color: var(--primary-color);
@@ -828,11 +845,16 @@ a {
       }
     }
 
+    // Description paragraph — centered like the title above it. Stated
+    // explicitly because the global `p { text-align: justify }` rule is an
+    // explicit declaration on the <p> itself, which otherwise beats this
+    // inherited center regardless of specificity.
     p {
       font-size: 1.1rem;
       color: var(--secondary-color);
       max-width: 600px;
       margin: 0 auto;
+      text-align: center;
     }
   }
 }
