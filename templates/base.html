@@ -44,14 +44,14 @@
     <meta property="og:description" content="{{ page_description }}">
     <meta property="og:url" content="{{ canonical_url | safe }}">
     <meta property="og:site_name" content="{{ config.title }}">
-    <meta property="og:image" content="{{ get_url(path="profile.jpg") }}">
+    <meta property="og:image" content="{{ get_url(path="Profile.png") }}">
     <meta property="og:locale" content="en_US">
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="{{ page_title }}">
     <meta name="twitter:description" content="{{ page_description }}">
-    <meta name="twitter:image" content="{{ get_url(path="profile.jpg") }}">
+    <meta name="twitter:image" content="{{ get_url(path="Profile.png") }}">
     {% if twitter_handle %}<meta name="twitter:creator" content="{{ twitter_handle }}">{% endif %}
 
     <!-- Structured data: Person schema for knowledge-panel / rich-result eligibility -->
@@ -67,7 +67,7 @@
         "@type": "Person",
         "name": {{ config.extra.name | default(value=config.title) | json_encode() | safe }},
         "url": {{ config.base_url | json_encode() | safe }},
-        "image": {{ get_url(path="profile.jpg") | json_encode() | safe }},
+        "image": {{ get_url(path="Profile.png") | json_encode() | safe }},
         {% if config.extra.role %}"jobTitle": {{ config.extra.role | json_encode() | safe }},{% endif %}
         {% if config.extra.organization %}
         "worksFor": {
