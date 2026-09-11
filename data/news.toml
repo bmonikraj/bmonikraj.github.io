@@ -2,10 +2,6 @@
 
 [[news]]
 date = "2026 Jun"
-content = "Serving as Workshop Reviewer in [ECML PKDD, 2026](https://ecmlpkdd.org/2026/)"
-
-[[news]]
-date = "2026 Jun"
 content = "Serving as PC Member in [9th AAAI Conference on AI, Ethics, and Society](https://www.aies-conference.com/2026/)"
 
 [[news]]
@@ -18,4 +14,8 @@ content = "Attending London Geometry and ML Summer School 2026 at London, UK [LO
 
 [[news]]
 date = "2026 Jul"
-content = "Serving as Ethics Reviewer in [40th NeurIPS, 2026](https://neurips.cc/Conferences/2026)"
+content = "Serving as Reviewer in [40th NeurIPS, 2026](https://neurips.cc/Conferences/2026)"
+
+[[news]]
+date = "2026 Sept"
+content = "Serving as Reviewer in [CIKM 2026](https://cikm2026.diag.uniroma1.it/)"

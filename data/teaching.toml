@@ -32,3 +32,15 @@ details = [
     "Guidance and mentorship in Asynchronous Federated Learning",
 ]
 link = "#"
+
+[[teaching]]
+name = "MA2054: Mathematical Statistics"
+role = "Co-Instructor"
+institution = "Halmstad University"
+term = "Autumn 2026"
+details = [
+    "Teaching, Lab Assistance",
+    "Lab Materials Design",
+    "Grading and Evaluations"
+]
+link = "#"

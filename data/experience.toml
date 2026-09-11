@@ -1,4 +1,14 @@
 [[experience]]
+title = "Researcher"
+company = "Volvo"
+location = "Gothenburg, Sweden"
+start_date = 2026.03
+end_date = 2029.11
+description = "Research in Artificial Intelligence"
+company_url = "https://www.volvo.com/en/"
+company_favicon = "https://assets.volvo.com/is/image/VolvoInformationTechnologyAB/Volvo-Spread-Word-Mark-Black-7?qlt=82&wid=2560&ts=1751547043001&dpr=off&fit=constrain&fmt=png-alpha"
+
+[[experience]]
 title = "Doctoral Student in Machine Learning"
 company = "Halmstad University"
 location = "Halmstad, Sweden"

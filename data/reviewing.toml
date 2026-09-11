@@ -5,13 +5,13 @@ year = 2026
 url = "https://www.aies-conference.com/2026/"
 
 [[reviewing]]
-role = "Workshop Reviewer"
-venue = "ECML PKDD 2026"
-year = 2026
-url = "https://ecmlpkdd.org/2026/"
-
-[[reviewing]]
-role = "Ethics Reviewer"
+role = "Reviewer"
 venue = "40th Conference on Neural Information Processing Systems (NeurIPS 2026)"
 year = 2026
 url = "https://neurips.cc/Conferences/2026"
+
+[[reviewing]]
+role = "Reviewer"
+venue = "35th ACM International Conference on Information and Knowledge Management (CIKM 2026)"
+year = 2026
+url = "https://cikm2026.diag.uniroma1.it/"
