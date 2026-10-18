@@ -21,3 +21,11 @@ year = 2026
 venue = "Imperial College London"
 location = "London, UK"
 url = "https://www.logml.ai/"
+
+[[engagement]]
+type = "Talk"
+title = "Length Generalization in Looped Transformers"
+year = 2026
+venue = "D3A 4.0, MLT Workshop"
+location = "Nyborg, Denmark"
+url = "https://d3aconference.dk/machine-learning-theory-3/"

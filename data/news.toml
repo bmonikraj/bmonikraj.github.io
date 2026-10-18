@@ -1,14 +1,6 @@
 # data/news.toml
 
 [[news]]
-date = "2026 Jun"
-content = "Serving as PC Member in [9th AAAI Conference on AI, Ethics, and Society](https://www.aies-conference.com/2026/)"
-
-[[news]]
-date = "2026 Jun"
-content = "Attending ELLIS Summer School in ML Reliability at Kraków, Poland [MLSS R&S2026](https://mlss2026.mlinpl.org/)"
-
-[[news]]
 date = "2026 Jul"
 content = "Attending London Geometry and ML Summer School 2026 at London, UK [LOGML 2026](https://www.logml.ai/)"
 
@@ -17,5 +9,13 @@ date = "2026 Jul"
 content = "Serving as Reviewer in [40th NeurIPS, 2026](https://neurips.cc/Conferences/2026)"
 
 [[news]]
-date = "2026 Sep"
+date = "2026 Aug"
 content = "Serving as Reviewer in [CIKM 2026](https://cikm2026.diag.uniroma1.it/)"
+
+[[news]]
+date = "2026 Sep"
+content = "Paper accepted in [NeurIPS 2026 AABA4ET](https://neurips.cc/virtual/2026/loc/sydney/160078)"
+
+[[news]]
+date = "2026 Sep"
+content = "Paper accepted in [NeurIPS 2026 ODI](https://neurips.cc/virtual/2026/loc/sydney/170063)"
