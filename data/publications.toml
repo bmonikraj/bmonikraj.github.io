@@ -88,3 +88,35 @@ author = [
 journal = "TechRxiv preprint"
 abstract = "In recent times, Machine learning and Artificial intelligence have become one of the key emerging fields of computer science. Many researchers and businesses are benefited by machine learning models that are trained by data processing at scale. However, machine learning, and particularly Deep Learning requires large amounts of data, that in several instances are proprietary and confidential to many businesses. In order to respect individual organization's privacy in collaborative machine learning, federated learning could play a crucial role. Such implementations of privacy preserving federated learning find applicability in various ecosystems like finance, health care, legal, research and other fields that require preservation of privacy. However, many such implementations are driven by a centralized architecture in the network, where the aggregator node becomes the single point of failure, and is also expected with lots of computing resources at its disposal. In this paper, we propose an approach of implementing a decentralized, peer-topeer federated learning framework, that leverages RAFT based aggregator selection. The proposal hinges on that fact that there is no one permanent aggregator, but instead a transient, time based elected leader, which will aggregate the models from all the peers in the network. The leader ( aggregator) publishes the aggregated model on the network, for everyone to consume. Along with peer-to-peer network and RAFT based aggregator selection, the framework uses dynamic generation of cryptographic keys, to create a more secure mechanism for delivery of models within the network. The key rotation also ensures anonymity of the sender on the network too. Experiments conducted in the paper, verifies the usage of peer-to-peer network for creating a resilient federated learning network. Although the proposed solution uses an artificial neural network in it's reference implementation, the generic design of the framework can accommodate any federated learning model within the network."
 url = "https://www.techrxiv.org/doi/pdf/10.36227/techrxiv.14267468"
+
+[[publication]]
+type = "article"
+title = "Right Tool, Wrong Arguments: Permission Drift in Quantized Tool-Calling LLMs"
+pub_year = 2026
+author = [
+    "*Monik Raj Behera*",
+    "Sivadinesh Ponrajan",
+    "Thorsteinn S Rögnvaldsson",
+    "Prayag Tiwari"
+]
+journal = "2026 40th Annual Conference on Neural Information Processing Systems (NeurIPS)"
+volume = "On-Device Intelligence: Foundation Models under Real-World Constraints Workshop"
+abstract = "Post-training quantization is the standard way to deploy tool-using language model agents on constrained hardware, and is generally assumed safe once it preserves benchmark accuracy. We test that assumption across four tool-calling model families (Qwen, Llama, Mistral, and Granite) at four precisions (BF16, FP8, INT8, and INT4). On the Berkeley Function-Calling Leaderboard, three families lose at most 2.17 accuracy points at INT4 and one improves by over 11 points: aggregate tool-calling capability largely survives quantization. A paired, case-level analysis of the same predictions tells a different story - up to 13.50% of individual decisions change between BF16 and INT4, even when aggregate accuracy remains stable or improves. We then introduce a permission-boundary analysis that gives each model an explicitly authorized tool call and measures whether untrusted external content changes the arguments it supplies. Every family exhibits at least one reproducible case where a securely authorized BF16 action becomes unauthorized at INT4, and INT4 changes 20-50% of permission records relative to BF16. Argument churn also exceeds tool-selection churn across all four families. These transitions are deterministic under repeated greedy decoding, although none of the 36 primary security comparisons survive Holm correction; the evidence therefore establishes case-level instability rather than population-wide average degradation. We call this failure mode permission drift: quantization can leave aggregate tool-calling accuracy intact while silently moving sensitive arguments outside the user's authorization boundary."
+url = "https://neurips.cc/virtual/2026/loc/sydney/170063"
+
+[[publication]]
+type = "article"
+title = "Decoupled Planning and Execution for Trustworthy Agents in Closed-Environment"
+pub_year = 2026
+author = [
+    "*Monik Raj Behera*",
+    "Preetam Nahak",
+    "Ajit K Behera",
+    "Zahra Taghiyarrenani",
+    "Yuantao Fan",
+    "Thorsteinn S Rögnvaldsson"
+]
+journal = "2026 40th Annual Conference on Neural Information Processing Systems (NeurIPS)"
+volume = "Agentic AI Benchmark and Application for Enterprise Tasks Workshop"
+abstract = "Enterprise systems rely heavily on LLM agents with typically large models(with parameters) to execute multi-step procedures. They use a dynamic approach; first the agent creates a plan and uses it to execute the input query and generate output. These agents do not require any offline preparation, yet they still fail in producing consistent results despite using a powerful model, rendering them unreliable. We presume that dynamic re-planning not only causes structural drifts, but also amounts to repeated redundant token costs. Existing literature points towards Localized task decomposition bounds updates within sub-tasks, complementing prior efforts that employ graph constraints, delta patching, and topological separation to safeguard global dependencies to mitigate the shortcomings, which motivates us to study a hybrid approach of query resolution that involves decoupling of planning and execution paths and employing DAGs(Directed Acyclic Graphs) to represent pre-defined workflows. We conducted two studies in closed environment setup. First, we study two different systems across a custom benchmark and do a cost analysis; one uses traditional dynamic approach and other one uses the hybrid approach. Then we study the novel hybrid system against three graph compiler models of different sizes. Results obtained from these studies suggest that the hybrid approach is more reliable, accurate and cheaper and that smaller compiler model performs fairly in ingestion phase, hence supporting central claim that small model executing a well-structured, pre-compiled plan is cheaper and more reliable than dynamic re-planning."
+url = "https://neurips.cc/virtual/2026/loc/sydney/160078"
