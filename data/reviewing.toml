@@ -15,3 +15,9 @@ role = "Reviewer"
 venue = "35th ACM International Conference on Information and Knowledge Management (CIKM 2026)"
 year = 2026
 url = "https://cikm2026.diag.uniroma1.it/"
+
+[[reviewing]]
+role = "Reviewer"
+venue = "30th Annual Conference on Artificial Intelligence and Statistics (AISTATS 2027)"
+year = 2026
+url = "https://virtual.aistats.org/Conferences/2027"
