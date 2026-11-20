@@ -1,9 +1,9 @@
+{% import "macros/icons.html" as icons %}
 <!DOCTYPE html>
 <html lang="{{ config.default_language }}" dir="ltr">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     {# Resolve a single title/description pair, falling back page -> section -> site,
        so every template (including section list pages, which only expose `section`,
@@ -21,6 +21,8 @@
     {% elif section.description %}
         {% set_global page_description = section.description %}
     {% endif %}
+
+    {% set_global og_image = resize_image(path="Profile.png", width=600, height=600, op="fill", format="jpg", quality=85) %}
 
     {% set_global canonical_url = current_url | default(value=config.base_url) %}
     {% set social_data = load_data(path="data/social.toml") %}
@@ -44,14 +46,17 @@
     <meta property="og:description" content="{{ page_description }}">
     <meta property="og:url" content="{{ canonical_url | safe }}">
     <meta property="og:site_name" content="{{ config.title }}">
-    <meta property="og:image" content="{{ get_url(path="Profile.png") }}">
+    <meta property="og:image" content="{{ og_image.url }}">
+    <meta property="og:image:width" content="600">
+    <meta property="og:image:height" content="600">
+    <meta property="og:image:alt" content="{{ config.extra.name | default(value=config.title) }}">
     <meta property="og:locale" content="en_US">
 
     <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="{{ page_title }}">
     <meta name="twitter:description" content="{{ page_description }}">
-    <meta name="twitter:image" content="{{ get_url(path="Profile.png") }}">
+    <meta name="twitter:image" content="{{ og_image.url }}">
     {% if twitter_handle %}<meta name="twitter:creator" content="{{ twitter_handle }}">{% endif %}
 
     <!-- Structured data: Person schema for knowledge-panel / rich-result eligibility -->
@@ -67,7 +72,7 @@
         "@type": "Person",
         "name": {{ config.extra.name | default(value=config.title) | json_encode() | safe }},
         "url": {{ config.base_url | json_encode() | safe }},
-        "image": {{ get_url(path="Profile.png") | json_encode() | safe }},
+        "image": {{ og_image.url | json_encode() | safe }},
         {% if config.extra.role %}"jobTitle": {{ config.extra.role | json_encode() | safe }},{% endif %}
         {% if config.extra.organization %}
         "worksFor": {
@@ -81,123 +86,90 @@
     }
     </script>
 
-    <!-- Fonts -->
+    <!-- Fonts (only the weights the stylesheet uses) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,600&display=swap" rel="stylesheet">
 
-    <!-- CSS -->
     <link rel="stylesheet" href="{{ get_url(path="style.css") }}">
-    
-    <!-- Dynamic color configuration from config.toml -->
+
+    {# Theme colours come from [extra.colors] in config.toml #}
     {% if config.extra.colors %}
+    {% set c = config.extra.colors %}
     <style>
         :root {
-            --primary-color: {{ config.extra.colors.primary_color | default(value="#39444C") }};
-            --secondary-color: {{ config.extra.colors.secondary_color | default(value="#C8102E") }};
-            --accent-color: {{ config.extra.colors.accent_color | default(value="#98A6AD") }};
-            --text-color: {{ config.extra.colors.text_color | default(value="#2C2F33") }};
-            --background-color: {{ config.extra.colors.background_color | default(value="#F8F9FA") }};
-            --card-background: {{ config.extra.colors.card_background | default(value="#FFFFFF") }};
-            --border-color: {{ config.extra.colors.border_color | default(value="#D0D3D4") }};
-            --light-background: {{ config.extra.colors.light_background | default(value="#EDF0F2") }};
-            /* Constant brand ink — always the light-mode primary color. Used only for solid
-               button/badge fills that are explicitly paired with literal white text, so that
-               pairing stays dark+white (readable) regardless of color scheme. */
-            --ink-color: {{ config.extra.colors.primary_color | default(value="#39444C") }};
+            --primary-color: {{ c.primary_color | default(value="#39444C") }};
+            --secondary-color: {{ c.secondary_color | default(value="#C8102E") }};
+            --accent-color: {{ c.accent_color | default(value="#98A6AD") }};
+            --text-color: {{ c.text_color | default(value="#2C2F33") }};
+            --background-color: {{ c.background_color | default(value="#F8F9FA") }};
+            --card-background: {{ c.card_background | default(value="#FFFFFF") }};
+            --border-color: {{ c.border_color | default(value="#D0D3D4") }};
+            /* Light-mode values in every theme: they back solid fills that carry white text. */
+            --ink-color: {{ c.primary_color | default(value="#39444C") }};
+            --accent-fill: {{ c.accent_color | default(value="#98A6AD") }};
         }
-
         .dark-mode {
-            --text-color: {{ config.extra.colors.dark_text_color | default(value="#E0E0E0") }};
-            --background-color: {{ config.extra.colors.dark_background_color | default(value="#121212") }};
-            --card-background: {{ config.extra.colors.dark_card_background | default(value="#1E1E1E") }};
-            --border-color: {{ config.extra.colors.dark_border_color | default(value="#2C2C2C") }};
-            --light-background: {{ config.extra.colors.dark_card_background | default(value="#1E1E1E") }};
-            /* Primary/secondary are tuned for the light canvas and are near-invisible as
-               foreground (text/links/icons) on a near-black canvas (contrast ratio ~1.1:1),
-               so dark mode remaps them to lighter tints in the same hue family. --ink-color
-               deliberately keeps the original dark value — it backs solid buttons/badges
-               that are paired with literal white text. */
-            --primary-color: {{ config.extra.colors.dark_primary_color | default(value=config.extra.colors.primary_color | default(value="#98A6AD")) }};
-            --secondary-color: {{ config.extra.colors.dark_secondary_color | default(value=config.extra.colors.secondary_color | default(value="#C8102E")) }};
-        }
-        
-        /* Footer link styling */
-        .footer a {
-            color: var(--secondary-color);
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-        
-        .footer a:hover {
-            color: var(--accent-color);
-            text-decoration: underline;
+            --text-color: {{ c.dark_text_color | default(value="#E0E0E0") }};
+            --background-color: {{ c.dark_background_color | default(value="#121212") }};
+            --card-background: {{ c.dark_card_background | default(value="#1E1E1E") }};
+            --border-color: {{ c.dark_border_color | default(value="#2C2C2C") }};
+            --primary-color: {{ c.dark_primary_color | default(value=c.primary_color | default(value="#98A6AD")) }};
+            --secondary-color: {{ c.dark_secondary_color | default(value=c.secondary_color | default(value="#C8102E")) }};
+            --accent-color: {{ c.dark_accent_color | default(value=c.accent_color | default(value="#98A6AD")) }};
         }
     </style>
     {% endif %}
-    
-    <!-- Font Awesome for icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
-    
-    <!-- Favicon -->
+
     <link rel="icon" href="{{ get_url(path="favicon.ico") }}" sizes="any">
     <link rel="icon" type="image/png" href="{{ get_url(path="avataaars.png") }}">
     <link rel="apple-touch-icon" href="{{ get_url(path="avataaars.png") }}">
-    
+
     {% if config.extra.enable_dark_mode %}
     <script>
-        // Dark mode toggle
-        function toggleDarkMode() {
-            document.documentElement.classList.toggle('dark-mode');
-            localStorage.setItem('darkMode', document.documentElement.classList.contains('dark-mode'));
-        }
-        
-        // Load dark mode preference
-        if (localStorage.getItem('darkMode') === 'true') {
-            document.documentElement.classList.add('dark-mode');
-        }
+        // Apply the theme before first paint: saved choice, else the OS preference.
+        (function () {
+            var saved = null;
+            try { saved = localStorage.getItem('darkMode'); } catch (e) {}
+            if (saved === 'true' || (saved === null && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark-mode');
+            }
+        })();
     </script>
     {% endif %}
+    <script src="{{ get_url(path="js/site.js") }}" defer></script>
+    {% block head %}{% endblock head %}
 </head>
 <body>
-    <!-- Ambient manifold background: one canvas, fixed behind the entire
-         scrollable page (see base.html script + [data-ambient-manifold] in
-         style.scss), so it never sits inside any page's stacking context. -->
-    <canvas class="site-manifold-bg" data-ambient-manifold data-protect=".hero-content, .section-header, .page-header" aria-hidden="true"></canvas>
+    {% block background %}{% endblock background %}
 
-    <!-- Navigation -->
-    <nav class="navbar" id="navbar">
+    <nav class="navbar" id="navbar" aria-label="Main">
         <div class="nav-container">
             <a href="{{ get_url(path="/") }}" class="nav-brand-mark" aria-label="Home">
                 {{ config.extra.initials | default(value=config.extra.name | truncate(length=1, end="")) }}
             </a>
 
-            <!-- Mobile menu button -->
-            <div class="nav-toggle" id="mobile-menu">
+            <button type="button" class="nav-toggle" id="mobile-menu" aria-label="Menu" aria-controls="nav-menu" aria-expanded="false">
                 <span class="bar"></span>
                 <span class="bar"></span>
                 <span class="bar"></span>
-            </div>
+            </button>
 
-            <!-- Navigation links -->
             <ul class="nav-menu" id="nav-menu">
                 <li class="nav-item">
-                    <a href="{{ get_url(path="/") }}" class="nav-link{% if current_path == "/" %} active{% endif %}"><i class="fas fa-house"></i></a>
+                    <a href="{{ get_url(path="/") }}" class="nav-link{% if current_path == "/" %} active{% endif %}" aria-label="Home"{% if current_path == "/" %} aria-current="page"{% endif %}>{{ icons::icon(name="house") }}</a>
                 </li>
-                {% if config.extra.menu %}
-                    {% for item in config.extra.menu %}
-                    <li class="nav-item">
-                        <a href="{{ get_url(path=item.url) }}" class="nav-link{% if current_path == item.url %} active{% endif %}">{{ item.name }}</a>
-                    </li>
-                    {% endfor %}
-                {% endif %}
+                {% for item in config.extra.menu | default(value=[]) %}
+                <li class="nav-item">
+                    <a href="{{ get_url(path=item.url) }}" class="nav-link{% if current_path == item.url %} active{% endif %}"{% if current_path == item.url %} aria-current="page"{% endif %}>{{ item.name }}</a>
+                </li>
+                {% endfor %}
 
                 {% if config.extra.enable_dark_mode %}
                 <li class="nav-item">
-                    <button class="dark-mode-toggle" onclick="toggleDarkMode()" aria-label="Toggle dark mode">
-                        <i class="fa-solid fa-moon moon-icon"></i>
-                        <i class="fa-solid fa-sun sun-icon"></i>
+                    <button type="button" class="dark-mode-toggle" id="theme-toggle" aria-label="Toggle dark mode">
+                        <span class="moon-icon">{{ icons::icon(name="moon") }}</span>
+                        <span class="sun-icon">{{ icons::icon(name="sun") }}</span>
                     </button>
                 </li>
                 {% endif %}
@@ -205,304 +177,16 @@
         </div>
     </nav>
 
-    <!-- Main content -->
     <main class="main-content">
         {% block content %}{% endblock content %}
     </main>
 
-    <!-- Footer -->
     <footer class="footer">
         <div class="footer-content">
-            <p style="font-size: 0.8em;">&copy; {{ now() | date(format="%Y") }} {{ config.extra.name | default(value=config.title) }}. <br> Built with <a href="https://www.getzola.org/">Zola</a>.</p>
+            <p>&copy; {{ now() | date(format="%Y") }} {{ config.extra.name | default(value=config.title) }}. <br> Built with <a href="https://www.getzola.org/">Zola</a>.</p>
         </div>
     </footer>
 
-    <!-- JavaScript -->
-    <script>
-        // Mobile menu toggle
-        const mobileMenu = document.getElementById('mobile-menu');
-        const navMenu = document.getElementById('nav-menu');
-
-        mobileMenu.addEventListener('click', function() {
-            mobileMenu.classList.toggle('is-active');
-            navMenu.classList.toggle('active');
-        });
-
-        // Close mobile menu when clicking on a link
-        document.querySelectorAll('.nav-link').forEach(n => n.addEventListener('click', () => {
-            mobileMenu.classList.remove('is-active');
-            navMenu.classList.remove('active');
-        }));
-
-        // Sticky navbar elevation on scroll
-        const navbar = document.getElementById('navbar');
-        const setNavElevation = () => navbar.classList.toggle('is-scrolled', window.scrollY > 8);
-        setNavElevation();
-        window.addEventListener('scroll', setNavElevation, { passive: true });
-
-        // Scroll-reveal animation for cards and content blocks
-        const revealSelectors = [
-            '.info-box', '.publication-item', '.experience-item', '.teaching-card',
-            '.reviewing-card', '.conference-item', '.item-card', '.subsection', '.talk-item'
-        ];
-        const revealTargets = document.querySelectorAll(revealSelectors.join(','));
-
-        if ('IntersectionObserver' in window && revealTargets.length) {
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('is-visible');
-                        observer.unobserve(entry.target);
-                    }
-                });
-            }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-
-            revealTargets.forEach((el, i) => {
-                el.classList.add('reveal');
-                el.style.transitionDelay = `${Math.min(i, 6) * 60}ms`;
-                observer.observe(el);
-            });
-        } else {
-            revealTargets.forEach(el => el.classList.add('is-visible'));
-        }
-    </script>
-
-    <script>
-    // Ambient manifold background: a single canvas, fixed behind the whole
-    // scrollable page (see [data-ambient-manifold] in style.scss), so it
-    // always covers the full viewport width/height and always paints behind
-    // every other component regardless of which page/template is active.
-    //
-    // It renders a continuous, infinitely differentiable height field
-    // z(u,v,t) — a small sum of low-frequency sine/cosine terms — sampled on
-    // a grid and projected in oblique 3D, like a chart of a smoothly curved
-    // manifold. Each grid line is drawn as a quadratic-spline path (not
-    // straight polygon segments) so the surface always reads as smooth
-    // curvature, never as faceted geometry. Line color/alpha are modulated
-    // by local curvature (the discrete second derivative of the height
-    // field) — gradient primary -> accent, so flatter regions fade toward
-    // primary and sharply curved regions brighten toward accent. All motion
-    // comes from the surface itself folding and rippling over time (several
-    // traveling wave terms summed into the height field) — there is no
-    // separate particle layer riding on top of it. Colors are read
-    // live from the page's CSS custom properties, so it follows light/dark
-    // mode automatically. Alpha values are kept low and desaturated relative
-    // to the site's text/brand colors so the surface stays a faint texture
-    // and never competes with foreground content.
-    //
-    // Legibility: the selectors in the canvas's data-protect attribute are
-    // measured with Range.getClientRects() to get the actual rendered text
-    // line-boxes (not just each element's full block width), and every
-    // frame's drawing is clipped to exclude those boxes. Because the canvas
-    // is fixed (viewport-relative) while that text scrolls with the page,
-    // those boxes are re-measured on scroll as well as on resize.
-    //
-    // Performance: frame rate, pixel ratio and grid resolution are capped,
-    // and the animation pauses whenever the tab is hidden or the visitor
-    // prefers reduced motion (in which case this whole script no-ops, since
-    // the CSS also hides the canvas outright).
-    (function () {
-        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-        const canvas = document.querySelector('[data-ambient-manifold]');
-        if (!canvas || !canvas.getContext) return;
-
-        function hexToRgb(hex) {
-            let h = (hex || '').trim().replace('#', '');
-            if (h.length === 3) h = h.split('').map(c => c + c).join('');
-            const num = parseInt(h, 16);
-            return isNaN(num) ? null : [(num >> 16) & 255, (num >> 8) & 255, num & 255];
-        }
-
-        function readColor(name, fallback) {
-            const v = getComputedStyle(document.documentElement).getPropertyValue(name);
-            return hexToRgb(v) || fallback;
-        }
-
-        function textLineRects(selectorList, canvasRect) {
-            const rects = [];
-            selectorList.forEach((sel) => {
-                document.querySelectorAll(sel).forEach((el) => {
-                    try {
-                        const range = document.createRange();
-                        range.selectNodeContents(el);
-                        Array.prototype.forEach.call(range.getClientRects(), (r) => {
-                            if (r.width < 1 || r.height < 1) return;
-                            rects.push({
-                                x: r.left - canvasRect.left - 6,
-                                y: r.top - canvasRect.top - 4,
-                                w: r.width + 12,
-                                h: r.height + 8
-                            });
-                        });
-                    } catch (e) { /* not a text-bearing element; ignore */ }
-                });
-            });
-            return rects;
-        }
-
-        const ctx = canvas.getContext('2d');
-        const protectSelectors = (canvas.getAttribute('data-protect') || '')
-            .split(',').map(s => s.trim()).filter(Boolean);
-
-        let width = 0, height = 0, dpr = 1;
-        let cols = 0, rows = 0, amp = 24, originX = 0, originY = 0, spanX = 0, spanY = 0;
-        let textRects = [];
-        let active = !document.hidden, lastFrame = 0, phase = 0;
-        const FRAME_INTERVAL = 1000 / 30;
-        const TILT = 0.82;
-
-        // The height field itself: a handful of low-frequency, infinitely
-        // smooth traveling-wave terms in normalized surface coordinates
-        // (u,v in [0,1]) plus a slow time phase — continuous and
-        // differentiable everywhere, so the surface it defines never has a
-        // seam, corner or discontinuity. Terms travel along different axes
-        // and at different speeds so the surface reads as folding and
-        // rippling over itself rather than just bobbing up and down.
-        function heightAt(u, v, t) {
-            return Math.sin(u * Math.PI * 2.1 + t) * Math.cos(v * Math.PI * 1.7 - t * 0.8)
-                + 0.55 * Math.sin((u + v) * Math.PI * 1.3 - t * 1.15)
-                + 0.4 * Math.cos((u - v) * Math.PI * 2.4 + t * 0.6)
-                + 0.3 * Math.sin(v * Math.PI * 3.2 + t * 1.4);
-        }
-
-        function project(u, v, z) {
-            return {
-                x: originX + (u - 0.5) * spanX,
-                y: originY + (v - 0.5) * spanY * TILT - z * amp
-            };
-        }
-
-        function updateTextRects() {
-            const rect = canvas.getBoundingClientRect();
-            textRects = textLineRects(protectSelectors, rect);
-        }
-
-        function resize() {
-            const rect = canvas.getBoundingClientRect();
-            dpr = Math.min(window.devicePixelRatio || 1, 2);
-            width = rect.width;
-            height = rect.height;
-            if (!width || !height) return;
-            canvas.width = Math.round(width * dpr);
-            canvas.height = Math.round(height * dpr);
-            ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-
-            textRects = textLineRects(protectSelectors, rect);
-
-            const isSmall = width < 600;
-            cols = Math.max(7, Math.min(isSmall ? 11 : 20, Math.round(width / 78)));
-            rows = Math.max(5, Math.min(isSmall ? 8 : 14, Math.round(height / 78)));
-            amp = Math.min(width, height) * 0.065;
-            originX = width / 2;
-            originY = height / 2;
-            spanX = width * 1.08;
-            spanY = height * 1.08;
-        }
-
-        // Draws one family of grid lines (rows if axis === 'u', columns if
-        // axis === 'v') as quadratic-curve splines through the projected
-        // points, so each line reads as a smooth C1 curve rather than a
-        // faceted polyline — the visual signature of a differentiable
-        // surface rather than a discrete mesh.
-        function drawFamily(axis, steps, cross, primaryRgb, accentRgb) {
-            for (let i = 0; i <= cross; i++) {
-                const c = cross === 0 ? 0.5 : i / cross;
-                const pts = [];
-                const zs = [];
-                for (let j = 0; j <= steps; j++) {
-                    const s = j / steps;
-                    const u = axis === 'u' ? s : c;
-                    const v = axis === 'u' ? c : s;
-                    const z = heightAt(u, v, phase);
-                    zs.push(z);
-                    pts.push(project(u, v, z));
-                }
-
-                ctx.beginPath();
-                ctx.moveTo(pts[0].x, pts[0].y);
-                for (let j = 1; j < pts.length - 1; j++) {
-                    const mx = (pts[j].x + pts[j + 1].x) / 2;
-                    const my = (pts[j].y + pts[j + 1].y) / 2;
-                    ctx.quadraticCurveTo(pts[j].x, pts[j].y, mx, my);
-                }
-                ctx.lineTo(pts[pts.length - 1].x, pts[pts.length - 1].y);
-
-                const grad = ctx.createLinearGradient(pts[0].x, pts[0].y, pts[pts.length - 1].x, pts[pts.length - 1].y);
-                grad.addColorStop(0, `rgba(${primaryRgb.join(',')},0.16)`);
-                grad.addColorStop(1, `rgba(${accentRgb.join(',')},0.16)`);
-                ctx.strokeStyle = grad;
-
-                // Curvature (discrete second derivative of the height field
-                // along this line) sets the line width so ridges/troughs of
-                // the manifold read slightly bolder than its flatter spans.
-                let curvature = 0;
-                for (let j = 1; j < zs.length - 1; j++) {
-                    curvature += Math.abs(zs[j - 1] - 2 * zs[j] + zs[j + 1]);
-                }
-                curvature /= zs.length;
-                ctx.lineWidth = 0.6 + Math.min(1, curvature * 6) * 0.7;
-                ctx.stroke();
-            }
-        }
-
-        function step(ts) {
-            if (!active) return;
-            requestAnimationFrame(step);
-            if (ts - lastFrame < FRAME_INTERVAL) return;
-            lastFrame = ts;
-            if (!width || !height) return;
-
-            phase += 0.0045;
-
-            const primaryRgb = readColor('--primary-color', [27, 35, 64]);
-            const accentRgb = readColor('--accent-color', [193, 101, 47]);
-
-            ctx.clearRect(0, 0, width, height);
-
-            ctx.save();
-            if (textRects.length) {
-                ctx.beginPath();
-                ctx.rect(0, 0, width, height);
-                textRects.forEach(r => ctx.rect(r.x, r.y, r.w, r.h));
-                ctx.clip('evenodd');
-            }
-
-            // Alpha/blur are kept deliberately faint (well below the opacity
-            // used for real text/UI colors) so this reads as ambient texture,
-            // never as a competing foreground element.
-            drawFamily('u', cols, rows, primaryRgb, accentRgb);
-            drawFamily('v', rows, cols, primaryRgb, accentRgb);
-
-            ctx.restore();
-        }
-
-        resize();
-        requestAnimationFrame(step);
-
-        let resizeTimer;
-        window.addEventListener('resize', () => {
-            clearTimeout(resizeTimer);
-            resizeTimer = setTimeout(resize, 200);
-        });
-
-        // The canvas is fixed to the viewport but the protected text scrolls
-        // underneath it, so the clip boxes (viewport-relative) need
-        // refreshing on scroll, not just on resize.
-        let scrollScheduled = false;
-        window.addEventListener('scroll', () => {
-            if (scrollScheduled) return;
-            scrollScheduled = true;
-            requestAnimationFrame(() => {
-                updateTextRects();
-                scrollScheduled = false;
-            });
-        }, { passive: true });
-
-        document.addEventListener('visibilitychange', () => {
-            active = !document.hidden;
-            if (active) requestAnimationFrame(step);
-        });
-    })();
-    </script>
+    {% block scripts %}{% endblock scripts %}
 </body>
-</html> 
+</html>

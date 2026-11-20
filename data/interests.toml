@@ -1,8 +1,7 @@
+# Research interests shown on the home page; keep to a few focused themes.
 interests = [
-  "Foundations of Deep Learning and AI",
-  "Collective and Cooperative AI",
-  "Generative AI and Agentic Systems",
-  "Weight Space Learning",
-  "Geometry and Topology of AI Models",
-  "Software Engineering, Systems Architecture and Distributed Computing"
+  "Generative AI and deep learning",
+  "Multi agent systems",
+  "Distributed optimization and learning",
+  "Cooperative learning",
 ]

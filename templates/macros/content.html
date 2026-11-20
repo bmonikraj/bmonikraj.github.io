@@ -1,0 +1,18 @@
+{#- Comma-separated author list; an entry wrapped in *asterisks* is the site owner and is bolded. -#}
+{%- macro authors(list) -%}
+<div class="publication-authors">
+    {%- for author in list %}
+    <span class="author">{% if author is starting_with("*") and author is ending_with("*") %}<strong>{{ author | replace(from="*", to="") }}</strong>{% else %}{{ author }}{% endif %}</span>{% if not loop.last %},{% endif %}
+    {%- endfor %}
+</div>
+{%- endmacro authors -%}
+
+{#- Collapsible abstract block. -#}
+{%- macro abstract(text, class="publication-abstract") -%}
+<div class="{{ class }}">
+    <details>
+        <summary>Abstract</summary>
+        <p>{{ text }}</p>
+    </details>
+</div>
+{%- endmacro abstract -%}

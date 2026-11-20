@@ -1,6 +1,6 @@
 +++
 title = "Experience"
-description = "Professional and Work Career"
+description = "Industry and research roles"
 sort_by = "date"
 template = "experience.html"
 

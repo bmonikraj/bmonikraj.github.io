@@ -1,8 +1,8 @@
 +++
-title = "Services"
-description = "Academic Duties, Reviewing and Program Committee Services"
+title = "Service & Teaching"
+description = "Reviewing, program committees and teaching"
 template = "services.html"
 
 [extra]
-eyebrow = "Services and Duties"
+eyebrow = "Academic Service"
 +++

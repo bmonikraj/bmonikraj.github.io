@@ -1,0 +1,6 @@
+# URLs the link checker in .github/workflows/zola-deploy-action.yml skips:
+# these sites block automated requests, so they always look "broken".
+^https://(in|www)\.linkedin\.com/
+^https://x\.com/
+^https://scholar\.google\.com/
+^mailto:

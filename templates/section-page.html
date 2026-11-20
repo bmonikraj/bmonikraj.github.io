@@ -1,0 +1,21 @@
+{#- Shared layout for every section page (Publications, Experience, ...).
+    A page template extends this, sets `page_class`, and fills `section_body`.
+    Title, description and eyebrow come from the section's _index.md. -#}
+{% extends "base.html" %}
+
+{% block content %}
+<div class="section-template {% block page_class %}{% endblock page_class %}">
+    <div class="container">
+        <header class="section-header">
+            {% if section.extra.eyebrow %}<span class="eyebrow">{{ section.extra.eyebrow }}</span>{% endif %}
+            <h1>{{ section.title }}</h1>
+            {% if section.description %}<p>{{ section.description }}</p>{% endif %}
+        </header>
+
+        <div class="section-content">
+            {{ section.content | safe }}
+            {% block section_body %}{% endblock section_body %}
+        </div>
+    </div>
+</div>
+{% endblock content %}

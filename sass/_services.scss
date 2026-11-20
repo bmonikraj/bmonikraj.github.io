@@ -1,0 +1,144 @@
+// Services page (templates/services.html): reviewing / PC duties and teaching.
+
+.page-services {
+  .duty-group {
+    max-width: var(--content-width);
+    margin: 0 auto 3rem auto;
+  }
+
+  .duty-group-title {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--text-color);
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .teaching-list,
+  .reviewing-list {
+    max-width: var(--content-width);
+    margin: 0 auto;
+  }
+
+  .teaching-card,
+  .reviewing-card {
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+  }
+
+  .teaching-title-row,
+  .reviewing-title-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .course-name,
+  .reviewing-role {
+    margin: 0;
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--primary-color);
+
+    a {
+      text-decoration: none;
+      color: inherit;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  .reviewing-role {
+    font-size: 1.15rem;
+  }
+
+  .term-tag {
+    font-style: italic;
+    font-size: 0.9rem;
+    color: var(--text-color);
+    opacity: 0.8;
+    white-space: nowrap;
+    font-weight: bolder;
+  }
+
+  .teaching-meta {
+    margin-bottom: 1rem;
+    font-size: 1rem;
+    color: var(--text-color);
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 8px;
+  }
+
+  .separator {
+    margin: 0 0.5rem;
+    color: var(--secondary-color);
+  }
+
+  .teaching-details {
+    margin-top: 1rem;
+    padding-left: 1.2rem;
+    list-style-type: disc;
+
+    li {
+      font-size: 0.95rem;
+      margin-bottom: 0.4rem;
+      line-height: 1.5;
+      color: var(--text-color);
+    }
+  }
+
+  .reviewing-venue {
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--accent-color);
+    line-height: 1.4;
+
+    a {
+      color: inherit;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    .teaching-title-row,
+    .reviewing-title-row {
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .teaching-card,
+    .reviewing-card {
+      padding: 1.2rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .course-name,
+    .reviewing-role {
+      font-size: 1.05rem;
+    }
+
+    .reviewing-venue {
+      font-size: 1rem;
+    }
+
+    .teaching-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .separator {
+      display: none;
+    }
+  }
+}

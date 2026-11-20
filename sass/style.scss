@@ -1,10 +1,10 @@
-// Personal site theme — sleek/modern refresh
-// Color variables are dynamically set from config.toml via base.html
+// Personal site theme.
+// Colour variables (--primary-color etc.) are injected from [extra.colors] in
+// config.toml by templates/base.html. Page-specific styles live in the partials
+// imported at the bottom of this file.
 :root {
   color-scheme: light;
-  --shadow: 0 1px 2px rgba(20, 20, 20, 0.04), 0 8px 24px rgba(20, 20, 20, 0.06);
-  --hover-shadow: 0 4px 12px rgba(20, 20, 20, 0.06), 0 16px 40px rgba(20, 20, 20, 0.12);
-  --glow-shadow: 0 0 0 1px var(--accent-color), 0 10px 30px rgba(20, 20, 20, 0.10);
+  --shadow: 0 1px 2px rgba(20, 20, 20, 0.04);
   --font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --heading-font: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --display-font: "Fraunces", Georgia, "Times New Roman", serif;
@@ -24,9 +24,7 @@
 
 .dark-mode {
   color-scheme: dark;
-  --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 8px 24px rgba(0, 0, 0, 0.35);
-  --hover-shadow: 0 4px 16px rgba(0, 0, 0, 0.4), 0 16px 40px rgba(0, 0, 0, 0.45);
-  --glow-shadow: 0 0 0 1px var(--accent-color), 0 10px 30px rgba(0, 0, 0, 0.4);
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 }
 
 // Reset and base styles
@@ -41,7 +39,7 @@ html {
 }
 
 ::selection {
-  background-color: var(--accent-color);
+  background-color: var(--accent-fill);
   color: white;
 }
 
@@ -78,12 +76,6 @@ h4 { font-size: 1.25rem; }
 p {
   margin-bottom: 1rem;
   color: var(--text-color);
-  text-align: justify;
-  // Justified text without hyphenation opens uneven gaps ("rivers") between
-  // words, especially in the site's narrower card/column widths — hyphenation
-  // lets the browser break long words instead of stretching whitespace.
-  -webkit-hyphens: auto;
-  hyphens: auto;
 }
 
 a {
@@ -96,16 +88,15 @@ a {
   }
 }
 
-// Reveal-on-scroll animation
-.reveal {
-  opacity: 0;
-  transform: translateY(18px);
-  transition: opacity 0.6s var(--ease), transform 0.6s var(--ease);
-
-  &.is-visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
+// Inline SVG icons (templates/macros/icons.html) — sized like the icon font
+// they replace: 1em tall, natural width, sitting on the text baseline.
+.icon {
+  display: inline-block;
+  height: 1em;
+  width: auto;
+  overflow: visible;
+  vertical-align: -0.125em;
+  fill: currentColor;
 }
 
 // Section eyebrow label
@@ -140,9 +131,7 @@ a {
 .experience-dates,
 .conference-date,
 .term-tag,
-.year-text,
-.page-date,
-.item-date {
+.year-text {
   font-family: var(--mono-font);
   font-variant-numeric: tabular-nums;
 }
@@ -203,17 +192,13 @@ a {
   width: 42px;
   height: 42px;
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--ink-color), var(--accent-color));
+  background-color: var(--ink-color);
   color: white !important;
   font-family: var(--display-font);
   font-weight: 600;
   font-size: 0.72rem;
   letter-spacing: 0.01em;
-  transition: transform 0.3s var(--ease);
 
-  &:hover {
-    transform: scale(1.08) rotate(-4deg);
-  }
 
   @media (max-width: 480px) {
     width: 38px;
@@ -268,7 +253,7 @@ a {
   border-radius: var(--radius-sm);
   white-space: nowrap;
 
-  i {
+  .icon {
     font-size: 0.95rem;
   }
 
@@ -331,7 +316,6 @@ a {
   &:hover {
     border-color: var(--accent-color);
     color: var(--accent-color);
-    transform: rotate(15deg);
   }
 }
 
@@ -346,6 +330,10 @@ a {
   flex-direction: column;
   cursor: pointer;
   z-index: 1001;
+  background: none;
+  border: 0;
+  padding: 6px 4px;
+  color: inherit;
 
   @media (max-width: 768px) {
     display: flex;
@@ -381,32 +369,6 @@ a {
 
   @media (max-width: 768px) {
     padding: 3rem 0 2.5rem;
-  }
-
-  &::before {
-    content: "";
-    position: absolute;
-    top: -12rem;
-    right: -8rem;
-    width: 32rem;
-    height: 32rem;
-    background: radial-gradient(circle, color-mix(in srgb, var(--accent-color) 22%, transparent), transparent 70%);
-    filter: blur(10px);
-    z-index: 0;
-    pointer-events: none;
-  }
-
-  &::after {
-    content: "";
-    position: absolute;
-    bottom: -10rem;
-    left: -10rem;
-    width: 28rem;
-    height: 28rem;
-    background: radial-gradient(circle, color-mix(in srgb, var(--primary-color) 10%, transparent), transparent 70%);
-    filter: blur(10px);
-    z-index: 0;
-    pointer-events: none;
   }
 
   .container {
@@ -453,12 +415,11 @@ a {
     text-align: center;
     gap: 2rem;
 
-    // The global `p { text-align: justify }` rule otherwise wins over this
-    // inherited center (an element's own explicit alignment always beats an
-    // inherited one), which would un-center the bio/organization text here.
-    .organization,
-    .bio p {
-      text-align: center;
+    // Long-form text stays left-aligned even when the column is centered.
+    .bio p,
+    .selected-pubs,
+    .news-container {
+      text-align: left;
     }
   }
 }
@@ -475,15 +436,9 @@ a {
     height: 190px;
     border-radius: 50%;
     object-fit: cover;
-    padding: 5px;
-    background: linear-gradient(135deg, var(--accent-color), var(--primary-color));
-    box-shadow: var(--shadow);
-    transition: transform 0.4s var(--ease), box-shadow 0.4s var(--ease);
-
-    &:hover {
-      transform: translateY(-4px) scale(1.02);
-      box-shadow: var(--hover-shadow);
-    }
+    padding: 4px;
+    background-color: var(--card-background);
+    border: 1px solid var(--border-color);
 
     @media (max-width: 768px) {
       width: 150px;
@@ -511,23 +466,24 @@ a {
   }
 
   .role {
-    display: inline-block;
-    font-size: 0.92rem;
-    color: white;
-    background: linear-gradient(120deg, var(--ink-color), var(--accent-color));
-    padding: 0.4rem 1rem;
-    border-radius: var(--radius-pill);
-    margin-bottom: 0.75rem;
-    font-weight: 600;
-    letter-spacing: 0.01em;
-    box-shadow: var(--shadow);
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--secondary-color);
+    margin-bottom: 1.75rem;
+
+    a {
+      color: var(--primary-color);
+      font-weight: 600;
+
+      &:hover {
+        color: var(--accent-color);
+      }
+    }
   }
 
-  .organization {
-    font-size: 1.05rem;
-    color: var(--primary-color);
-    margin-bottom: 1.5rem;
-    font-weight: 600;
+  .role-sep {
+    margin: 0 0.55rem;
+    color: var(--secondary-color);
   }
 
   .bio {
@@ -541,7 +497,11 @@ a {
     p {
       font-size: 1.05rem;
       line-height: 1.75;
-      color: var(--primary-color);
+      color: var(--text-color);
+
+      &:last-child {
+        margin-bottom: 0;
+      }
     }
   }
 }
@@ -561,15 +521,12 @@ a {
   cursor: pointer;
 
   &.btn-primary {
-    background: linear-gradient(120deg, var(--ink-color), var(--accent-color));
-    background-size: 160% 160%;
-    background-position: 0% 50%;
+    background-color: var(--ink-color);
     color: white;
 
     &:hover {
-      background-position: 100% 50%;
-      transform: translateY(-2px);
-      box-shadow: var(--hover-shadow);
+      background-color: var(--accent-fill);
+      color: white;
     }
   }
 }
@@ -608,10 +565,9 @@ a {
     transition: all 0.25s var(--ease);
 
     &:hover {
-      background-color: var(--accent-color);
-      border-color: var(--accent-color);
+      background-color: var(--accent-fill);
+      border-color: var(--accent-fill);
       color: white;
-      transform: translateY(-3px);
     }
   }
 }
@@ -650,6 +606,8 @@ a {
   list-style: none;
 
   li {
+    display: flex;
+    align-items: baseline;
     padding: 0.4rem 0;
     color: var(--text-color);
     font-size: 0.92rem;
@@ -704,7 +662,7 @@ a {
       font-size: 0.82rem;
       line-height: 1.4;
 
-      i {
+      .icon {
         color: var(--accent-color);
         width: 1rem;
       }
@@ -722,7 +680,7 @@ a {
       font-size: 0.78rem;
       opacity: 0.85;
 
-      i {
+      .icon {
         color: var(--accent-color);
         width: 1rem;
       }
@@ -783,7 +741,7 @@ a {
       line-height: 1.4;
       margin-top: 0.2rem;
 
-      i {
+      .icon {
         color: var(--accent-color);
         width: 1rem;
       }
@@ -840,14 +798,11 @@ a {
   font-size: 0.78rem;
   letter-spacing: 0.02em;
 
-  i { margin-right: 0.3rem; }
+  .icon { margin-right: 0.3rem; }
 }
 
 .news-content {
   color: var(--text-color);
-  text-align: justify;
-  -webkit-hyphens: auto;
-  hyphens: auto;
 }
 
 // Footer
@@ -863,19 +818,23 @@ a {
   color: var(--secondary-color);
   font-size: 0.85rem;
 
-  // The global `p { text-align: justify }` rule is an explicit declaration on
-  // the <p> itself, which otherwise beats this inherited center regardless
-  // of specificity — so it needs restating here.
   p {
     text-align: center;
+    font-size: 0.8em;
   }
 
   a {
-    color: var(--primary-color);
+    color: var(--secondary-color);
+    transition: color 0.3s ease;
+
+    &:hover {
+      color: var(--accent-color);
+      text-decoration: underline;
+    }
   }
 }
 
-// Section templates (Publications / Experience / Teaching / Conferences pages)
+// Section pages (templates/section-page.html)
 .section-template {
   padding: 3.5rem 0 5rem;
 
@@ -894,9 +853,7 @@ a {
       position: relative;
       padding-bottom: 1.1rem;
 
-      // Signature gradient underline — the same accent-to-primary bar used
-      // on card edges and the eyebrow marker, echoed here as a centered
-      // divider so every section opens with the same graphic vocabulary.
+      // Short centered rule under each section title.
       &::after {
         content: "";
         position: absolute;
@@ -906,7 +863,7 @@ a {
         width: 56px;
         height: 3px;
         border-radius: 2px;
-        background: linear-gradient(90deg, var(--accent-color), var(--primary-color));
+        background-color: var(--accent-color);
       }
 
       @media (max-width: 768px) {
@@ -914,10 +871,6 @@ a {
       }
     }
 
-    // Description paragraph — centered like the title above it. Stated
-    // explicitly because the global `p { text-align: justify }` rule is an
-    // explicit declaration on the <p> itself, which otherwise beats this
-    // inherited center regardless of specificity.
     p {
       font-size: 1.1rem;
       color: var(--secondary-color);
@@ -928,60 +881,27 @@ a {
   }
 }
 
-// -----------------------------------------------------------------------
-// Shared "surface card" treatment — applies to every list-item card
-// across Publications, Experience, Teaching, Conferences and Section pages.
-// Keeps the visual language consistent without repeating the same rules
-// inside every page-level <style> block.
-// -----------------------------------------------------------------------
+// Shared surface for every card (publications, experience, teaching, talks,
+// and the home-page blocks): a flat panel with a hairline border.
 .publication-item,
 .experience-content,
 .teaching-card,
 .reviewing-card,
 .conference-item,
-.item-card,
-.subsection,
-.talk-item,
 .bio,
+.selected-pubs,
 .news-container,
 .info-box {
   background-color: var(--card-background);
   border: 1px solid var(--border-color);
   border-radius: var(--radius);
   box-shadow: var(--shadow);
-  transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease), border-color 0.3s var(--ease);
+  transition: border-color 0.2s var(--ease);
   position: relative;
-  overflow: hidden;
-
-  // A quiet accent edge sits on every card at rest — not just on hover — so
-  // the "designed" signal reads immediately, without requiring interaction.
-  &::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 3px;
-    background: linear-gradient(90deg, var(--accent-color), var(--primary-color));
-    opacity: 0.4;
-    transition: opacity 0.35s var(--ease);
-  }
-
-  &:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--hover-shadow);
-    border-color: color-mix(in srgb, var(--accent-color) 35%, var(--border-color));
-
-    &::before {
-      opacity: 1;
-    }
-  }
 }
 
 // Shared pill-style link/button treatment for "view more" style links
 .publication-link,
-.link-btn,
-.item-link,
 .conference-link {
   display: inline-flex;
   align-items: center;
@@ -996,9 +916,117 @@ a {
   transition: all 0.25s var(--ease);
 
   &:hover {
-    background-color: var(--accent-color);
+    background-color: var(--accent-fill);
     color: white;
-    transform: translateY(-2px);
   }
 }
 
+// Home: block heading with a trailing "see all" link
+.block-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  margin-bottom: 1rem;
+
+  h3 {
+    font-size: 1.05rem;
+    margin-bottom: 0;
+  }
+}
+
+.block-heading-link {
+  font-size: 0.85rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+// Home: Selected Publications
+.selected-pubs {
+  padding: 1.5rem 1.75rem;
+  margin-bottom: 2rem;
+}
+
+.selected-pubs-list {
+  list-style: none;
+}
+
+.selected-pub {
+  padding: 0.85rem 0;
+
+  &:first-child {
+    padding-top: 0.25rem;
+  }
+
+  &:not(:last-child) {
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .publication-authors {
+    font-size: 0.86rem;
+    color: var(--secondary-color);
+    margin: 0.2rem 0;
+  }
+
+  .author {
+    font-weight: 400;
+  }
+
+  strong {
+    color: var(--text-color);
+    font-weight: 600;
+  }
+}
+
+.selected-pub-title {
+  font-weight: 600;
+  font-size: 0.98rem;
+  line-height: 1.4;
+  color: var(--primary-color);
+
+  &:hover {
+    color: var(--accent-color);
+    text-decoration: underline;
+  }
+}
+
+.selected-pub-venue {
+  font-size: 0.85rem;
+  font-style: italic;
+  color: var(--secondary-color);
+
+  .publication-year {
+    font-style: normal;
+    font-weight: 600;
+    margin-right: 0.35rem;
+  }
+}
+
+// Section pages: group headings inside a list (e.g. Papers / Patents)
+.list-group-title {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--text-color);
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+// Dark mode: the dark ink fill disappears on a near-black canvas, so solid
+// buttons and the brand mark switch to the blue fill.
+.dark-mode {
+  .btn.btn-primary,
+  .nav-brand-mark {
+    background-color: var(--accent-fill);
+  }
+
+  .btn.btn-primary:hover {
+    background-color: var(--ink-color);
+  }
+}
+
+// Page-specific styles
+@import "publications";
+@import "experience";
+@import "engagements";
+@import "services";

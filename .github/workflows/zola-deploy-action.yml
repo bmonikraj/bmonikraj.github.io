@@ -1,18 +1,42 @@
 name: Zola on GitHub Pages
 
-on: 
- push:
-  branches:
-   - main
+on:
+  push:
+    branches:
+      - main
+  pull_request:
 
 jobs:
-  build:
-    name: Publish site
+  check:
+    name: Build and check links
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout main
-      uses: actions/checkout@v4
-    - name: Build and deploy
-      uses: shalzz/zola-deploy-action@v0.22.0
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Build
+        uses: shalzz/zola-deploy-action@v0.22.0
+        env:
+          BUILD_ONLY: true
+      # Broken links inside the site (pages, CSS, JS, images, CV) block the deploy.
+      - name: Check internal links
+        run: python3 .github/scripts/check_internal_links.py public https://bmonikraj.github.io
+      # Broken external links (papers, venues, profiles) are only reported in the
+      # run summary, so a flaky third-party site never blocks publishing.
+      - name: Check external links
+        uses: lycheeverse/lychee-action@v2
+        with:
+          args: --no-progress --max-retries 2 --accept '100..=103,200..=299,403,429' 'public/**/*.html'
+          fail: false
+
+  build:
+    name: Publish site
+    needs: check
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+      - name: Build and deploy
+        uses: shalzz/zola-deploy-action@v0.22.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

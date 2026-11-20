@@ -1,4 +1,15 @@
 {% extends "base.html" %}
+{% import "macros/icons.html" as icons %}
+{% import "macros/content.html" as content %}
+
+{# The animated manifold backdrop is home-page only; section pages stay plain for reading. #}
+{% block background %}
+<canvas class="site-manifold-bg" data-ambient-manifold data-protect=".hero-content" aria-hidden="true"></canvas>
+{% endblock background %}
+
+{% block scripts %}
+<script src="{{ get_url(path="js/manifold.js") }}" defer></script>
+{% endblock scripts %}
 
 {% block content %}
 {# Load data from separate TOML files #}
@@ -7,17 +18,19 @@
 {% set interests_data = load_data(path="data/interests.toml") %}
 {% set news_data = load_data(path="data/news.toml") %}
 {% set awards_data = load_data(path="data/awards.toml") %}
+{% set publications = load_data(path="data/publications.toml") %}
 <div class="hero-section">
     <div class="container">
         <div class="hero-content">
             <!-- Avatar section -->
             <div class="avatar-section">
-                <img src="{{ get_url(path="Profile.png") }}" alt="{{ config.extra.name }}" class="avatar">
+                {% set avatar = resize_image(path="Profile.png", width=400, height=400, op="fill", format="webp", quality=85) %}
+                <img src="{{ avatar.url }}" alt="{{ config.extra.name }}" class="avatar" width="190" height="190">
 
                 <!-- Download CV button -->
                 <div class="cv-download">
                     <a href="{{ config.extra.cv_url }}" class="btn btn-primary" target="_blank" rel="noopener noreferrer">
-                        <i class="fas fa-link"></i> Link to CV
+                        {{ config.extra.cv_label | default(value="CV") }}
                     </a>
                 </div>
 
@@ -26,7 +39,7 @@
                     <div class="social-links">
                         {% for social in social_data.social %}
                         <a href="{{ social.url }}" target="_blank" rel="noopener noreferrer" aria-label="{{ social.name }}">
-                            <i class="{{ social.icon }}"></i>
+                            {{ icons::icon(name=social.icon) }}
                         </a>
                         {% endfor %}
                     </div>
@@ -36,15 +49,33 @@
             <!-- Bio section -->
             <div class="bio-section">
                 <h1 class="name">{{ config.extra.name | default(value=config.title) }}</h1>
-                <h2 class="role">{{ config.extra.role }}</h2>
-                {% if config.extra.organization %}
-                <p class="organization">{{ config.extra.organization }}</p>
-                {% endif %}
-                
+                <p class="role">
+                    {{ config.extra.role }}{% if config.extra.organization %}<span class="role-sep" aria-hidden="true">·</span>{% if config.extra.organization_url %}<a href="{{ config.extra.organization_url }}" target="_blank" rel="noopener noreferrer">{{ config.extra.organization }}</a>{% else %}{{ config.extra.organization }}{% endif %}{% endif %}
+                </p>
+
                 {% if config.extra.bio %}
                 <div class="bio">
-                    <h3>About Me</h3>
+                    <h3>About</h3>
                     <div>{{ config.extra.bio | markdown(inline=false) | safe }}</div>
+                </div>
+                {% endif %}
+
+                {% set selected = publications.publication | filter(attribute="selected", value=true) | sort(attribute="date") | reverse %}
+                {% if selected %}
+                <div class="selected-pubs">
+                    <div class="block-heading">
+                        <h3>Selected Publications</h3>
+                        <a href="{{ get_url(path="@/publications/_index.md") }}" class="block-heading-link">All publications →</a>
+                    </div>
+                    <ol class="selected-pubs-list">
+                        {% for pub in selected %}
+                        <li class="selected-pub">
+                            <a class="selected-pub-title" href="{{ pub.url }}" target="_blank" rel="noopener noreferrer">{{ pub.title }}</a>
+                            {{ content::authors(list=pub.author) }}
+                            <div class="selected-pub-venue"><span class="publication-year">{{ pub.date | split(pat="-") | first }}</span> {{ pub.venue }}</div>
+                        </li>
+                        {% endfor %}
+                    </ol>
                 </div>
                 {% endif %}
 
@@ -52,9 +83,9 @@
                 <div class="news-container">
                     <h3>News</h3>
                     <ul class="news-list">
-                        {% for item in news_data.news | reverse %}
+                        {% for item in news_data.news | sort(attribute="date") | reverse %}
                         <li class="news-item">
-                            <span class="news-date"><i class="fa-solid fa-bullhorn"></i> {{ item.date }}</span>
+                            <span class="news-date">{{ icons::icon(name="bullhorn") }} <time datetime="{{ item.date }}">{{ item.date ~ "-01" | date(format="%Y %b") }}</time></span>
                             <span class="news-content">{{ item.content | markdown(inline=true) | safe }}</span>
                         </li>
                         {% endfor %}
@@ -90,14 +121,14 @@
                                     <li class="education-item">
                                         <div class="education-content">
                                             <div class="degree">{{ edu.degree }}</div>
-                                            <div class="institution"><i class="fas fa-calendar"></i> {{ edu.year }}</div>
+                                            <div class="institution">{{ icons::icon(name="calendar") }} {{ edu.year }}</div>
                                             <div class="institution-line">
-                                                <div class="institution"><i class="fas fa-building"></i><a href="{{ edu.institution_url }}" target="_blank" rel="noopener noreferrer"> {{ edu.institution }}</a></div>
+                                                <div class="institution">{{ icons::icon(name="building") }}<a href="{{ edu.institution_url }}" target="_blank" rel="noopener noreferrer"> {{ edu.institution }}</a></div>
                                                 {% if edu.lab %}
-                                                <div class="institution"><i class="fas fa-microscope"></i><a href="{{ edu.lab_url }}" target="_blank" rel="noopener noreferrer"> {{ edu.lab }}</a></div>
+                                                <div class="institution">{{ icons::icon(name="microscope") }}<a href="{{ edu.lab_url }}" target="_blank" rel="noopener noreferrer"> {{ edu.lab }}</a></div>
                                                 {% endif %}
                                                 {% if edu.honors %}
-                                                <div class="honors"><i class="fas fa-trophy"></i><em><small> {{ edu.honors }}</small></em></div>
+                                                <div class="honors">{{ icons::icon(name="trophy") }}<em><small> {{ edu.honors }}</small></em></div>
                                                 {% endif %}
                                             </div>
                                             {% if edu.year_text %}
@@ -120,9 +151,9 @@
                                 <li class="award-item">
                                     <div class="award-content">
                                         <div class="award-title">{{ award.title }}</div>
-                                        <div class="institution"><i class="fas fa-calendar"></i> {{ award.year }}</div>
+                                        <div class="institution">{{ icons::icon(name="calendar") }} {{ award.year }}</div>
                                         <div class="institution">
-                                            <i class="fas fa-award"></i>
+                                            {{ icons::icon(name="award") }}
                                             {% if award.issuer_url %}
                                             <a href="{{ award.issuer_url }}" target="_blank" rel="noopener noreferrer"> {{ award.issuer }}</a>
                                             {% else %}

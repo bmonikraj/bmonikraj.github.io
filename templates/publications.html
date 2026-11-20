@@ -1,232 +1,66 @@
-{% extends "base.html" %}
+{% extends "section-page.html" %}
+{% import "macros/icons.html" as icons %}
+{% import "macros/content.html" as content %}
 
-{% block content %}
-<div class="section-template">
-    <div class="container">
-        <div class="section-header">
-            {% if section.extra.eyebrow %}<span class="eyebrow">{{ section.extra.eyebrow }}</span>{% endif %}
-            <h1>{{ section.title }}</h1>
-            {% if section.description %}
-            <p>{{ section.description }}</p>
-            {% endif %}
-        </div>
-        
-        {% set publications = load_data(path="data/publications.toml") %}
-        
-        <div class="section-content">
-            {% if section.content %}
-                {{ section.content | safe }}
-            {% endif %}
-            
-            <div class="publications-list">
-                {% for pub in publications.publication | sort(attribute="pub_year") | reverse %}
-                <article class="publication-item">
-                    <header class="publication-header">
-                        <h3 class="publication-title">
-                            <i class="fa-solid fa-book"></i>
-                            {{ pub.title }}
-                        </h3>
-                        
-                        <div class="publication-meta">
-                            <span class="publication-year">{{ pub.pub_year }}</span>
-                            {% if pub.journal %}
-                                {% if pub.journal is containing("preprint") %}
-                                <span class="publication-venue is-preprint" title="Preprint — not yet peer-reviewed">
-                                    <i class="fa-solid fa-flask"></i> {{ pub.journal }}
-                                </span>
-                                {% else %}
-                                <span class="publication-venue is-peer-reviewed" title="Peer-reviewed venue">
-                                    <i class="fa-solid fa-award"></i> {{ pub.journal }}
-                                </span>
-                                {% endif %}
-                                {% if pub.volume %}
-                                    <span class="publication-volume">Vol. {{ pub.volume }}</span>
-                                {% endif %}
-                            {% endif %}
-                        </div>
-                        
-                        <div class="publication-authors">
-                            {% for author in pub.author %}         
-                                <span class="author">
-                                    {% if author is starting_with("*") and author is ending_with("*") %}
-                                        <strong>{{ author | replace(from="*", to="") }}</strong>
-                                    {% else %}
-                                        {{ author }}
-                                    {% endif %}
-                                </span>{% if not loop.last %},{% endif %}
-                            {% endfor %}
-                        </div>
-                    </header>
-                    
-                    {% if pub.abstract %}
-                    <div class="publication-abstract">
-                        <details>
-                            <summary>Abstract</summary>
-                            <p>{{ pub.abstract }}</p>
-                        </details>
-                    </div>
-                    {% endif %}
-                    
-                    <footer class="publication-footer">
-                        {% if pub.url %}
-                            <a href="{{ pub.url }}" class="publication-link" target="_blank" rel="noopener noreferrer">
-                                View Manuscript →
-                            </a>
-                        {% endif %}
-                    </footer>
-                </article>
-                {% endfor %}
+{% block page_class %}page-publications{% endblock page_class %}
+
+{% block section_body %}
+{% set publications = load_data(path="data/publications.toml") %}
+{% set patents = load_data(path="data/patents.toml") %}
+<section class="publications-list" aria-labelledby="papers">
+    <h2 class="list-group-title" id="papers">Papers</h2>
+    {% for pub in publications.publication | sort(attribute="date") | reverse %}
+    {% set type = pub.venue_type | default(value="preprint") %}
+    {% if type == "preprint" %}{% set badge_icon = "flask" %}{% set badge_title = "Preprint — not yet peer-reviewed" %}
+    {% elif type == "workshop" %}{% set badge_icon = "chalkboard-user" %}{% set badge_title = "Workshop paper" %}
+    {% else %}{% set badge_icon = "award" %}{% set badge_title = "Peer-reviewed " ~ type %}{% endif %}
+    <article class="publication-item">
+        <header class="publication-header">
+            <h3 class="publication-title">{{ pub.title }}</h3>
+
+            <div class="publication-meta">
+                <span class="publication-year">{{ pub.date | split(pat="-") | first }}</span>
+                <span class="publication-venue is-{{ type }}" title="{{ badge_title }}">
+                    {{ icons::icon(name=badge_icon) }} {{ pub.venue }}
+                </span>
+                {% if pub.volume %}<span class="publication-volume">Vol. {{ pub.volume }}</span>{% endif %}
+                {% if pub.pages %}<span class="publication-volume">pp. {{ pub.pages }}</span>{% endif %}
             </div>
-        </div>
-    </div>
-</div>
 
-<style>
-.publications-list {
-    max-width: 800px;
-    margin: 0 auto;
-}
+            {{ content::authors(list=pub.author) }}
+        </header>
 
-.publication-item {
-    margin-bottom: 2rem;
-    padding: 1.5rem;
-}
+        {% if pub.abstract %}{{ content::abstract(text=pub.abstract) }}{% endif %}
 
-.publication-title {
-    margin: 0 0 0.5rem 0;
-    font-size: 1.2rem;
-    font-weight: 600;
-    line-height: 1.4;
-}
+        <footer class="publication-footer">
+            {% if pub.url %}<a href="{{ pub.url }}" class="publication-link" target="_blank" rel="noopener noreferrer">View Manuscript →</a>{% endif %}
+            {% if pub.pdf_url %}<a href="{{ pub.pdf_url }}" class="publication-link" target="_blank" rel="noopener noreferrer">PDF</a>{% endif %}
+            {% if pub.code_url %}<a href="{{ pub.code_url }}" class="publication-link" target="_blank" rel="noopener noreferrer">{{ icons::icon(name="github") }} Code</a>{% endif %}
+        </footer>
+    </article>
+    {% endfor %}
+</section>
 
-.publication-title a {
-    color: var(--primary-color);
-    text-decoration: none;
-}
+{% if patents.patent %}
+<section class="publications-list" aria-labelledby="patents">
+    <h2 class="list-group-title" id="patents">Patents</h2>
+    {% for pat in patents.patent | sort(attribute="pub_year") | reverse %}
+    <article class="publication-item">
+        <header class="publication-header">
+            <h3 class="publication-title">{{ pat.title }}</h3>
+            <div class="publication-meta">
+                <span class="publication-year">{{ pat.pub_year }}</span>
+            </div>
+            {{ content::authors(list=pat.author) }}
+        </header>
 
-.publication-title a:hover {
-    text-decoration: underline;
-}
+        {% if pat.abstract %}{{ content::abstract(text=pat.abstract) }}{% endif %}
 
-.publication-meta {
-    margin-bottom: 0.75rem;
-    font-size: 0.9rem;
-    color: var(--text-color);
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.publication-year {
-    font-weight: 700;
-    color: var(--secondary-color);
-    font-size: 0.85rem;
-}
-
-.publication-venue {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-    font-style: normal;
-    font-weight: 600;
-    font-size: 0.82rem;
-    line-height: 1.3;
-    padding: 0.3rem 0.75rem;
-    border-radius: var(--radius-pill);
-
-    i { font-size: 0.78rem; }
-}
-
-/* Peer-reviewed journals/conferences carry the accent fill — the strongest visual
-   signal on the card — so readers can spot vetted venues at a glance. */
-.publication-venue.is-peer-reviewed {
-    background-color: var(--accent-color);
-    color: white;
-}
-
-/* Preprints get a muted outline instead of the solid accent fill, marking them
-   as not-yet-peer-reviewed without hiding the venue name. */
-.publication-venue.is-preprint {
-    background-color: transparent;
-    border: 1px solid var(--border-color);
-    color: var(--secondary-color);
-}
-
-.publication-volume {
-    color: var(--secondary-color);
-    font-size: 0.82rem;
-}
-
-.publication-authors {
-    margin-bottom: 1rem;
-    font-size: 0.9rem;
-    color: var(--text-color);
-}
-
-.author {
-    font-weight: 500;
-}
-
-.highlighted-author {
-    color: var(--accent-color);
-    font-weight: 600;
-}
-
-.publication-abstract details {
-    margin-top: 1rem;
-}
-
-.publication-abstract summary {
-    cursor: pointer;
-    font-weight: 500;
-    color: var(--text-color);
-    padding: 0.5rem 0;
-    transition: color 0.2s ease;
-}
-
-.publication-abstract summary:hover {
-    color: var(--primary-color);
-}
-
-.publication-abstract p {
-    margin: 0.5rem 0 0 0;
-    padding: 0.5rem 0;
-    line-height: 1.6;
-    color: var(--text-color);
-    border-top: 1px solid var(--border-color);
-}
-
-.publication-footer {
-    margin-top: 1rem;
-}
-
-@media (max-width: 768px) {
-    .publication-item {
-        padding: 1rem;
-        margin-bottom: 1.5rem;
-    }
-
-    .publication-title {
-        font-size: 1.1rem;
-    }
-}
-
-@media (max-width: 480px) {
-    .publication-title {
-        font-size: 1.02rem;
-        display: flex;
-        gap: 0.5rem;
-    }
-
-    .publication-meta {
-        gap: 0.4rem;
-    }
-
-    .publication-venue {
-        font-size: 0.76rem;
-        padding: 0.25rem 0.6rem;
-    }
-}
-</style>
-{% endblock content %} 
+        <footer class="publication-footer">
+            {% if pat.url %}<a href="{{ pat.url }}" class="publication-link" target="_blank" rel="noopener noreferrer">View Patent →</a>{% endif %}
+        </footer>
+    </article>
+    {% endfor %}
+</section>
+{% endif %}
+{% endblock section_body %}

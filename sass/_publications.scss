@@ -1,0 +1,174 @@
+// Publications and Patents pages (templates/publications.html, templates/patents.html).
+// Both render `.publication-item` cards; the shared look lives in the first block,
+// page-specific differences below it.
+
+.page-publications,
+.page-patents {
+  .publications-list {
+    max-width: var(--content-width);
+    margin: 0 auto;
+
+    & + .publications-list {
+      margin-top: 3.5rem;
+    }
+  }
+
+  .publication-item {
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+  }
+
+  .publication-title {
+    margin: 0 0 0.5rem 0;
+    font-size: 1.2rem;
+    font-weight: 600;
+    line-height: 1.4;
+  }
+
+  .publication-meta {
+    font-size: 0.9rem;
+    color: var(--text-color);
+  }
+
+  .publication-authors {
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+    color: var(--text-color);
+  }
+
+  .author {
+    font-weight: 500;
+  }
+
+  .publication-abstract details {
+    margin-top: 1rem;
+  }
+
+  .publication-abstract summary {
+    cursor: pointer;
+    font-weight: 500;
+    color: var(--text-color);
+    padding: 0.5rem 0;
+    transition: color 0.2s ease;
+
+    &:hover {
+      color: var(--primary-color);
+    }
+  }
+
+  .publication-abstract p {
+    margin: 0.5rem 0 0 0;
+    padding: 0.5rem 0;
+    line-height: 1.6;
+    color: var(--text-color);
+    border-top: 1px solid var(--border-color);
+  }
+
+  .publication-footer {
+    margin-top: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+
+    &:empty {
+      display: none;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .publication-item {
+      padding: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .publication-title {
+      font-size: 1.1rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .publication-title {
+      font-size: 1.02rem;
+      display: flex;
+      gap: 0.5rem;
+    }
+  }
+}
+
+.page-publications {
+  .publication-meta {
+    margin-bottom: 0.75rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .publication-year {
+    font-weight: 700;
+    color: var(--secondary-color);
+    font-size: 0.85rem;
+  }
+
+  .publication-venue {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-weight: 600;
+    font-size: 0.82rem;
+    line-height: 1.3;
+    padding: 0.3rem 0.75rem;
+    border-radius: var(--radius-pill);
+
+    .icon { font-size: 0.78rem; }
+
+    // Peer-reviewed journals/conferences carry the solid accent fill — the
+    // strongest signal on the card — so vetted venues stand out at a glance.
+    &.is-journal,
+    &.is-conference {
+      background-color: var(--accent-fill);
+      color: white;
+    }
+
+    // Workshop papers: tinted, between the solid fill and the preprint outline.
+    &.is-workshop {
+      background-color: color-mix(in srgb, var(--accent-color) 12%, transparent);
+      border: 1px solid color-mix(in srgb, var(--accent-color) 45%, transparent);
+      color: var(--primary-color);
+    }
+
+    // Preprints: muted outline, marking them as not-yet-peer-reviewed.
+    &.is-preprint {
+      background-color: transparent;
+      border: 1px solid var(--border-color);
+      color: var(--secondary-color);
+    }
+  }
+
+  .publication-volume {
+    color: var(--secondary-color);
+    font-size: 0.82rem;
+  }
+
+  @media (max-width: 480px) {
+    .publication-meta {
+      gap: 0.4rem;
+    }
+
+    .publication-venue {
+      font-size: 0.76rem;
+      padding: 0.25rem 0.6rem;
+    }
+  }
+}
+
+.page-patents {
+  .publication-meta {
+    margin-bottom: 0.5rem;
+  }
+
+  .publication-year {
+    font-weight: 600;
+    color: var(--text-color);
+  }
+}

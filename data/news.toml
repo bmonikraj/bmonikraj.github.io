@@ -1,21 +1,22 @@
 # data/news.toml
+# One [[news]] per item; date is "YYYY-MM". Items are shown newest first regardless of file order.
 
 [[news]]
-date = "2026 Jul"
+date = "2026-07"
 content = "Attending London Geometry and ML Summer School 2026 at London, UK [LOGML 2026](https://www.logml.ai/)"
 
 [[news]]
-date = "2026 Jul"
+date = "2026-07"
 content = "Serving as Reviewer in [40th NeurIPS, 2026](https://neurips.cc/Conferences/2026)"
 
 [[news]]
-date = "2026 Aug"
+date = "2026-08"
 content = "Serving as Reviewer in [CIKM 2026](https://cikm2026.diag.uniroma1.it/)"
 
 [[news]]
-date = "2026 Sep"
+date = "2026-09"
 content = "Paper accepted in [NeurIPS 2026 AABA4ET](https://neurips.cc/virtual/2026/loc/sydney/160078)"
 
 [[news]]
-date = "2026 Sep"
+date = "2026-09"
 content = "Paper accepted in [NeurIPS 2026 ODI](https://neurips.cc/virtual/2026/loc/sydney/170063)"

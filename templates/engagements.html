@@ -1,235 +1,46 @@
-{% extends "base.html" %}
+{% extends "section-page.html" %}
+{% import "macros/icons.html" as icons %}
+{% import "macros/content.html" as content %}
 
-{% block content %}
-<div class="section-template">
-    <div class="container">
-        <div class="section-header">
-            {% if section.extra.eyebrow %}<span class="eyebrow">{{ section.extra.eyebrow }}</span>{% endif %}
-            <h1>{{ section.title }}</h1>
-            {% if section.description %}
-            <p>{{ section.description }}</p>
-            {% endif %}
-        </div>
-        
-        <div class="section-content">
-            {% if section.content %}
-                {{ section.content | safe }}
-            {% endif %}
-            
-            {% set engagements = load_data(path="data/engagements.toml") %}
-            
-            <div class="conferences-list">
-                {% for conf in engagements.engagement | sort(attribute="year") | reverse %}
-                <article class="conference-item">
-                    <header class="conference-header">
-                        <h3 class="conference-title">
-                            {% if conf.type == "Summer School" %}
-                                <i class="fa-solid fa-graduation-cap"></i>
-                            {% elif conf.type == "Workshop" %}
-                                <i class="fa-solid fa-chalkboard-user"></i>
-                            {% elif conf.type == "Talk" %}
-                                <i class="fa-solid fa-microphone"></i>
-                            {% else %}
-                                <i class="fa-solid fa-people-group"></i>
-                            {% endif %}
-                            {% if conf.url %}
-                                <a href="{{ conf.url }}" target="_blank" rel="noopener noreferrer">{{ conf.title }}</a>
-                            {% else %}
-                                {{ conf.title }}
-                            {% endif %}
-                        </h3>
+{% block page_class %}page-engagements{% endblock page_class %}
 
-                        <div class="conference-meta">
-                            {% if conf.type %}
-                                <span class="conference-type">{{ conf.type }}</span>
-                            {% endif %}
-                            <span class="conference-date">{{ conf.year}}</span>
-                            {% if conf.venue %}
-                                <span class="conference-venue">{{ conf.venue }}</span>
-                            {% endif %}
-                            {% if conf.location %}
-                                <br><span class="conference-location">{{ conf.location }}</span>
-                            {% endif %}
-                        </div>
+{% block section_body %}
+{% set engagements = load_data(path="data/engagements.toml") %}
+<div class="conferences-list">
+    {% for conf in engagements.engagement | sort(attribute="year") | reverse %}
+    <article class="conference-item">
+        <header class="conference-header">
+            <h3 class="conference-title">
+                {% if conf.type == "Summer School" %}{{ icons::icon(name="graduation-cap") }}{% elif conf.type == "Workshop" %}{{ icons::icon(name="chalkboard-user") }}{% elif conf.type == "Talk" %}{{ icons::icon(name="microphone") }}{% else %}{{ icons::icon(name="people-group") }}{% endif %}
+                {% if conf.url %}<a href="{{ conf.url }}" target="_blank" rel="noopener noreferrer">{{ conf.title }}</a>{% else %}{{ conf.title }}{% endif %}
+            </h3>
 
-                        {% if conf.author %}
-                        <div class="conference-authors">
-                            {% for author in conf.author %}
-                                <span class="author">{{ author }}</span>{% if not loop.last %}, {% endif %}
-                            {% endfor %}
-                        </div>
-                        {% endif %}
-                        
-                        {% if conf.description %}
-                        <div class="conference-description">
-                            {{ conf.description }}
-                        </div>
-                        {% endif %}
-                    </header>
-                    
-                    {% if conf.abstract %}
-                    <div class="conference-abstract">
-                        <details>
-                            <summary>Abstract</summary>
-                            <p>{{ conf.abstract }}</p>
-                        </details>
-                    </div>
-                    {% endif %}
-                    
-                    {% if conf.links %}
-                    <footer class="conference-footer">
-                        {% for link in conf.links %}
-                            {% if link.name == "Slides" or link.name == "Poster" %}
-                            <a href="{{ link.url }}" class="conference-link" target="_blank" rel="noopener noreferrer">{{ link.name }}</a>
-                            {% endif %}
-                        {% endfor %}
-                    </footer>
-                    {% endif %}
-                </article>
-                {% endfor %}
+            <div class="conference-meta">
+                {% if conf.type %}<span class="conference-type">{{ conf.type }}</span>{% endif %}
+                <span class="conference-date">{{ conf.year }}</span>
+                {% if conf.venue %}<span class="conference-venue">{{ conf.venue }}</span>{% endif %}
+                {% if conf.location %}<br><span class="conference-location">{{ conf.location }}</span>{% endif %}
             </div>
-        </div>
-    </div>
+
+            {% if conf.author %}
+            <div class="conference-authors">
+                {% for author in conf.author %}<span class="author">{{ author }}</span>{% if not loop.last %}, {% endif %}{% endfor %}
+            </div>
+            {% endif %}
+
+            {% if conf.description %}<div class="conference-description">{{ conf.description }}</div>{% endif %}
+        </header>
+
+        {% if conf.abstract %}{{ content::abstract(text=conf.abstract, class="conference-abstract") }}{% endif %}
+
+        {% if conf.links %}
+        <footer class="conference-footer">
+            {% for link in conf.links %}
+            <a href="{{ link.url }}" class="conference-link" target="_blank" rel="noopener noreferrer">{{ link.name }}</a>
+            {% endfor %}
+        </footer>
+        {% endif %}
+    </article>
+    {% endfor %}
 </div>
-
-<style>
-.conferences-list {
-    max-width: var(--content-width);
-    margin: 2rem auto;
-}
-
-.conference-item {
-    padding: 2rem;
-    margin-bottom: 2rem;
-}
-
-.conference-header {
-    margin-bottom: 1rem;
-}
-
-.conference-title {
-    font-size: 1.3rem;
-    margin-bottom: 0.5rem;
-    line-height: 1.4;
-    color: var(--text-color);
-}
-
-.conference-title a {
-    color: var(--primary-color);
-    text-decoration: none;
-}
-
-.conference-title a:hover {
-    text-decoration: underline;
-}
-
-.conference-meta {
-    margin-bottom: 0.5rem;
-    font-size: 0.9rem;
-    color: var(--text-color);
-}
-
-.conference-date {
-    font-weight: 600;
-    color: var(--text-color);
-}
-
-.conference-type {
-    display: inline-block;
-    margin-right: 0.75rem;
-    padding: 0.15rem 0.6rem;
-    border-radius: var(--radius-pill, 12px);
-    background-color: var(--accent-color);
-    color: white;
-    font-size: 0.8rem;
-    font-weight: 500;
-}
-
-.conference-venue {
-    font-style: italic;
-    font-weight: bold;
-    color: var(--text-color);
-}
-
-.conference-location {
-    color: var(--text-color);
-}
-
-.conference-authors {
-    margin-bottom: 1rem;
-    font-size: 0.9rem;
-    color: var(--text-color);
-}
-
-.author {
-    font-weight: 500;
-}
-
-.highlighted-author {
-    color: var(--accent-color);
-    font-weight: 600;
-}
-
-.conference-description {
-    margin-bottom: 1rem;
-    color: var(--secondary-color);
-    text-align: justify;
-    -webkit-hyphens: auto;
-    hyphens: auto;
-}
-
-.conference-abstract details {
-    margin-top: 1rem;
-}
-
-.conference-abstract summary {
-    cursor: pointer;
-    font-weight: 500;
-    color: var(--text-color);
-    padding: 0.5rem 0;
-    transition: color 0.2s ease;
-}
-
-.conference-abstract summary:hover {
-    color: var(--primary-color);
-}
-
-.conference-abstract p {
-    margin: 0.5rem 0 0 0;
-    padding: 0.5rem 0;
-    line-height: 1.6;
-    color: var(--text-color);
-    border-top: 1px solid var(--border-color);
-}
-
-.conference-footer {
-    margin-top: 1rem;
-}
-
-.conference-link {
-    margin-right: 0.75rem;
-}
-
-@media (max-width: 768px) {
-    .conference-item {
-        padding: 1rem;
-        margin-bottom: 1.5rem;
-    }
-
-    .conference-title {
-        font-size: 1.1rem;
-    }
-}
-
-@media (max-width: 480px) {
-    .conference-title {
-        font-size: 1.02rem;
-    }
-
-    .conference-type {
-        display: inline-block;
-        margin-bottom: 0.4rem;
-    }
-}
-</style>
-{% endblock content %} 
+{% endblock section_body %}

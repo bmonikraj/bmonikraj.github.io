@@ -1,0 +1,135 @@
+// Engagements page (templates/engagements.html): talks, summer schools, workshops.
+
+.page-engagements {
+  .conferences-list {
+    max-width: var(--content-width);
+    margin: 2rem auto;
+  }
+
+  .conference-item {
+    padding: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .conference-header {
+    margin-bottom: 1rem;
+  }
+
+  .conference-title {
+    font-size: 1.3rem;
+    margin-bottom: 0.5rem;
+    line-height: 1.4;
+    color: var(--text-color);
+
+    a {
+      color: var(--primary-color);
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  .conference-meta {
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    color: var(--text-color);
+  }
+
+  .conference-date {
+    font-weight: 600;
+    color: var(--text-color);
+  }
+
+  .conference-type {
+    display: inline-block;
+    margin-right: 0.75rem;
+    padding: 0.15rem 0.6rem;
+    border-radius: var(--radius-pill);
+    background-color: var(--accent-fill);
+    color: white;
+    font-size: 0.8rem;
+    font-weight: 500;
+  }
+
+  .conference-venue {
+    font-style: italic;
+    font-weight: bold;
+    color: var(--text-color);
+  }
+
+  .conference-location {
+    color: var(--text-color);
+  }
+
+  .conference-authors {
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+    color: var(--text-color);
+  }
+
+  .author {
+    font-weight: 500;
+  }
+
+  .conference-description {
+    margin-bottom: 1rem;
+    color: var(--secondary-color);
+  }
+
+  .conference-abstract {
+    details {
+      margin-top: 1rem;
+    }
+
+    summary {
+      cursor: pointer;
+      font-weight: 500;
+      color: var(--text-color);
+      padding: 0.5rem 0;
+      transition: color 0.2s ease;
+
+      &:hover {
+        color: var(--primary-color);
+      }
+    }
+
+    p {
+      margin: 0.5rem 0 0 0;
+      padding: 0.5rem 0;
+      line-height: 1.6;
+      color: var(--text-color);
+      border-top: 1px solid var(--border-color);
+    }
+  }
+
+  .conference-footer {
+    margin-top: 1rem;
+  }
+
+  .conference-link {
+    margin-right: 0.75rem;
+  }
+
+  @media (max-width: 768px) {
+    .conference-item {
+      padding: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .conference-title {
+      font-size: 1.1rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .conference-title {
+      font-size: 1.02rem;
+    }
+
+    .conference-type {
+      margin-bottom: 0.4rem;
+    }
+  }
+}

@@ -1,29 +1,33 @@
+# data/social.toml
+# One [[social]] per profile link on the home page. `icon` is a name from
+# templates/macros/icons.html (envelope, linkedin, google-scholar, github, orcid, x-twitter).
+
 [[social]]
 name = "Email"
 url = "mailto:monik.raj.behera@hh.se"
-icon = "fas fa-envelope"
+icon = "envelope"
 
 [[social]]
 name = "LinkedIn"
 url = "https://in.linkedin.com/in/bmonikraj"
-icon = "fab fa-linkedin" 
+icon = "linkedin"
 
 [[social]]
 name = "Google Scholar"
 url = "https://scholar.google.com/citations?hl=en&user=Lrz4h9AAAAAJ&view_op=list_works&sortby=pubdate"
-icon = "ai ai-google-scholar"
+icon = "google-scholar"
 
 [[social]]
 name = "GitHub"
 url = "https://github.com/bmonikraj"
-icon = "fab fa-github"
+icon = "github"
 
 [[social]]
 name = "ORCID"
 url = "https://orcid.org/0000-0001-9385-2533"
-icon = "fa-brands fa-orcid"
+icon = "orcid"
 
 [[social]]
 name = "X"
 url = "https://x.com/raj_monik"
-icon = "fa-brands fa-x-twitter"
+icon = "x-twitter"

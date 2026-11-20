@@ -1,0 +1,3 @@
+# Zola image-processing cache (regenerated on every build)
+static/processed_images/
+public/
